@@ -138,8 +138,11 @@ a:focus {
 .intro .intro-body .brand-heading {
   font-size: 40px;
 }
-.intro .intro-body .intro-text {
+.intro .intro-body .intro-tagline {
   font-size: 18px;
+}
+.intro .intro-body .intro-titles {
+  font-size: 14px;
 }
 @media (min-width: 768px) {
   .intro {
@@ -149,8 +152,11 @@ a:focus {
   .intro .intro-body .brand-heading {
     font-size: 100px;
   }
-  .intro .intro-body .intro-text {
+  .intro .intro-body .intro-tagline {
     font-size: 26px;
+  }
+  .intro .intro-body .intro-titles {
+    font-size: 18px;
   }
 }
 .btn-circle {
