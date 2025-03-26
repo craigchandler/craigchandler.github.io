@@ -1,26 +1,103 @@
-# [Start Bootstrap](http://startbootstrap.com/) - [Grayscale](http://startbootstrap.com/template-overviews/grayscale/)
+# Craig Chandler's Portfolio
 
-[Grayscale](http://startbootstrap.com/template-overviews/grayscale/) is a multipurpose, one page HTML theme for [Bootstrap](http://getbootstrap.com/) created by [Start Bootstrap](http://startbootstrap.com/). This template features various content sections and a Google Maps section with a custom map marker.
+This is my personal portfolio website built using Bootstrap and Gulp.
 
-## Getting Started
+## Prerequisites
 
-To use this template, choose one of the following options to get started:
-* Download the latest release on Start Bootstrap
-* Fork this repository on GitHub
+- Node.js (v16 or higher)
+- npm (comes with Node.js)
 
-## Bugs and Issues
+## Installation
 
-Have a bug or an issue with this template? [Open a new issue](https://github.com/IronSummitMedia/startbootstrap-grayscale/issues) here on GitHub or leave a comment on the [template overview page at Start Bootstrap](http://startbootstrap.com/template-overviews/grayscale/).
+1. Clone the repository:
+```bash
+git clone https://github.com/craigchandler/craigchandler.github.io.git
+cd craigchandler.github.io
+```
 
-## Creator
+2. Install dependencies:
+```bash
+npm install
+```
 
-Start Bootstrap was created by and is maintained by **David Miller**, Managing Parter at [Iron Summit Media Strategies](http://www.ironsummitmedia.com/).
+3. Build the assets:
+```bash
+npx gulp build
+```
 
-* https://twitter.com/davidmillerskt
-* https://github.com/davidtmiller
+## Development
 
-Start Bootstrap is based on the [Bootstrap](http://getbootstrap.com/) framework created by [Mark Otto](https://twitter.com/mdo) and [Jacob Thorton](https://twitter.com/fat).
+To start the development server with live reload:
+```bash
+npx gulp watch
+```
 
-## Copyright and License
+This will:
+- Compile LESS files to CSS
+- Minify CSS and JavaScript
+- Copy vendor files
+- Start a local server
+- Watch for changes and reload automatically
 
-Copyright 2013-2015 Iron Summit Media Strategies, LLC. Code released under the [Apache 2.0](https://github.com/IronSummitMedia/startbootstrap-grayscale/blob/gh-pages/LICENSE) license.
+## Available Gulp Tasks
+
+- `npx gulp build` - Full build of all assets
+- `npx gulp css` - Compile and minify CSS only
+- `npx gulp js` - Minify JavaScript only
+- `npx gulp less` - Compile LESS files
+- `npx gulp vendor` - Copy vendor files
+- `npx gulp watch` - Start development server and watch for changes
+
+## File Structure
+
+```
+├── css/                  # Compiled CSS files
+├── js/                   # JavaScript files
+├── less/                 # LESS source files
+├── vendor/              # Third-party libraries
+├── img/                 # Image assets
+├── index.html           # Main HTML file
+├── gulpfile.js         # Gulp configuration
+└── package.json        # Project dependencies
+```
+
+## Updating Dependencies
+
+To update all dependencies to their latest versions:
+
+1. Check for outdated packages:
+```bash
+npm outdated
+```
+
+2. Update packages:
+```bash
+npm update
+```
+
+3. Rebuild assets:
+```bash
+npx gulp build
+```
+
+## Deployment
+
+The site is hosted on GitHub Pages. To deploy:
+
+1. Build the assets:
+```bash
+npx gulp build
+```
+
+2. Commit and push changes:
+```bash
+git add .
+git commit -m "Update site"
+git push origin main
+```
+
+GitHub Pages will automatically deploy the site from the main branch.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
