@@ -1,6 +1,5 @@
 var gulp = require('gulp');
 var less = require('gulp-less');
-var browserSync = require('browser-sync').create();
 var header = require('gulp-header');
 var cleanCSS = require('gulp-clean-css');
 var rename = require("gulp-rename");
@@ -21,10 +20,7 @@ function lessTask() {
     return gulp.src('less/grayscale.less')
         .pipe(less())
         .pipe(header(banner, { pkg: pkg }))
-        .pipe(gulp.dest('css'))
-        .pipe(browserSync.reload({
-            stream: true
-        }));
+        .pipe(gulp.dest('css'));
 }
 
 // Minify CSS
@@ -32,10 +28,7 @@ function minifyCSS() {
     return gulp.src('css/grayscale.css')
         .pipe(cleanCSS({ compatibility: 'ie8' }))
         .pipe(rename({ suffix: '.min' }))
-        .pipe(gulp.dest('css'))
-        .pipe(browserSync.reload({
-            stream: true
-        }));
+        .pipe(gulp.dest('css'));
 }
 
 // Minify JS
@@ -44,15 +37,12 @@ function minifyJS() {
         .pipe(uglify())
         .pipe(header(banner, { pkg: pkg }))
         .pipe(rename({ suffix: '.min' }))
-        .pipe(gulp.dest('js'))
-        .pipe(browserSync.reload({
-            stream: true
-        }));
+        .pipe(gulp.dest('js'));
 }
 
 // Copy Bootstrap core files
 function bootstrap() {
-    return gulp.src(['node_modules/bootstrap/dist/**/*', '!**/npm.js', '!**/bootstrap-theme.*', '!**/*.map'])
+    return gulp.src(['node_modules/bootstrap/dist/**/*', '!**/npm.js', '!**/bootstrap-theme.*'])
         .pipe(gulp.dest('vendor/bootstrap'))
 }
 
@@ -75,29 +65,16 @@ function fontawesome() {
         .pipe(gulp.dest('vendor/font-awesome'))
 }
 
-// Configure the browserSync task
-function browserSyncTask(done) {
-    browserSync.init({
-        server: {
-            baseDir: ''
-        },
-    });
-    done();
-}
-
-// Watch task
+// Watch source assets. Vite serves the site and reloads generated files.
 function watchTask() {
-    gulp.watch('less/*.less', lessTask);
-    gulp.watch('css/*.css', minifyCSS);
-    gulp.watch('js/*.js', minifyJS);
-    gulp.watch('*.html').on('change', browserSync.reload);
-    gulp.watch('js/**/*.js').on('change', browserSync.reload);
+    gulp.watch('less/*.less', gulp.series(lessTask, minifyCSS));
+    return gulp.watch('js/grayscale.js', minifyJS);
 }
 
 // Define complex tasks
 const vendor = gulp.parallel(bootstrap, jquery, fontawesome);
 const build = gulp.series(lessTask, gulp.parallel(minifyCSS, minifyJS), vendor);
-const watch = gulp.series(build, gulp.parallel(watchTask, browserSyncTask));
+const watch = gulp.series(build, watchTask);
 
 // Export tasks
 exports.less = lessTask;

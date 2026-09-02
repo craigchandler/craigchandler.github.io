@@ -1,10 +1,10 @@
 # Craig Chandler's Portfolio
 
-This is my personal portfolio website built using Bootstrap and Gulp.
+This is my personal portfolio website built using Bootstrap, Gulp, and Vite.
 
 ## Prerequisites
 
-- Node.js (v16 or higher)
+- Node.js 20.19.x, or Node.js 22.12 or higher
 - npm (comes with Node.js)
 
 ## Installation
@@ -22,31 +22,34 @@ npm install
 
 3. Build the assets:
 ```bash
-npx gulp build
+npm run build
 ```
 
 ## Development
 
 To start the development server with live reload:
 ```bash
-npx gulp watch
+npm run dev
 ```
 
 This will:
 - Compile LESS files to CSS
 - Minify CSS and JavaScript
 - Copy vendor files
-- Start a local server
-- Watch for changes and reload automatically
+- Serve the site with Vite at `http://127.0.0.1:5173`
+- Watch source files and reload automatically
 
-## Available Gulp Tasks
+## Available Commands
 
-- `npx gulp build` - Full build of all assets
+- `npm run build` - Full build of all assets
+- `npm run dev` - Build assets, watch sources, and start the Vite development server
+- `npm run watch:assets` - Build assets and watch LESS and source JavaScript without starting a server
+- `npm run serve` - Start only the Vite development server
+- `npm run audit` - Fail when npm reports a high or critical vulnerability
 - `npx gulp css` - Compile and minify CSS only
 - `npx gulp js` - Minify JavaScript only
 - `npx gulp less` - Compile LESS files
 - `npx gulp vendor` - Copy vendor files
-- `npx gulp watch` - Start development server and watch for changes
 
 ## File Structure
 
@@ -77,7 +80,7 @@ npm update
 
 3. Rebuild assets:
 ```bash
-npx gulp build
+npm run build
 ```
 
 ## Deployment
@@ -86,7 +89,7 @@ The site is hosted on GitHub Pages. To deploy:
 
 1. Build the assets:
 ```bash
-npx gulp build
+npm run build
 ```
 
 2. Commit and push changes:
