@@ -138,6 +138,14 @@ const breadcrumb = {
             ))}
           </div>
         )}
+        {project.furtherReading && (
+          <aside class="case-further-reading" aria-label="Further reading">
+            <p class="eyebrow">Further reading</p>
+            {project.furtherReading.map((link) => (
+              <a class="text-link" href={link.href}>{link.label} <span aria-hidden="true">→</span></a>
+            ))}
+          </aside>
+        )}
       </div>
     </section>
 

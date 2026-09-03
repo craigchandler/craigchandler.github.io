@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import WholeTrainClearanceDiagram from '../../components/WholeTrainClearanceDiagram.astro';
+import { articles, type ArticleItem } from '../../content/articles';
+
+export function getStaticPaths() {
+  return articles.map((article) => ({
+    params: { slug: article.slug },
+    props: { article }
+  }));
+}
+
+interface Props {
+  article: ArticleItem;
+}
+
+const { article } = Astro.props;
+const pageUrl = article.metadata.canonical;
+const siteUrl = new URL('/', Astro.site).toString();
+const personId = `${siteUrl}#person`;
+const websiteId = `${siteUrl}#website`;
+const socialImage = new URL('/assets/social-preview.png', Astro.site).toString();
+
+const articleEntity = {
+  '@type': 'Article',
+  '@id': `${pageUrl}#article`,
+  headline: article.title,
+  description: article.metadata.description,
+  url: pageUrl,
+  image: socialImage,
+  datePublished: article.published,
+  author: { '@id': personId },
+  publisher: { '@id': personId },
+  isPartOf: { '@id': websiteId },
+  inLanguage: 'en-AU',
+  mainEntityOfPage: pageUrl
+};
+
+const breadcrumb = {
+  '@type': 'BreadcrumbList',
+  '@id': `${pageUrl}#breadcrumb`,
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Craig Chandler', item: siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'Articles', item: new URL('/articles/', Astro.site).toString() },
+    { '@type': 'ListItem', position: 3, name: article.title, item: pageUrl }
+  ]
+};
+---
+
+<BaseLayout
+  title={article.metadata.title}
+  description={article.metadata.description}
+  canonical={article.metadata.canonical}
+  type="article"
+  structuredData={[articleEntity, breadcrumb]}
+>
+  <article class="technical-article">
+    <header class="article-hero container-wide">
+      <a class="back-link" href="/articles"><span aria-hidden="true">←</span> Articles</a>
+      <p class="eyebrow">Technical writing</p>
+      <h1>{article.title}</h1>
+      <p class="article-subtitle">{article.subtitle}</p>
+      <div class="article-byline">
+        <span>Craig Chandler</span>
+        <time datetime={article.published}>
+          {new Date(`${article.published}T00:00:00+09:30`).toLocaleDateString('en-AU', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+          })}
+        </time>
+      </div>
+    </header>
+
+    <div class="article-body">
+      <div class="article-introduction">
+        {article.introduction.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+
+      {article.sections.map((section) => (
+        <section>
+          <h2>{section.title}</h2>
+          {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+          {section.figure === 'whole-train-clearance' && <WholeTrainClearanceDiagram />}
+        </section>
+      ))}
+
+      <aside class="article-related" aria-label="Related work">
+        <p class="eyebrow">Related work</p>
+        <p>
+          A shorter overview of the related work is available in the
+          <a href={article.relatedWork.href}>{article.relatedWork.label}</a>.
+        </p>
+      </aside>
+    </div>
+  </article>
+</BaseLayout>

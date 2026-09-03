@@ -36,6 +36,7 @@ export interface WorkItem {
   imageWidth?: number;
   imageHeight?: number;
   externalLinks?: Array<{ label: string; href: string }>;
+  furtherReading?: Array<{ label: string; href: string }>;
 }
 
 export const work: WorkItem[] = [
@@ -239,7 +240,13 @@ export const work: WorkItem[] = [
     services: ['Control-system architecture', 'C++ engineering', 'Planimate integration', 'Test architecture'],
     technologies: ['C++', 'CMake', 'Windows', 'Linux', 'Planimate', 'Native APIs'],
     diagram: 'control',
-    featured: true
+    featured: true,
+    furtherReading: [
+      {
+        label: 'Read the deeper discussion of the modelling problem',
+        href: '/articles/modelling-moving-block-train-control'
+      }
+    ]
   },
   {
     slug: 'rail-supply-chain',

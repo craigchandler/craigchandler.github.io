@@ -9,6 +9,7 @@ interface Props {
   image?: string;
   imageAlt?: string;
   type?: 'website' | 'article';
+  canonical?: string;
   structuredData?: Array<Record<string, unknown>>;
 }
 
@@ -18,11 +19,12 @@ const {
   image = '/assets/social-preview.png',
   imageAlt = 'Craig Chandler — Solution Architect and Decision Intelligence Specialist',
   type = 'website',
+  canonical,
   structuredData = []
 } = Astro.props;
 
 const siteURL = new URL('/', Astro.site).toString();
-const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+const canonicalURL = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
 const socialImage = new URL(image, Astro.site).toString();
 const personId = `${siteURL}#person`;
 const websiteId = `${siteURL}#website`;
