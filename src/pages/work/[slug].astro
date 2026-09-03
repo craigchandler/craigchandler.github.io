@@ -87,10 +87,15 @@ const breadcrumb = {
     </section>
 
     {project.image && (
-      <figure class="case-interface container-wide">
-        <div class="case-interface-frame">
+      <figure id="project-visual" class="case-interface container-wide">
+        <div
+          class:list={[
+            'case-interface-frame',
+            { 'case-interface-frame-natural': project.imageNaturalRatio }
+          ]}
+        >
           <div class="preview-toolbar" aria-hidden="true">
-            <i></i><i></i><i></i><span>Product interface / Sample schedule</span>
+            <i></i><i></i><i></i><span>{project.imageLabel ?? 'Product interface / Sample schedule'}</span>
           </div>
           <img
             src={project.image}
@@ -101,7 +106,7 @@ const breadcrumb = {
             decoding="async"
           />
         </div>
-        <figcaption>FAID Quantum schedule dashboard — sample data shown.</figcaption>
+        <figcaption>{project.imageCaption ?? 'FAID Quantum schedule dashboard — sample data shown.'}</figcaption>
       </figure>
     )}
 
@@ -117,8 +122,8 @@ const breadcrumb = {
         </div>
       </aside>
       <div class="case-narrative">
-        {project.sections.map((section) => (
-          <section>
+        {project.sections.map((section, index) => (
+          <section id={`case-section-${String(index + 1).padStart(2, '0')}`}>
             <p class="eyebrow">{section.label}</p>
             <h2>{section.title}</h2>
             <div class="case-copy">
@@ -128,6 +133,14 @@ const breadcrumb = {
               <ul class="case-points">
                 {section.points.map((point) => <li>{point}</li>)}
               </ul>
+            )}
+            {section.subsection && (
+              <div class="case-subsection">
+                <h3>{section.subsection.title}</h3>
+                <div class="case-copy">
+                  {section.subsection.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+                </div>
+              </div>
             )}
           </section>
         ))}

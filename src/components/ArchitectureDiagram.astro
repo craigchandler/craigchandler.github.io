@@ -40,6 +40,14 @@ const diagrams = {
       'A discrete-event model follows material and fleet through mine or source, stockpile and loadout, the rail network, port or plant unloading, and the empty return cycle. Schedules, maintenance, delays, infrastructure, operating rules and fleet availability influence the entire cycle. Outputs include throughput, utilisation, queues, cycle times, bottlenecks and scenario comparisons.',
     caption:
       'Loaded movement runs to the destination; the empty fleet returns through the network to begin the next cycle.'
+  },
+  revival: {
+    label: 'Modernisation boundary',
+    context: 'Preserve the game · replace the ageing platform layer',
+    description:
+      'The recovered game engine, scripting system and creative content are retained above a modern platform and runtime boundary. That boundary provides SDL2 platform services and feeds an SDL renderer for desktop Linux or a direct OpenGL ES 2.0 renderer for handheld Linux. PhysFS packages shared game data for repeatable desktop, release and PortMaster targets.',
+    caption:
+      'Modernisation is concentrated around the platform and runtime boundary; the recovered game and scripting core remain the system being carried forward.'
   }
 } as const;
 
@@ -291,6 +299,55 @@ const captionId = `${type}-diagram-caption`;
           <span>Windows DLL</span>
           <span>Linux shared library</span>
         </div>
+      </div>
+    </div>
+  )}
+
+  {type === 'revival' && (
+    <div class="diagram-canvas diagram-revival">
+      <div class="diagram-node diagram-revival-core">
+        <small>Recovered system</small>
+        <strong>Game engine + scripting core</strong>
+        <span>Original remake logic · scripts · creative content</span>
+      </div>
+
+      <div class="diagram-revival-link" aria-hidden="true"><span>Preserved above the boundary</span><i>↓</i></div>
+
+      <div class="diagram-boundary diagram-revival-boundary">
+        <div class="diagram-boundary-heading">
+          <span>Modern platform / runtime boundary</span>
+          <strong>Window · input · timing · audio · image loading · rendering</strong>
+        </div>
+        <div class="diagram-chip-row">
+          <span>SDL2</span>
+          <span>SDL_image</span>
+          <span>SDL_mixer</span>
+          <span>PhysFS</span>
+        </div>
+      </div>
+
+      <div class="diagram-revival-link" aria-hidden="true"><span>Two supported renderer paths</span><i>↓</i></div>
+
+      <div class="diagram-revival-renderers">
+        <div class="diagram-node">
+          <small>Desktop Linux</small>
+          <strong>SDL renderer</strong>
+          <span>Conventional desktop path</span>
+        </div>
+        <div class="diagram-node diagram-node-emphasis">
+          <small>ARM handhelds</small>
+          <strong>Direct OpenGL ES 2.0</strong>
+          <span>PortMaster performance path</span>
+        </div>
+      </div>
+
+      <div class="diagram-revival-link" aria-hidden="true"><span>Shared packaged data</span><i>↓</i></div>
+
+      <div class="diagram-revival-targets">
+        <span>data.zip</span>
+        <span>Linux releases</span>
+        <span>Windows CI package</span>
+        <span>PortMaster aarch64 + armhf</span>
       </div>
     </div>
   )}
