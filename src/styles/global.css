@@ -1018,8 +1018,8 @@ h3 {
 
 .github-grid {
   display: grid;
-  align-items: center;
-  grid-template-columns: minmax(0, 0.8fr) minmax(390px, 1fr);
+  align-items: start;
+  grid-template-columns: minmax(0, 1.1fr) minmax(390px, 0.75fr);
   gap: clamp(4rem, 9vw, 10rem);
 }
 
@@ -1027,6 +1027,72 @@ h3 {
   max-width: 600px;
   margin: 2rem 0 2.5rem;
   color: var(--muted);
+}
+
+.engineering-themes {
+  margin: 2.5rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.engineering-theme {
+  padding-block: 1.5rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.engineering-theme header {
+  display: grid;
+  margin-bottom: 0.9rem;
+  grid-template-columns: 2.5rem 1fr;
+  gap: 0.75rem;
+}
+
+.engineering-theme header span {
+  padding-top: 0.22rem;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+}
+
+.engineering-theme h3 {
+  margin: 0;
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+  font-weight: 520;
+  letter-spacing: -0.02em;
+}
+
+.engineering-theme > p:not(.engineering-theme-tech) {
+  margin: 0 0 1rem 3.25rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.repository-links {
+  display: flex;
+  margin: 0 0 0.9rem 3.25rem;
+  padding: 0;
+  flex-wrap: wrap;
+  gap: 0.45rem 1rem;
+  list-style: none;
+}
+
+.repository-links a {
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  transition: color 180ms ease;
+}
+
+.repository-links a:hover {
+  color: var(--accent-soft);
+}
+
+.engineering-theme-tech {
+  margin: 0 0 0 3.25rem;
+  color: #858a83;
+  font-family: var(--font-mono);
+  font-size: 0.61rem;
+  letter-spacing: 0.015em;
+  line-height: 1.7;
 }
 
 .principles-panel {

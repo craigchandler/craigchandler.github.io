@@ -77,7 +77,7 @@ export const work: WorkItem[] = [
     response:
       'A clear workload boundary separates the interactive product from long-running compute: an Angular client and .NET API prepare scenarios, orchestration services schedule containerised jobs, and cloud storage retains inputs, state, and results.',
     outcome:
-      'The architecture supports independently scalable workload execution and a durable path from scenario definition to analytical output. Detailed performance and customer outcomes are not published here.',
+      'The architecture supports independently scalable workload execution and a durable path from scenario definition to analytical output.',
     services: ['Solution architecture', 'Cloud workload design', 'API design', 'Application engineering'],
     technologies: ['Angular', '.NET', 'Azure', 'Containers', 'REST', 'OpenAPI', 'CI/CD'],
     diagram: 'platform',
@@ -100,7 +100,7 @@ export const work: WorkItem[] = [
     response:
       'A platform-neutral C++ core defines explicit interfaces for network state, route control, speed and headway logic, and Planimate integration. Control rules remain separate from the simulation host.',
     outcome:
-      'The component provides a reusable engineering boundary for detailed train-control behaviour and cross-platform simulation. Operational validation is kept distinct from compilation and native test evidence.',
+      'The component provides a reusable engineering boundary for detailed train-control behaviour and cross-platform simulation.',
     services: ['Systems architecture', 'C++ engineering', 'Simulation integration', 'Verification design'],
     technologies: ['C++', 'CMake', 'Windows', 'Linux', 'Planimate', 'Native APIs'],
     diagram: 'control',
