@@ -6,9 +6,10 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build",
+    "build": "astro check && astro build && node scripts/validate-internal-links.mjs",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro check",
+    "validate:links": "node scripts/validate-internal-links.mjs"
   },
   "engines": {
     "node": ">=22.19.0"

@@ -7,6 +7,9 @@ import ProjectCard from '../components/ProjectCard.astro';
 import TechnologyGroups from '../components/TechnologyGroups.astro';
 import Experience from '../components/Experience.astro';
 import { work } from '../content/work';
+import { articles } from '../content/articles';
+
+const latestArticle = [...articles].sort((a, b) => b.published.localeCompare(a.published))[0];
 
 const expertise = [
   {
@@ -118,6 +121,23 @@ const industries = [
       </div>
     </div>
   </section>
+
+  {latestArticle && (
+    <section class="latest-article section-ruled" aria-labelledby="latest-article-title">
+      <div class="container-wide latest-article-grid">
+        <p class="eyebrow">Latest article</p>
+        <div class="latest-article-copy">
+          <h2 id="latest-article-title">
+            <a href={`/articles/${latestArticle.slug}/`}>{latestArticle.title}</a>
+          </h2>
+          <p>{latestArticle.subtitle}</p>
+          <a class="text-link" href={`/articles/${latestArticle.slug}/`}>
+            Read article <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  )}
 
   <section class="section process-section" aria-labelledby="process-title">
     <div class="container-wide">

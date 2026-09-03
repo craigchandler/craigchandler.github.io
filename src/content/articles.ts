@@ -12,7 +12,6 @@ export interface ArticleItem {
   metadata: {
     title: string;
     description: string;
-    canonical: string;
   };
   introduction: string[];
   sections: ArticleSection[];
@@ -32,8 +31,7 @@ export const articles: ArticleItem[] = [
     metadata: {
       title: 'Modelling Moving-Block Control in Discrete-Event Simulation',
       description:
-        'Why train length, changing separation, network topology and simulation timing make moving-block railway behaviour difficult to model.',
-      canonical: 'https://craigchandler.xyz/articles/modelling-moving-block-train-control'
+        'Why train length, changing separation, network topology and simulation timing make moving-block railway behaviour difficult to model.'
     },
     introduction: [
       'Railway simulations often begin with a convenient abstraction: divide the track into sections, represent each train by its current location, and move it from one part of the network to the next. For many planning questions, this works well. It makes occupancy visible, creates clear event boundaries and keeps the model understandable.',
@@ -116,7 +114,7 @@ export const articles: ArticleItem[] = [
     ],
     relatedWork: {
       label: 'Moving Block Train Control case study',
-      href: '/work/moving-block'
+      href: '/work/moving-block/'
     }
   }
 ];

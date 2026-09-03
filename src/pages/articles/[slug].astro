@@ -15,7 +15,7 @@ interface Props {
 }
 
 const { article } = Astro.props;
-const pageUrl = article.metadata.canonical;
+const pageUrl = new URL(`/articles/${article.slug}/`, Astro.site).toString();
 const siteUrl = new URL('/', Astro.site).toString();
 const personId = `${siteUrl}#person`;
 const websiteId = `${siteUrl}#website`;
@@ -50,13 +50,12 @@ const breadcrumb = {
 <BaseLayout
   title={article.metadata.title}
   description={article.metadata.description}
-  canonical={article.metadata.canonical}
   type="article"
   structuredData={[articleEntity, breadcrumb]}
 >
   <article class="technical-article">
     <header class="article-hero container-wide">
-      <a class="back-link" href="/articles"><span aria-hidden="true">←</span> Articles</a>
+      <a class="back-link" href="/articles/"><span aria-hidden="true">←</span> Articles</a>
       <p class="eyebrow">Technical writing</p>
       <h1>{article.title}</h1>
       <p class="article-subtitle">{article.subtitle}</p>

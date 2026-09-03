@@ -244,7 +244,7 @@ export const work: WorkItem[] = [
     furtherReading: [
       {
         label: 'Read the deeper discussion of the modelling problem',
-        href: '/articles/modelling-moving-block-train-control'
+        href: '/articles/modelling-moving-block-train-control/'
       }
     ]
   },
