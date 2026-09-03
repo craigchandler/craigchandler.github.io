@@ -26,12 +26,12 @@ const diagrams = {
       'The browser submits and observes work through durable state; long-running compute continues independently.'
   },
   control: {
-    label: 'Control architecture',
-    context: 'Network state to movement authority',
+    label: 'Simulation integration',
+    context: 'Specialist train behaviour within an operational model',
     description:
-      'An abstract railway schematic shows a following train behind a lead train, plus a switch to an unavailable branch. Observed topology, train position, route and switch state, restrictions and reservations enter a C++ control core. It evaluates routes, following separation, conflict resources, movement authority and speed. Planimate applies returned commands, advances the simulation and supplies the next observed state through the native interface.',
+      'An abstract railway schematic shows trains interacting across changing topology. A separate C++ train-control component integrates with the Planimate operational simulation through a narrow native boundary and supports moving-block behaviour on Windows and Linux.',
     caption:
-      'A closed control loop: observed railway state in, revisioned authority and speed commands out, then fresh state back on the next step.'
+      'The operational simulation and specialist C++ component remain separate responsibilities within one cross-platform model.'
   },
   'supply-chain': {
     label: 'Operational model',
@@ -217,8 +217,8 @@ const captionId = `${type}-diagram-caption`;
     <div class="diagram-canvas diagram-moving-block">
       <div class="diagram-state-panel">
         <div class="diagram-boundary-heading">
-          <span>Observed inputs</span>
-          <strong>Railway state</strong>
+          <span>Operational context</span>
+          <strong>Changing railway conditions</strong>
         </div>
         <div
           class="diagram-topology-cue"
@@ -234,62 +234,61 @@ const captionId = `${type}-diagram-caption`;
           <small class="topology-label">Branch unavailable</small>
         </div>
         <div class="diagram-state-list">
-          <span>Network topology</span>
-          <span>Train front / rear</span>
-          <span>Routes &amp; switches</span>
-          <span>Restrictions</span>
-          <span>Occupancy &amp; reservations</span>
+          <span>Train length</span>
+          <span>Changing separation</span>
+          <span>Rail topology</span>
+          <span>Shared infrastructure</span>
+          <span>Closures &amp; restrictions</span>
         </div>
       </div>
 
-      <div class="diagram-control-link" aria-hidden="true"><span>Observed state</span><i>→</i></div>
+      <div class="diagram-control-link" aria-hidden="true"><span>Separate responsibility</span><i>·</i></div>
 
       <div class="diagram-controller-core">
         <div class="diagram-boundary-heading">
-          <span>C++ control core</span>
-          <strong>Current-state evaluation</strong>
+          <span>Specialist component</span>
+          <strong>Train-control behaviour</strong>
         </div>
         <div class="diagram-logic-grid">
-          <span>Route evaluation</span>
-          <span>Following / headway</span>
-          <span>Conflict reservations</span>
-          <span>Movement authority</span>
-          <span>Speed decisions</span>
+          <span>Moving-block behaviour</span>
+          <span>Changing separation</span>
+          <span>Network interactions</span>
+          <span>Operating constraints</span>
+          <span>Cross-platform C++</span>
         </div>
       </div>
 
-      <div class="diagram-control-link" aria-hidden="true"><span>Revised commands</span><i>→</i></div>
+      <div class="diagram-control-link" aria-hidden="true"><span>Narrow integration</span><i>·</i></div>
 
       <div class="diagram-command-panel">
         <div class="diagram-boundary-heading">
-          <span>Controller outputs</span>
-          <strong>Authority &amp; commands</strong>
+          <span>Operational simulation</span>
+          <strong>Network-wide operation</strong>
         </div>
         <div class="diagram-state-list">
-          <span>Position limit</span>
-          <span>Route / hold</span>
-          <span>Speed profile</span>
-          <span>Next recheck</span>
+          <span>Train movements</span>
+          <span>Junction interactions</span>
+          <span>Shared infrastructure</span>
+          <span>Changing conditions</span>
         </div>
       </div>
 
       <div class="diagram-host-boundary">
         <div>
-          <small>Simulation host</small>
-          <strong>Planimate owns clock, events and train movement</strong>
+          <small>Integration context</small>
+          <strong>Planimate operational simulation</strong>
         </div>
         <div class="diagram-host-cycle">
-          <span>Apply current commands</span>
-          <i aria-hidden="true">→</i>
-          <span>Advance simulation</span>
-          <i aria-hidden="true">→</i>
-          <span>Return fresh observed state</span>
-          <b aria-hidden="true">↺</b>
+          <span>Operational model</span>
+          <i aria-hidden="true">·</i>
+          <span>Specialist behaviour</span>
+          <i aria-hidden="true">·</i>
+          <span>Network interactions</span>
         </div>
         <div class="diagram-platforms">
-          <span>Native table interface</span>
-          <span>Windows DLL</span>
-          <span>Linux shared library</span>
+          <span>Narrow native integration</span>
+          <span>Windows</span>
+          <span>Linux</span>
         </div>
       </div>
     </div>

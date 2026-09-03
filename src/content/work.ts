@@ -192,16 +192,16 @@ export const work: WorkItem[] = [
     title: 'Moving Block Train Control',
     kicker: 'Cross-platform control and simulation',
     summary:
-      'A C++ train-control component for modelling moving-block separation, routes, switching, and network-aware speed authority.',
+      'A C++ train-control component for modelling moving-block train behaviour, changing separation and network-aware rail operations.',
     card: {
-      problem: 'Model network-aware movement authority and safe train separation across changing rail topology.',
+      problem: 'Model realistic train separation and network interactions across changing rail topology.',
       role: 'Systems architecture + C++ engineering',
-      complexity: 'C++ · moving block · route control · Planimate integration · Windows · Linux'
+      complexity: 'C++ · moving block · rail topology · Planimate integration · Windows · Linux'
     },
     metadata: {
       title: 'Moving Block Train Control — C++ Simulation | Craig Chandler',
       description:
-        'Case study of a cross-platform C++ train-control component modelling rail topology, moving-block separation, movement authority and Planimate integration.',
+        'Case study of a cross-platform C++ component for modelling moving-block train behaviour and network-aware rail operations within Planimate simulations.',
       image: '/assets/social/moving-block.png',
       imageAlt: 'Moving Block Train Control — C++ simulation and control architecture',
       entityType: 'CreativeWork'
@@ -209,31 +209,31 @@ export const work: WorkItem[] = [
     sections: [
       {
         label: '01 / Control problem',
-        title: 'Authority changes as trains and topology change',
+        title: 'Movement constraints change with the railway',
         paragraphs: [
-          'Moving-block control cannot treat the railway as a fixed sequence of occupied blocks. Authority depends on train front and rear position, the route ahead, following trains, switches, shared track, active restrictions and reservations.',
-          'Those inputs change continuously. A route event, closure or new train observation can shorten an earlier authority and invalidate its speed plan, so control decisions have to be recalculated against current state.'
+          'Moving-block behaviour depends on more than which section of track a train occupies. Train length, changing separation, junctions, shared infrastructure, closures and speed restrictions all affect what movements remain practical as the simulation evolves.',
+          'Representing those effects requires the model to account for changing physical and network conditions rather than treating movement as a fixed sequence of occupied and clear sections.'
         ]
       },
       {
         label: '02 / Control architecture',
-        title: 'Observed state in; current commands out',
+        title: 'Separate the operational model from specialist control logic',
         paragraphs: [
-          'Planimate owns simulation time, events and train movement. At each control step it passes the observed railway state across a native interface. The C++ controller evaluates route access, following separation and conflict reservations, then returns movement authority and speed commands.',
-          'The authority is a position limit along the selected route, not simply permission to reach the next node. Commands carry revisions so the simulation host can discard a superseded speed profile after the controller state changes.'
+          'The train-control logic is implemented as a separate C++ component integrated with the operational simulation. Keeping those responsibilities separate allows the railway model to focus on the wider operation while the specialist component handles detailed train-control behaviour.',
+          'That separation also makes the control behaviour easier to test independently from the larger simulation model and keeps the integration boundary explicit.'
         ],
         points: [
-          'Train length and rear clearance affect occupancy and release',
-          'Junctions and shared track are handled as reservable resources',
-          'Closures and speed restrictions feed the same authority calculation'
+          'Train length and changing separation affect movement behaviour',
+          'Junctions and shared infrastructure introduce network-level constraints',
+          'Closures and speed restrictions can alter earlier operating assumptions'
         ]
       },
       {
         label: '03 / Integration',
-        title: 'Detailed control behaviour inside an operational model',
+        title: 'Detailed train behaviour within a larger operational simulation',
         paragraphs: [
-          'Keeping the control core outside the simulation model makes the logic testable against explicit network and train-state fixtures. The same source builds as a Windows DLL and Linux shared library, with a narrow adapter handling the Planimate table interface.',
-          'The component supports topology-aware following, route and switch decisions, speed profiles and conflict handling within larger rail simulations.'
+          'The component is written in C++ and integrated with Planimate through a deliberately narrow native boundary. The same source is designed to build for Windows and Linux.',
+          'Within the wider simulation it supports topology-aware train movement, changing operating constraints and interactions across the rail network.'
         ]
       }
     ],
