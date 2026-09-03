@@ -10,46 +10,332 @@ const { type, compact = false } = Astro.props;
 
 const diagrams = {
   fatigue: {
-    label: 'FAID Quantum system architecture',
-    nodes: ['Schedule data', 'Angular application', '.NET APIs', 'Fatigue engine', 'Risk insights'],
-    sub: ['Organisation context', 'Identity & access', 'Analysis boundary', 'Reports']
+    label: 'Application architecture',
+    context: 'Identity, tenancy and analytical workflow',
+    description:
+      'A user authenticates through Auth0 before working in the Angular application. Organisation context is carried into .NET application services, which coordinate customer data and the fatigue analysis engine. The same result set feeds risk views, comparisons and reports.',
+    caption:
+      'Identity establishes access; organisation context scopes the workflow; analysis remains behind the application-service boundary.'
   },
   platform: {
-    label: 'DASH-X cloud workload architecture',
-    nodes: ['Scenario', 'Angular client', '.NET API', 'Orchestrator', 'Container jobs', 'Results'],
-    sub: ['User workflow', 'Control plane', 'Compute plane', 'Storage']
+    label: 'Workload architecture',
+    context: 'Interactive control plane and isolated compute',
+    description:
+      'The Angular client and application API form an interactive control plane. They persist scenario configuration, submit asynchronous work and report status. A separate compute plane orchestrates isolated container runs, with cloud storage holding inputs, execution state and results.',
+    caption:
+      'The browser submits and observes work through durable state; long-running compute continues independently.'
   },
   control: {
-    label: 'Moving block control architecture',
-    nodes: ['Network state', 'Route logic', 'Movement authority', 'Speed profile', 'Simulation host'],
-    sub: ['Topology', 'Reservations', 'Safe separation', 'Windows · Linux']
+    label: 'Control architecture',
+    context: 'Network state to movement authority',
+    description:
+      'Observed topology, train position, route and switch state, restrictions and reservations enter a C++ control core. It evaluates routes, following separation, conflict resources, movement authority and speed. Planimate applies returned commands, advances the simulation and supplies the next observed state through the native interface.',
+    caption:
+      'A closed control loop: observed railway state in, revisioned authority and speed commands out, then fresh state back on the next step.'
   },
   'supply-chain': {
-    label: 'Rail and bulk supply chain model',
-    nodes: ['Mine / source', 'Loadout', 'Rail network', 'Port / plant', 'Decision outputs'],
-    sub: ['Demand & delays', 'Fleet cycles', 'Constraints', 'Scenarios']
+    label: 'Operational model',
+    context: 'System boundary and decision outputs',
+    description:
+      'A discrete-event model follows material and fleet through mine or source, stockpile and loadout, the rail network, port or plant unloading, and the empty return cycle. Schedules, maintenance, delays, infrastructure, operating rules and fleet availability influence the entire cycle. Outputs include throughput, utilisation, queues, cycle times, bottlenecks and scenario comparisons.',
+    caption:
+      'The model represents the complete operating cycle so a change at one stage can be traced through the rest of the system.'
   }
 } as const;
 
 const diagram = diagrams[type];
+const titleId = `${type}-diagram-title`;
+const descriptionId = `${type}-diagram-description`;
+const captionId = `${type}-diagram-caption`;
 ---
 
-<figure class:list={['architecture-diagram', { compact }]} aria-label={diagram.label}>
+<figure
+  class:list={['architecture-diagram', `architecture-diagram-${type}`, { compact }]}
+  aria-labelledby={titleId}
+  aria-describedby={`${descriptionId} ${captionId}`}
+>
   <div class="diagram-meta">
-    <span>System architecture</span>
-    <span>Conceptual view</span>
+    <span id={titleId}>{diagram.label}</span>
+    <span>{diagram.context}</span>
   </div>
-  <div class="diagram-track">
-    {diagram.nodes.map((node, index) => (
-      <div class="diagram-stage">
-        <span>{String(index + 1).padStart(2, '0')}</span>
-        <strong>{node}</strong>
-        {index < diagram.nodes.length - 1 && <i aria-hidden="true">→</i>}
+  <p id={descriptionId} class="visually-hidden">{diagram.description}</p>
+
+  {type === 'fatigue' && (
+    <div class="diagram-canvas diagram-faid">
+      <div class="diagram-boundary diagram-identity">
+        <div class="diagram-boundary-heading">
+          <span>Boundary 01</span>
+          <strong>Identity &amp; access</strong>
+        </div>
+        <div class="diagram-inline-flow">
+          <div class="diagram-node">
+            <small>User</small>
+            <strong>Browser session</strong>
+          </div>
+          <span class="diagram-arrow" aria-hidden="true">↔</span>
+          <div class="diagram-node">
+            <small>Identity provider</small>
+            <strong>Auth0</strong>
+          </div>
+        </div>
+        <p class="diagram-note">Authentication · access claims</p>
       </div>
-    ))}
-  </div>
-  <div class="diagram-subsystems">
-    {diagram.sub.map((item) => <span>{item}</span>)}
-  </div>
-  <figcaption>{diagram.label} — simplified to show responsibilities and system boundaries.</figcaption>
+
+      <div class="diagram-boundary-link" aria-hidden="true">
+        <span>Identity + organisation membership</span>
+        <i>→</i>
+      </div>
+
+      <div class="diagram-boundary diagram-tenant">
+        <div class="diagram-boundary-heading">
+          <span>Boundary 02</span>
+          <strong>Organisation / tenant context</strong>
+        </div>
+        <div class="diagram-stack">
+          <div class="diagram-node diagram-node-emphasis">
+            <small>Customer workflow</small>
+            <strong>Angular web application</strong>
+            <span>Import · edit · analyse · review</span>
+          </div>
+          <div class="diagram-stack-link">
+            <span>Authenticated request + tenant context</span>
+            <i aria-hidden="true">↓</i>
+          </div>
+          <div class="diagram-node">
+            <small>Application boundary</small>
+            <strong>.NET application services</strong>
+            <span>Access · workflow · coordination</span>
+          </div>
+          <div class="diagram-analysis-grid">
+            <div class="diagram-node">
+              <small>Analytical service</small>
+              <strong>Fatigue analysis engine</strong>
+            </div>
+            <div class="diagram-node">
+              <small>Organisation-owned</small>
+              <strong>Schedules &amp; results</strong>
+            </div>
+          </div>
+          <div class="diagram-output-row">
+            <span>Risk views</span>
+            <span>Comparisons</span>
+            <span>Reports</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {type === 'platform' && (
+    <div class="diagram-canvas diagram-dash">
+      <div class="diagram-plane diagram-control-plane">
+        <div class="diagram-boundary-heading">
+          <span>Plane 01</span>
+          <strong>Interactive / control plane</strong>
+        </div>
+        <div class="diagram-stage-row">
+          <div class="diagram-node">
+            <small>User workflow</small>
+            <strong>Projects · studies · scenarios</strong>
+          </div>
+          <span class="diagram-arrow" aria-hidden="true">→</span>
+          <div class="diagram-node diagram-node-emphasis">
+            <small>Browser</small>
+            <strong>Angular client</strong>
+          </div>
+          <span class="diagram-arrow" aria-hidden="true">→</span>
+          <div class="diagram-node">
+            <small>Application service</small>
+            <strong>.NET API</strong>
+            <span>Configure · submit · monitor</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="diagram-async-bridge">
+        <span><i aria-hidden="true">↓</i> Execution request</span>
+        <strong>Asynchronous boundary</strong>
+        <span>Progress + results <i aria-hidden="true">↑</i></span>
+      </div>
+
+      <div class="diagram-plane diagram-compute-plane">
+        <div class="diagram-boundary-heading">
+          <span>Plane 02</span>
+          <strong>Isolated compute plane</strong>
+        </div>
+        <div class="diagram-stage-row">
+          <div class="diagram-node">
+            <small>Control service</small>
+            <strong>Workload orchestration</strong>
+          </div>
+          <span class="diagram-arrow" aria-hidden="true">→</span>
+          <div class="diagram-node diagram-node-emphasis">
+            <small>Disposable workers</small>
+            <strong>Container runs</strong>
+            <span>Staged / parallel work</span>
+          </div>
+          <span class="diagram-arrow" aria-hidden="true">→</span>
+          <div class="diagram-node">
+            <small>Post-run</small>
+            <strong>Result aggregation</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="diagram-persistence">
+        <div class="diagram-boundary-heading">
+          <span>Durable layer</span>
+          <strong>Persisted independently of workers</strong>
+        </div>
+        <div class="diagram-persistence-list">
+          <span>Scenario configuration</span>
+          <span>Workload inputs</span>
+          <span>Execution state</span>
+          <span>Analytical outputs</span>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {type === 'control' && (
+    <div class="diagram-canvas diagram-moving-block">
+      <div class="diagram-state-panel">
+        <div class="diagram-boundary-heading">
+          <span>Observed inputs</span>
+          <strong>Railway state</strong>
+        </div>
+        <div class="diagram-state-list">
+          <span>Network topology</span>
+          <span>Train front / rear</span>
+          <span>Routes &amp; switches</span>
+          <span>Restrictions</span>
+          <span>Occupancy &amp; reservations</span>
+        </div>
+      </div>
+
+      <div class="diagram-control-link" aria-hidden="true"><span>Observed state</span><i>→</i></div>
+
+      <div class="diagram-controller-core">
+        <div class="diagram-boundary-heading">
+          <span>C++ control core</span>
+          <strong>Current-state evaluation</strong>
+        </div>
+        <div class="diagram-logic-grid">
+          <span>Route evaluation</span>
+          <span>Following / headway</span>
+          <span>Conflict reservations</span>
+          <span>Movement authority</span>
+          <span>Speed decisions</span>
+        </div>
+      </div>
+
+      <div class="diagram-control-link" aria-hidden="true"><span>Revised commands</span><i>→</i></div>
+
+      <div class="diagram-command-panel">
+        <div class="diagram-boundary-heading">
+          <span>Controller outputs</span>
+          <strong>Authority &amp; commands</strong>
+        </div>
+        <div class="diagram-state-list">
+          <span>Position limit</span>
+          <span>Route / hold</span>
+          <span>Speed profile</span>
+          <span>Next recheck</span>
+        </div>
+      </div>
+
+      <div class="diagram-host-boundary">
+        <div>
+          <small>Simulation host</small>
+          <strong>Planimate owns clock, events and train movement</strong>
+        </div>
+        <div class="diagram-host-cycle">
+          <span>Apply current commands</span>
+          <i aria-hidden="true">→</i>
+          <span>Advance simulation</span>
+          <i aria-hidden="true">→</i>
+          <span>Return fresh observed state</span>
+          <b aria-hidden="true">↺</b>
+        </div>
+        <div class="diagram-platforms">
+          <span>Native table interface</span>
+          <span>Windows DLL</span>
+          <span>Linux shared library</span>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {type === 'supply-chain' && (
+    <div class="diagram-canvas diagram-rail-model">
+      <div class="diagram-influences">
+        <div class="diagram-boundary-heading">
+          <span>Model inputs</span>
+          <strong>Conditions affecting the whole cycle</strong>
+        </div>
+        <div class="diagram-chip-row">
+          <span>Schedules</span>
+          <span>Maintenance</span>
+          <span>Stochastic delay</span>
+          <span>Infrastructure</span>
+          <span>Operating rules</span>
+          <span>Fleet availability</span>
+        </div>
+      </div>
+
+      <div class="diagram-operating-cycle">
+        <div class="diagram-boundary-heading">
+          <span>Discrete-event simulation boundary</span>
+          <strong>Mine-to-destination operating cycle</strong>
+        </div>
+        <div class="diagram-cycle-row">
+          <div class="diagram-node">
+            <small>01</small>
+            <strong>Mine / source</strong>
+            <span>Material release</span>
+          </div>
+          <span class="diagram-arrow" aria-hidden="true">→</span>
+          <div class="diagram-node">
+            <small>02</small>
+            <strong>Stockpile / loadout</strong>
+            <span>Queue · load · depart</span>
+          </div>
+          <span class="diagram-arrow" aria-hidden="true">→</span>
+          <div class="diagram-node diagram-node-emphasis">
+            <small>03</small>
+            <strong>Rail fleet &amp; network</strong>
+            <span>Travel · meet · pass · wait</span>
+          </div>
+          <span class="diagram-arrow" aria-hidden="true">→</span>
+          <div class="diagram-node">
+            <small>04</small>
+            <strong>Port / plant</strong>
+            <span>Queue · unload · release</span>
+          </div>
+        </div>
+        <div class="diagram-return-path">
+          <span>Empty fleet returns through the network and re-enters the next loading cycle</span>
+          <i aria-hidden="true">↶</i>
+        </div>
+        <p class="diagram-shared-state">Shared state: queues · asset availability · fleet position · current events</p>
+      </div>
+
+      <div class="diagram-decision-outputs">
+        <div class="diagram-boundary-heading">
+          <span>Decision outputs</span>
+          <strong>Compare whole-system behaviour</strong>
+        </div>
+        <div class="diagram-output-grid">
+          <span>Throughput</span>
+          <span>Utilisation</span>
+          <span>Queues</span>
+          <span>Cycle times</span>
+          <span>Bottlenecks</span>
+          <span>Scenarios</span>
+        </div>
+      </div>
+    </div>
+  )}
+
+  <figcaption id={captionId}>{diagram.caption}</figcaption>
 </figure>

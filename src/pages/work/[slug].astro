@@ -74,21 +74,20 @@ const related = work.filter((item) => item.slug !== project.slug).slice(0, 2);
         </div>
       </aside>
       <div class="case-narrative">
-        <section>
-          <p class="eyebrow">01 / The challenge</p>
-          <h2>What the system needed to resolve</h2>
-          <p>{project.challenge}</p>
-        </section>
-        <section>
-          <p class="eyebrow">02 / The architecture</p>
-          <h2>How the responsibilities were separated</h2>
-          <p>{project.response}</p>
-        </section>
-        <section>
-          <p class="eyebrow">03 / The result</p>
-          <h2>What the work enabled</h2>
-          <p>{project.outcome}</p>
-        </section>
+        {project.sections.map((section) => (
+          <section>
+            <p class="eyebrow">{section.label}</p>
+            <h2>{section.title}</h2>
+            <div class="case-copy">
+              {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+            </div>
+            {section.points && (
+              <ul class="case-points">
+                {section.points.map((point) => <li>{point}</li>)}
+              </ul>
+            )}
+          </section>
+        ))}
         {project.externalLinks && (
           <div class="case-links">
             {project.externalLinks.map((link) => (

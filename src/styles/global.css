@@ -1241,6 +1241,18 @@ h3 {
 }
 
 /* Architecture diagrams */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 .architecture-diagram {
   margin: 0;
   padding: clamp(1.4rem, 3vw, 2.5rem);
@@ -1254,7 +1266,7 @@ h3 {
 .diagram-meta {
   display: flex;
   justify-content: space-between;
-  margin-bottom: clamp(3rem, 6vw, 5.5rem);
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
   padding-bottom: 0.8rem;
   border-bottom: 1px solid var(--line);
   color: var(--accent);
@@ -1268,68 +1280,438 @@ h3 {
   color: var(--muted);
 }
 
-.diagram-track {
-  position: relative;
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
-  gap: clamp(1.2rem, 3vw, 3rem);
+.diagram-canvas {
+  min-width: 0;
 }
 
-.diagram-stage {
-  position: relative;
-  display: flex;
-  width: 100%;
-  min-height: 110px;
-  max-width: 180px;
-  padding: 1rem;
+.diagram-boundary,
+.diagram-plane,
+.diagram-state-panel,
+.diagram-controller-core,
+.diagram-command-panel,
+.diagram-host-boundary,
+.diagram-influences,
+.diagram-operating-cycle,
+.diagram-decision-outputs,
+.diagram-persistence {
+  min-width: 0;
+  padding: clamp(1rem, 2vw, 1.5rem);
   border: 1px solid var(--line-strong);
+  background: rgba(23, 25, 24, 0.86);
+}
+
+.diagram-boundary-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
+  margin-bottom: 1rem;
+}
+
+.diagram-boundary-heading span,
+.diagram-node small,
+.diagram-host-boundary small {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.diagram-boundary-heading strong {
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  font-weight: 620;
+  line-height: 1.35;
+}
+
+.diagram-node {
+  display: flex;
+  min-width: 0;
+  min-height: 92px;
+  padding: 0.9rem;
+  border: 1px solid var(--line);
   background: var(--bg-soft);
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 0.28rem;
 }
 
-.diagram-stage span {
-  color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: 0.58rem;
+.diagram-node-emphasis {
+  border-color: rgba(208, 168, 95, 0.58);
+  background: rgba(208, 168, 95, 0.065);
 }
 
-.diagram-stage strong {
-  font-size: 0.82rem;
-  font-weight: 570;
-  line-height: 1.3;
+.diagram-node strong {
+  color: var(--ink-soft);
+  font-size: 0.77rem;
+  font-weight: 600;
+  line-height: 1.35;
 }
 
-.diagram-stage i {
-  position: absolute;
-  top: 50%;
-  right: calc(clamp(1.2rem, 3vw, 3rem) * -1);
-  width: clamp(1.2rem, 3vw, 3rem);
-  color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  font-style: normal;
-  text-align: center;
-  transform: translateY(-50%);
-}
-
-.diagram-subsystems {
-  display: grid;
-  max-width: 75%;
-  margin: clamp(3rem, 5vw, 5rem) auto 0;
-  padding-top: 1rem;
-  border-top: 1px dashed var(--line-strong);
+.diagram-node > span {
   color: var(--muted);
   font-family: var(--font-mono);
-  font-size: 0.58rem;
+  font-size: 0.52rem;
+  line-height: 1.45;
+}
+
+.diagram-arrow,
+.diagram-control-link i,
+.diagram-boundary-link i,
+.diagram-stack-link i {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-style: normal;
   text-align: center;
-  grid-template-columns: repeat(4, 1fr);
+}
+
+.diagram-inline-flow,
+.diagram-stage-row,
+.diagram-cycle-row {
+  display: grid;
+  align-items: stretch;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 0.7rem;
+}
+
+.diagram-inline-flow .diagram-arrow,
+.diagram-stage-row .diagram-arrow,
+.diagram-cycle-row .diagram-arrow {
+  align-self: center;
+}
+
+.diagram-note,
+.diagram-shared-state {
+  margin: 0.85rem 0 0;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.54rem;
+  line-height: 1.5;
+}
+
+/* FAID Quantum: identity boundary feeding a tenant-scoped application. */
+.diagram-faid {
+  display: grid;
+  align-items: center;
+  grid-template-columns: minmax(220px, 0.72fr) minmax(130px, auto) minmax(380px, 1.45fr);
+  gap: clamp(1rem, 2.6vw, 2.2rem);
+}
+
+.diagram-identity {
+  border-style: dashed;
+}
+
+.diagram-tenant {
+  border-color: rgba(208, 168, 95, 0.45);
+}
+
+.diagram-boundary-link {
+  display: flex;
+  align-items: center;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  gap: 0.7rem;
+  line-height: 1.45;
+}
+
+.diagram-boundary-link i {
+  font-size: 1rem;
+}
+
+.diagram-stack-link {
+  display: grid;
+  align-items: center;
+  min-height: 45px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  text-align: center;
+  grid-template-columns: 1fr auto;
+  gap: 0.6rem;
+}
+
+.diagram-analysis-grid {
+  display: grid;
+  margin-top: 0.7rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.diagram-output-row,
+.diagram-output-grid {
+  display: grid;
+  margin-top: 0.7rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.diagram-output-row span,
+.diagram-output-grid span {
+  padding: 0.55rem 0.4rem;
+  border-top: 1px solid rgba(208, 168, 95, 0.52);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  text-align: center;
+}
+
+/* DASH-X: interactive and compute planes joined only through asynchronous work. */
+.diagram-dash {
+  display: grid;
+  align-items: stretch;
+  grid-template-columns: minmax(0, 1fr) minmax(210px, 0.3fr);
+  grid-template-areas:
+    "control persistence"
+    "bridge persistence"
+    "compute persistence";
+  gap: 0.9rem clamp(1rem, 2vw, 1.6rem);
+}
+
+.diagram-control-plane {
+  grid-area: control;
+}
+
+.diagram-compute-plane {
+  grid-area: compute;
+  border-color: rgba(208, 168, 95, 0.45);
+}
+
+.diagram-dash .diagram-stage-row {
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 0.75fr) auto minmax(0, 1fr);
+}
+
+.diagram-async-bridge {
+  display: grid;
+  align-items: center;
+  padding: 0.25rem 1rem;
+  border-inline: 1px dashed var(--line-strong);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  grid-area: bridge;
+  grid-template-columns: 1fr auto 1fr;
   gap: 1rem;
 }
 
+.diagram-async-bridge strong {
+  color: var(--accent);
+  font-size: 0.54rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.diagram-async-bridge span:last-child {
+  text-align: right;
+}
+
+.diagram-async-bridge i {
+  color: var(--accent);
+  font-style: normal;
+}
+
+.diagram-persistence {
+  display: flex;
+  border-style: dashed;
+  flex-direction: column;
+  grid-area: persistence;
+}
+
+.diagram-persistence-list,
+.diagram-state-list,
+.diagram-logic-grid,
+.diagram-chip-row {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.diagram-persistence-list {
+  margin-top: auto;
+}
+
+.diagram-persistence-list span,
+.diagram-state-list span,
+.diagram-logic-grid span,
+.diagram-chip-row span,
+.diagram-platforms span {
+  padding: 0.55rem 0.65rem;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  background: rgba(241, 238, 229, 0.018);
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  line-height: 1.4;
+}
+
+/* Moving block: current-state feedback loop around a native control core. */
+.diagram-moving-block {
+  display: grid;
+  align-items: center;
+  grid-template-columns: minmax(170px, 0.75fr) minmax(75px, auto) minmax(260px, 1.15fr) minmax(85px, auto) minmax(170px, 0.75fr);
+  grid-template-areas:
+    "state state-link core command-link command"
+    "host host host host host";
+  gap: 1.2rem 0.7rem;
+}
+
+.diagram-state-panel {
+  grid-area: state;
+}
+
+.diagram-controller-core {
+  border-color: rgba(208, 168, 95, 0.55);
+  grid-area: core;
+}
+
+.diagram-command-panel {
+  grid-area: command;
+}
+
+.diagram-control-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.48rem;
+  gap: 0.45rem;
+}
+
+.diagram-state-panel + .diagram-control-link {
+  grid-area: state-link;
+}
+
+.diagram-controller-core + .diagram-control-link {
+  grid-area: command-link;
+}
+
+.diagram-logic-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.diagram-logic-grid span:nth-child(4) {
+  border-color: rgba(208, 168, 95, 0.52);
+}
+
+.diagram-logic-grid span:last-child {
+  grid-column: 1 / -1;
+  text-align: center;
+}
+
+.diagram-host-boundary {
+  display: grid;
+  align-items: center;
+  border-style: dashed;
+  grid-area: host;
+  grid-template-columns: minmax(180px, 0.8fr) minmax(300px, 1.4fr) minmax(180px, 0.8fr);
+  gap: 1rem;
+}
+
+.diagram-host-boundary > div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.diagram-host-boundary > div:first-child strong {
+  color: var(--ink-soft);
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.diagram-host-cycle {
+  display: grid;
+  align-items: center;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.48rem;
+  grid-template-columns: 1fr auto 1fr auto 1fr auto;
+  gap: 0.35rem;
+  text-align: center;
+}
+
+.diagram-host-cycle i,
+.diagram-host-cycle b {
+  color: var(--accent);
+  font-style: normal;
+  font-weight: 500;
+}
+
+.diagram-platforms {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.35rem;
+}
+
+/* Rail and bulk: a recirculating operating system with inputs and outputs. */
+.diagram-rail-model {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(210px, 0.26fr);
+  grid-template-areas:
+    "influences influences"
+    "cycle outputs";
+  gap: 1rem;
+}
+
+.diagram-influences {
+  grid-area: influences;
+}
+
+.diagram-chip-row {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.diagram-chip-row span {
+  text-align: center;
+}
+
+.diagram-operating-cycle {
+  border-color: rgba(208, 168, 95, 0.45);
+  grid-area: cycle;
+}
+
+.diagram-cycle-row {
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+}
+
+.diagram-return-path {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.75rem;
+  padding: 0.7rem 0.9rem;
+  border: 1px dashed rgba(208, 168, 95, 0.48);
+  color: var(--accent-soft);
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  gap: 1rem;
+}
+
+.diagram-return-path i {
+  color: var(--accent);
+  font-size: 1.2rem;
+  font-style: normal;
+}
+
+.diagram-decision-outputs {
+  grid-area: outputs;
+}
+
+.diagram-output-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.diagram-output-grid span {
+  min-width: 0;
+  border: 1px solid var(--line);
+  overflow-wrap: anywhere;
+}
+
 .architecture-diagram figcaption {
-  margin-top: 2.5rem;
+  max-width: 760px;
+  margin: 2rem auto 0;
   color: #787d77;
   font-size: 0.7rem;
   text-align: center;
@@ -1471,9 +1853,36 @@ h3 {
   line-height: 1.08;
 }
 
-.case-narrative section > p:last-child {
+.case-copy p {
+  margin-bottom: 1.1rem;
   color: var(--muted);
   font-size: 1.07rem;
+}
+
+.case-points {
+  display: grid;
+  margin: 2rem 0 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+  list-style: none;
+}
+
+.case-points li {
+  position: relative;
+  padding: 0.85rem 0 0.85rem 1.25rem;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.case-points li::before {
+  position: absolute;
+  top: 1.35rem;
+  left: 0;
+  width: 4px;
+  height: 4px;
+  background: var(--accent);
+  content: "";
 }
 
 .case-links {
@@ -1528,13 +1937,16 @@ h3 {
     grid-column: 2;
   }
 
-  .diagram-track {
-    gap: 1rem;
+  .diagram-faid {
+    grid-template-columns: minmax(180px, 0.6fr) minmax(100px, auto) minmax(340px, 1.4fr);
   }
 
-  .diagram-stage i {
-    right: -1rem;
-    width: 1rem;
+  .diagram-control-link span {
+    display: none;
+  }
+
+  .diagram-chip-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -1703,21 +2115,67 @@ h3 {
     gap: 2rem;
   }
 
-  .diagram-track {
+  .diagram-faid {
     display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .diagram-boundary-link {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .diagram-boundary-link i,
+  .diagram-control-link i {
+    transform: rotate(90deg);
+  }
+
+  .diagram-dash {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "control"
+      "bridge"
+      "compute"
+      "persistence";
+  }
+
+  .diagram-persistence-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .diagram-stage {
-    max-width: none;
+  .diagram-moving-block {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "state"
+      "state-link"
+      "core"
+      "command-link"
+      "command"
+      "host";
   }
 
-  .diagram-stage i {
-    display: none;
+  .diagram-control-link {
+    min-height: 32px;
   }
 
-  .diagram-subsystems {
-    max-width: none;
+  .diagram-control-link span {
+    display: inline;
+  }
+
+  .diagram-host-boundary {
+    grid-template-columns: 1fr;
+  }
+
+  .diagram-platforms {
+    justify-content: flex-start;
+  }
+
+  .diagram-rail-model {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "influences"
+      "cycle"
+      "outputs";
   }
 }
 
@@ -1845,16 +2303,80 @@ h3 {
     grid-template-columns: 1fr;
   }
 
-  .diagram-track {
+  .architecture-diagram {
+    padding: 0.95rem;
+  }
+
+  .diagram-meta {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .diagram-inline-flow,
+  .diagram-analysis-grid,
+  .diagram-stage-row,
+  .diagram-dash .diagram-stage-row,
+  .diagram-cycle-row,
+  .diagram-persistence-list,
+  .diagram-logic-grid,
+  .diagram-output-row,
+  .diagram-output-grid {
     grid-template-columns: 1fr;
   }
 
-  .diagram-stage {
-    min-height: 90px;
+  .diagram-boundary-heading span,
+  .diagram-node small,
+  .diagram-host-boundary small {
+    font-size: 0.6rem;
   }
 
-  .diagram-subsystems {
-    grid-template-columns: repeat(2, 1fr);
+  .diagram-node strong {
+    font-size: 0.82rem;
+  }
+
+  .diagram-persistence-list span,
+  .diagram-state-list span,
+  .diagram-logic-grid span,
+  .diagram-chip-row span,
+  .diagram-platforms span {
+    font-size: 0.57rem;
+  }
+
+  .diagram-inline-flow .diagram-arrow,
+  .diagram-stage-row .diagram-arrow,
+  .diagram-cycle-row .diagram-arrow {
+    transform: rotate(90deg);
+  }
+
+  .diagram-async-bridge {
+    padding-block: 0.7rem;
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .diagram-async-bridge span:last-child {
+    text-align: center;
+  }
+
+  .diagram-logic-grid span:last-child {
+    grid-column: auto;
+  }
+
+  .diagram-host-cycle {
+    grid-template-columns: 1fr;
+  }
+
+  .diagram-host-cycle i {
+    transform: rotate(90deg);
+  }
+
+  .diagram-host-cycle b {
+    margin-top: 0.25rem;
+  }
+
+  .diagram-chip-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
