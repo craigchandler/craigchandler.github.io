@@ -10,7 +10,7 @@
   <text x="64" y="375" font-family="Arial, sans-serif" font-size="28" fill="#ead5aa">Web, managed API and native integration—one analytical capability.</text>
   <g transform="translate(64 416)" font-family="monospace" font-size="10">
     <g fill="#222522" stroke="#f1eee5" stroke-opacity=".3"><rect width="160" height="42"/><rect x="200" width="160" height="42"/><rect x="400" width="160" height="42"/><rect x="200" y="82" width="220" height="44" stroke="#d0a85f" stroke-opacity=".8"/><rect x="620" y="82" width="180" height="44"/></g>
-    <g fill="#f1eee5"><text x="68" y="26">WEB</text><text x="270" y="26">API</text><text x="452" y="26">C++ NATIVE</text><text x="237" y="108">FAID ANALYTICS</text><text x="653" y="108">RISK OUTPUTS</text></g>
+    <g fill="#f1eee5"><text x="68" y="26">WEB</text><text x="270" y="26">API</text><text x="417" y="26">SHARED OBJECT LIBRARY</text><text x="237" y="108">FAID METHODOLOGY</text><text x="653" y="108">RISK OUTPUTS</text></g>
     <path d="M80 42v22h230M280 42v40M480 42v22H310M420 104h200" fill="none" stroke="#d0a85f" stroke-width="2" stroke-dasharray="4 7"/>
   </g>
   <text x="64" y="590" font-family="monospace" font-size="12" letter-spacing="1" fill="#a6aaa3">ANGULAR  ·  .NET  ·  API MANAGEMENT  ·  AZURE FUNCTIONS  ·  C++</text>

@@ -13,9 +13,9 @@ const diagrams = {
     label: 'Platform architecture',
     context: 'One analytical capability · three delivery models',
     description:
-      'FAID analytical capability is delivered through three integration surfaces: the Angular and .NET FAID Quantum web application, a managed developer API using Azure API Management and .NET Azure Functions, and a native C++ shared library embedded in third-party software. The developer API uses separate controls for API subscription access and product entitlement, with entitlement validated by the InterDynamics Licensing Platform.',
+      'FAID analytical capability is delivered through three integration surfaces: the Angular and .NET FAID Quantum web application, a managed developer API using Azure API Management and .NET Azure Functions, and the native FAID Quantum Shared Object Library embedded in third-party software. The developer API uses separate controls for API subscription access and product entitlement, with entitlement validated by the InterDynamics Licensing Platform.',
     caption:
-      'Interactive, managed API and local native integrations use the same analytical capability; developer API access and product entitlement remain separate controls.'
+      'Interactive, managed API and local native integrations apply the same FAID methodology; developer API access and product entitlement remain separate controls.'
   },
   platform: {
     label: 'Workload architecture',
@@ -82,29 +82,29 @@ const captionId = `${type}-diagram-caption`;
           </div>
           <div class="diagram-node diagram-faid-surface">
             <small>Native integration</small>
-            <strong>C++ shared library</strong>
-            <span>Embedded in third-party software</span>
-            <em>No remote service dependency</em>
+            <strong>FAID Quantum Shared Object Library</strong>
+            <span>C++ · embedded third-party integration</span>
+            <em>Rostering · scheduling · local calculation</em>
           </div>
         </div>
       </div>
 
       <div class="diagram-faid-convergence" aria-hidden="true">
-        <span>Delivery-specific adapters</span>
+        <span>Delivery paths</span>
         <i>↓</i>
       </div>
 
       <div class="diagram-boundary diagram-faid-engine">
         <div class="diagram-boundary-heading">
-          <span>Shared analytical capability</span>
-          <strong>FAID fatigue engine</strong>
+          <span>Consistent analytical capability</span>
+          <strong>FAID methodology</strong>
         </div>
         <div class="diagram-faid-engine-flow">
           <span>Work &amp; sleep data</span>
           <i aria-hidden="true">→</i>
           <div class="diagram-node diagram-node-emphasis">
-            <small>Analytical core</small>
-            <strong>FAID analytical algorithms</strong>
+            <small>Analytical method</small>
+            <strong>FAID calculations</strong>
           </div>
           <i aria-hidden="true">→</i>
           <span>Fatigue outputs &amp; risk measures</span>

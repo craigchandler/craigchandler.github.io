@@ -54,7 +54,7 @@ export const work: WorkItem[] = [
     metadata: {
       title: 'FAID Quantum — Fatigue-Risk Platform | Craig Chandler',
       description:
-        'Case study of a multi-tenant fatigue-risk platform delivered through an interactive web product, managed developer API and native C++ library.',
+        'Case study of a multi-tenant fatigue-risk platform spanning the FAID Quantum web product, developer API and Shared Object Library.',
       image: '/assets/social/faid-quantum.png',
       imageAlt: 'FAID Quantum — web, API and native fatigue-risk integration platform',
       entityType: 'SoftwareApplication',
@@ -84,21 +84,21 @@ export const work: WorkItem[] = [
       },
       {
         label: '03 / Integration models',
-        title: 'One analytical engine, three delivery models',
+        title: 'One analytical capability, three delivery models',
         paragraphs: [
-          'The same analytical capability can be consumed interactively through FAID Quantum, remotely through the developer API, or embedded directly into third-party software through a native C++ library. Each surface fits a different operating context without turning the underlying fatigue model into three unrelated products.'
+          'The same FAID methodology can be applied interactively through FAID Quantum, remotely through the developer API, or embedded directly into third-party software through a native library. Each surface fits a different operating context while providing a consistent fatigue-analysis capability.'
         ],
         points: [
           'Web application — Angular and .NET provide schedule analysis, identity, organisation context, reporting and the complete user workflow.',
           'Developer API — Azure API Management and .NET Azure Functions provide remote integration. Requests require API subscription credentials and valid product entitlement, checked separately through the InterDynamics Licensing Platform.',
-          'Native integration — A C++ shared library embeds the algorithms in rostering, scheduling or workforce-management software without depending on a remote web-service call.'
+          'Native integration — The FAID Quantum Shared Object Library (formerly FAID DLL) embeds FAID calculations in third-party rostering, scheduling or workforce-management software without requiring a remote API call.'
         ]
       },
       {
         label: '04 / Product outcome',
         title: 'Analysis that can be inspected and reported',
         paragraphs: [
-          'FAID Quantum brings schedule preparation, FAID and KSS indicators, comparative views and reporting into one browser-based workflow. For integrated workflows, the developer API and native library let the consuming system choose managed or local calculation without redefining the analytical logic.'
+          'FAID Quantum brings schedule preparation, FAID and KSS indicators, comparative views and reporting into one browser-based workflow. For integrated workflows, the developer API and native library let the consuming system choose managed or local calculation while applying the same FAID methodology.'
         ]
       }
     ],
@@ -121,6 +121,10 @@ export const work: WorkItem[] = [
       {
         label: 'FAID Quantum user guide',
         href: 'https://www.interdynamics.com/download/documents/FAID-Quantum-Web-User-Guide.pdf'
+      },
+      {
+        label: 'Shared Object Library overview',
+        href: 'https://www.interdynamics.com/download/documents/The-FAID-Suite-of-Products.pdf'
       },
       { label: 'InterDynamics licensing platform', href: 'https://licensing.interdynamics.com/about' }
     ]
