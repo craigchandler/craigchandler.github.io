@@ -1,0 +1,261 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ExpertiseCard from '../components/ExpertiseCard.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import TechnologyGroups from '../components/TechnologyGroups.astro';
+import Experience from '../components/Experience.astro';
+import { work } from '../content/work';
+
+const expertise = [
+  {
+    number: '01',
+    title: 'Software & Product Engineering',
+    description:
+      'Full-stack applications, APIs, analytical systems, and complex technical products—from architecture through production.',
+    technologies: ['Angular', 'TypeScript', 'JavaScript', '.NET', 'C#', 'C++', 'REST', 'OpenAPI', 'Linux']
+  },
+  {
+    number: '02',
+    title: 'Cloud Architecture',
+    description:
+      'Cloud-native and distributed systems designed around security, reliability, operability, and proportionate cost. Deepest platform experience is in Azure.',
+    technologies: [
+      'Azure',
+      'AWS',
+      'Google Cloud',
+      'Containers',
+      'Serverless',
+      'API Management',
+      'Identity',
+      'Multi-tenancy',
+      'Secrets',
+      'Monitoring',
+      'CI/CD',
+      'Cost optimisation'
+    ]
+  },
+  {
+    number: '03',
+    title: 'Decision Intelligence',
+    description:
+      'Models and analytical products that expose constraints, test scenarios, and make operational trade-offs easier to understand.',
+    technologies: ['Discrete-event simulation', 'Rail modelling', 'Supply chains', 'Capacity', 'Scheduling', 'Monte Carlo', 'Fatigue risk']
+  },
+  {
+    number: '04',
+    title: 'Solution Architecture',
+    description:
+      'Translating difficult operational problems into maintainable technical systems, with a clear path from intent to operation.',
+    technologies: ['Discovery', 'System design', 'Integration', 'Security', 'Delivery', 'Operations', 'Decision support']
+  }
+];
+
+const process = [
+  ['01', 'Understand the operation', 'Start with the real system: its decisions, constraints, actors, data, and failure modes.'],
+  ['02', 'Model the problem', 'Choose the right abstraction and make assumptions, boundaries, and uncertainty explicit.'],
+  ['03', 'Design the architecture', 'Shape components, contracts, security, data, and deployment around the work the system must do.'],
+  ['04', 'Build the system', 'Implement the smallest coherent product with strong engineering boundaries and feedback loops.'],
+  ['05', 'Deploy and operate', 'Treat identity, observability, delivery, cost, and support as part of the architecture.'],
+  ['06', 'Support better decisions', 'Return useful evidence to the people deciding what happens next.']
+];
+
+const industries = [
+  ['Rail & transport', 'BHP Billiton · Aurizon · Queensland Rail · Bowen Rail · Roy Hill · CBG'],
+  ['Mining & bulk logistics', 'Mineral Resources · Alcoa · Orica Explosives · mine-to-port supply chains'],
+  ['Supply chain & manufacturing', 'Coles Myer · Hitachi · operational capacity and network strategy'],
+  ['Workforce risk', 'Fatigue analysis · biomathematical models · schedule risk management'],
+  ['Infrastructure logistics', 'Port Authority of NY & NJ · World Trade Center truck arrival scheduling']
+];
+---
+
+<BaseLayout>
+  <Hero />
+
+  <section id="whole-system" class="section positioning-section">
+    <div class="container-wide positioning-grid">
+      <p class="eyebrow">The whole system</p>
+      <div class="positioning-copy">
+        <h2>Architecture grounded in how operations actually work.</h2>
+        <div class="positioning-columns">
+          <p>
+            The difficult part of an analytical system is rarely a single technology. It is understanding the
+            operation well enough to model it, choosing an architecture that will hold up, and turning the result into
+            dependable software.
+          </p>
+          <p>
+            Operational knowledge, analytical models, application boundaries, cloud infrastructure, and decision
+            outputs are treated as one connected architecture.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="expertise" class="section section-ruled">
+    <div class="container-wide">
+      <SectionHeading
+        eyebrow="Expertise"
+        title="Four disciplines. One connected practice."
+        intro="The strongest solutions come from treating product, platform, model, and operation as one architecture."
+      />
+      <div class="expertise-grid">
+        {expertise.map((item) => <ExpertiseCard {...item} />)}
+      </div>
+    </div>
+  </section>
+
+  <section id="work" class="section work-section">
+    <div class="container-wide">
+      <SectionHeading
+        eyebrow="Selected work"
+        title="Systems built around consequential decisions."
+        intro="A focused selection across analytical products, cloud platforms, control systems, and operational models."
+      />
+      <div class="projects-grid">
+        {work.map((project, index) => <ProjectCard project={project} large={index === 0} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section process-section" aria-labelledby="process-title">
+    <div class="container-wide">
+      <SectionHeading
+        eyebrow="Approach"
+        title="From operational reality to working system."
+        intro="A disciplined path through the problem—without losing sight of the people who will use the answer."
+        headingId="process-title"
+      />
+      <div class="process-flow">
+        {process.map(([number, title, description]) => (
+          <article class="process-step">
+            <span>{number}</span>
+            <h3>{title}</h3>
+            <p>{description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-ruled" aria-labelledby="technology-title">
+    <div class="container-wide">
+      <SectionHeading
+        eyebrow="Technology landscape"
+        title="Tools chosen by responsibility, not fashion."
+        intro="A practical technology range, organised around the role each part plays in the system."
+        headingId="technology-title"
+      />
+      <div>
+        <TechnologyGroups />
+      </div>
+      <aside class="ai-note">
+        <span class="ai-note-mark" aria-hidden="true">AI</span>
+        <div>
+          <h3>AI-assisted engineering, with engineering controls.</h3>
+          <p>
+            Modern coding agents and AI-assisted workflows complement conventional engineering controls for
+            architecture, review, testing, security, and source control.
+          </p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="experience" class="section experience-section">
+    <div class="container-wide">
+      <SectionHeading
+        eyebrow="Experience"
+        title="A career spent where software meets operations."
+        intro="More than twenty-five years building decision-support systems and the software platforms around them."
+      />
+      <Experience />
+    </div>
+  </section>
+
+  <section class="section industries-section" aria-labelledby="industries-title">
+    <div class="container-wide industries-grid">
+      <div>
+        <p class="eyebrow">Representative work</p>
+        <h2 id="industries-title">Across systems where capacity, time, and risk matter.</h2>
+      </div>
+      <div class="industry-list">
+        {industries.map(([title, names], index) => (
+          <article>
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <h3>{title}</h3>
+            <p>{names}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="section about-section" aria-labelledby="about-title">
+    <div class="container-wide about-grid">
+      <div class="about-portrait">
+        <p class="eyebrow">About Craig</p>
+        <img
+          src="/assets/images/craig-chandler.webp"
+          alt="Craig Chandler"
+          width="720"
+          height="720"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <div class="about-copy">
+        <h2 id="about-title">Mechanical engineer by education. Systems architect by practice.</h2>
+        <div class="about-columns">
+          <p>
+            Based in Adelaide, I approach software as an engineer: understand the physical operation, make assumptions
+            explicit, and design around the decisions that matter.
+          </p>
+          <p>
+            A Bachelor of Mechanical Engineering from the University of Adelaide provides a useful foundation for
+            reasoning about physical operations as well as software systems.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section github-section">
+    <div class="container-wide github-grid">
+      <div class="github-intro">
+        <p class="eyebrow">Open source & engineering</p>
+        <h2>Engineering beyond client work.</h2>
+        <p>
+          Outside client work, engineering projects span BOM Glance and QNAP/Linux tooling, native C++, simulation,
+          web applications, and developer infrastructure.
+        </p>
+        <a class="button button-secondary" href="https://github.com/craigchandler" rel="me">
+          View GitHub profile <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+      <aside class="principles-panel" aria-labelledby="principles-title">
+        <p class="eyebrow" id="principles-title">Working principles</p>
+        <ol>
+          <li><span>01</span><p>Make system boundaries explicit.</p></li>
+          <li><span>02</span><p>Separate evidence from assumption.</p></li>
+          <li><span>03</span><p>Design operations with the product.</p></li>
+          <li><span>04</span><p>Test the behaviour that matters.</p></li>
+        </ol>
+      </aside>
+    </div>
+  </section>
+
+  <section id="contact" class="contact-section">
+    <div class="container-wide contact-grid">
+      <p class="eyebrow">Contact</p>
+      <div>
+        <h2>Have a complex operational problem?</h2>
+        <p>Let’s talk about the system behind it.</p>
+        <a class="contact-email" href="mailto:craig.chandler@gmail.com">
+          craig.chandler@gmail.com <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

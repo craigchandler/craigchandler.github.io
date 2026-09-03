@@ -1,0 +1,24 @@
+---
+const groups = [
+  { title: 'Application', items: ['Angular', 'TypeScript', 'RxJS', 'Signals', 'Angular Material'] },
+  { title: 'Backend', items: ['.NET', 'C#', 'C++', 'REST', 'OpenAPI'] },
+  { title: 'Cloud', items: ['Azure', 'AWS', 'Google Cloud', 'Firebase'] },
+  { title: 'Platform', items: ['Docker', 'Linux', 'GitHub Actions', 'CI/CD'] },
+  { title: 'Data', items: ['Cosmos DB', 'SQL', 'MySQL', 'Analytical datasets'] },
+  { title: 'Identity & Security', items: ['Auth0', 'OAuth 2.0', 'OpenID Connect', 'RBAC', 'Key Vault'] },
+  {
+    title: 'Decision Systems',
+    items: ['Discrete-event simulation', 'Operational modelling', 'Scheduling', 'Capacity analysis', 'Rail modelling']
+  }
+];
+---
+
+<div class="technology-groups">
+  {groups.map((group, index) => (
+    <article class="technology-group">
+      <span>{String(index + 1).padStart(2, '0')}</span>
+      <h3>{group.title}</h3>
+      <p>{group.items.join(' · ')}</p>
+    </article>
+  ))}
+</div>

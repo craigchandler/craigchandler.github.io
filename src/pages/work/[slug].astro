@@ -1,0 +1,114 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArchitectureDiagram from '../../components/ArchitectureDiagram.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { work, type WorkItem } from '../../content/work';
+
+export function getStaticPaths() {
+  return work.map((project) => ({
+    params: { slug: project.slug },
+    props: { project }
+  }));
+}
+
+interface Props {
+  project: WorkItem;
+}
+
+const { project } = Astro.props;
+const related = work.filter((item) => item.slug !== project.slug).slice(0, 2);
+---
+
+<BaseLayout
+  title={`${project.title} — Craig Chandler`}
+  description={project.summary}
+  type="article"
+>
+  <article class="case-study">
+    <header class="case-hero container-wide">
+      <a class="back-link" href="/#work"><span aria-hidden="true">←</span> Selected work</a>
+      <div class="case-title-grid">
+        <div>
+          <p class="eyebrow">Case study / {project.number}</p>
+          <h1>{project.title}</h1>
+        </div>
+        <div class="case-summary">
+          <p class="case-kicker">{project.kicker}</p>
+          <p>{project.summary}</p>
+        </div>
+      </div>
+    </header>
+
+    <section class="case-diagram container-wide" aria-label="System overview">
+      <ArchitectureDiagram type={project.diagram} />
+    </section>
+
+    {project.image && (
+      <figure class="case-interface container-wide">
+        <div class="case-interface-frame">
+          <div class="preview-toolbar" aria-hidden="true">
+            <i></i><i></i><i></i><span>Product interface / Sample schedule</span>
+          </div>
+          <img
+            src={project.image}
+            alt={project.imageAlt}
+            width={project.imageWidth}
+            height={project.imageHeight}
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+        <figcaption>FAID Quantum schedule dashboard — sample data shown.</figcaption>
+      </figure>
+    )}
+
+    <section class="case-body container-wide">
+      <aside class="case-facts">
+        <div>
+          <p>Contribution</p>
+          <ul>{project.services.map((service) => <li>{service}</li>)}</ul>
+        </div>
+        <div>
+          <p>Technology</p>
+          <ul>{project.technologies.map((technology) => <li>{technology}</li>)}</ul>
+        </div>
+      </aside>
+      <div class="case-narrative">
+        <section>
+          <p class="eyebrow">01 / The challenge</p>
+          <h2>What the system needed to resolve</h2>
+          <p>{project.challenge}</p>
+        </section>
+        <section>
+          <p class="eyebrow">02 / The architecture</p>
+          <h2>How the responsibilities were separated</h2>
+          <p>{project.response}</p>
+        </section>
+        <section>
+          <p class="eyebrow">03 / The result</p>
+          <h2>What the work enabled</h2>
+          <p>{project.outcome}</p>
+        </section>
+        {project.externalLinks && (
+          <div class="case-links">
+            {project.externalLinks.map((link) => (
+              <a class="text-link" href={link.href}>{link.label} <span aria-hidden="true">↗</span></a>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+
+    <section class="related-work section-ruled">
+      <div class="container-wide">
+        <div class="related-heading">
+          <p class="eyebrow">Continue exploring</p>
+          <h2>Related work</h2>
+        </div>
+        <div class="projects-grid related-grid">
+          {related.map((item) => <ProjectCard project={item} />)}
+        </div>
+      </div>
+    </section>
+  </article>
+</BaseLayout>

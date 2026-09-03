@@ -1,0 +1,55 @@
+---
+import type { DiagramType } from '../content/work';
+
+interface Props {
+  type: DiagramType;
+  compact?: boolean;
+}
+
+const { type, compact = false } = Astro.props;
+
+const diagrams = {
+  fatigue: {
+    label: 'FAID Quantum system architecture',
+    nodes: ['Schedule data', 'Angular application', '.NET APIs', 'Fatigue engine', 'Risk insights'],
+    sub: ['Organisation context', 'Identity & access', 'Analysis boundary', 'Reports']
+  },
+  platform: {
+    label: 'DASH-X cloud workload architecture',
+    nodes: ['Scenario', 'Angular client', '.NET API', 'Orchestrator', 'Container jobs', 'Results'],
+    sub: ['User workflow', 'Control plane', 'Compute plane', 'Storage']
+  },
+  control: {
+    label: 'Moving block control architecture',
+    nodes: ['Network state', 'Route logic', 'Movement authority', 'Speed profile', 'Simulation host'],
+    sub: ['Topology', 'Reservations', 'Safe separation', 'Windows · Linux']
+  },
+  'supply-chain': {
+    label: 'Rail and bulk supply chain model',
+    nodes: ['Mine / source', 'Loadout', 'Rail network', 'Port / plant', 'Decision outputs'],
+    sub: ['Demand & delays', 'Fleet cycles', 'Constraints', 'Scenarios']
+  }
+} as const;
+
+const diagram = diagrams[type];
+---
+
+<figure class:list={['architecture-diagram', { compact }]} aria-label={diagram.label}>
+  <div class="diagram-meta">
+    <span>System architecture</span>
+    <span>Conceptual view</span>
+  </div>
+  <div class="diagram-track">
+    {diagram.nodes.map((node, index) => (
+      <div class="diagram-stage">
+        <span>{String(index + 1).padStart(2, '0')}</span>
+        <strong>{node}</strong>
+        {index < diagram.nodes.length - 1 && <i aria-hidden="true">→</i>}
+      </div>
+    ))}
+  </div>
+  <div class="diagram-subsystems">
+    {diagram.sub.map((item) => <span>{item}</span>)}
+  </div>
+  <figcaption>{diagram.label} — simplified to show responsibilities and system boundaries.</figcaption>
+</figure>

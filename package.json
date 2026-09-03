@@ -1,38 +1,26 @@
 {
-  "name": "grayscale",
-  "title": "Grayscale",
-  "version": "1.1.0",
-  "homepage": "http://startbootstrap.com/template-overviews/grayscale",
-  "author": "Start Bootstrap",
-  "license": {
-    "type": "MIT",
-    "url": "https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE"
-  },
+  "name": "craig-chandler-portfolio",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "build": "gulp build",
-    "watch:assets": "gulp watch",
-    "serve": "vite --host 127.0.0.1",
-    "dev": "concurrently --kill-others-on-fail --names assets,server \"gulp watch\" \"vite --host 127.0.0.1\"",
-    "audit": "npm audit --audit-level=high"
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "check": "astro check"
   },
   "engines": {
-    "node": "^20.19.0 || >=22.12.0"
+    "node": ">=22.19.0"
   },
-  "devDependencies": {
-    "bootstrap": "^3.4.0",
-    "concurrently": "^10.0.5",
-    "font-awesome": "^4.7.0",
-    "gulp": "^5.0.0",
-    "gulp-clean-css": "^4.3.0",
-    "gulp-header": "^2.0.12",
-    "gulp-less": "^5.0.0",
-    "gulp-rename": "^2.0.0",
-    "gulp-uglify": "^3.0.2",
-    "jquery": "^3.3.1",
-    "vite": "^8.2.2"
+  "dependencies": {
+    "@astrojs/check": "^0.9.10",
+    "astro": "^7.2.10",
+    "typescript": "^5.9.2"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/craigchandler/craigchandler.github.io.git"
-  }
+  },
+  "license": "MIT"
 }

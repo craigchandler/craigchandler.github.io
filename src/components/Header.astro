@@ -1,0 +1,37 @@
+---
+const path = Astro.url.pathname;
+const links = [
+  { label: 'Work', href: path === '/' ? '#work' : '/#work' },
+  { label: 'Expertise', href: path === '/' ? '#expertise' : '/#expertise' },
+  { label: 'Experience', href: path === '/' ? '#experience' : '/#experience' },
+  { label: 'About', href: path === '/' ? '#about' : '/#about' },
+  { label: 'Contact', href: path === '/' ? '#contact' : '/#contact' }
+];
+---
+
+<header class="site-header">
+  <div class="header-inner container-wide">
+    <a class="wordmark" href="/" aria-label="Craig Chandler — home">
+      <span class="wordmark-mark" aria-hidden="true">CC</span>
+      <span class="wordmark-text">Craig Chandler</span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      {links.map((link) => <a href={link.href}>{link.label}</a>)}
+    </nav>
+
+    <details class="mobile-nav">
+      <summary aria-label="Open navigation"><span>Menu</span></summary>
+      <nav aria-label="Mobile navigation">
+        {links.map((link) => <a href={link.href}>{link.label}</a>)}
+      </nav>
+    </details>
+  </div>
+</header>
+
+<script>
+  const mobileNav = document.querySelector<HTMLDetailsElement>('.mobile-nav');
+  mobileNav?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => mobileNav.removeAttribute('open'));
+  });
+</script>

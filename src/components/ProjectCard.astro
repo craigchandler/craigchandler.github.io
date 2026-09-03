@@ -1,0 +1,50 @@
+---
+import type { WorkItem } from '../content/work';
+
+interface Props {
+  project: WorkItem;
+  large?: boolean;
+}
+
+const { project, large = false } = Astro.props;
+---
+
+<article class:list={['project-card', { 'project-card-large': large }]}> 
+  <a class="project-card-link" href={`/work/${project.slug}`} aria-label={`Read the ${project.title} case study`}>
+    <div class="project-card-topline">
+      <span>{project.number}</span>
+      <span>{project.kicker}</span>
+      <span aria-hidden="true">↗</span>
+    </div>
+    <div class="project-card-body">
+      <h3>{project.title}</h3>
+      <dl class="project-brief">
+        <div>
+          <dt>Problem</dt>
+          <dd>{project.card.problem}</dd>
+        </div>
+        <div>
+          <dt>Role</dt>
+          <dd>{project.card.role}</dd>
+        </div>
+        <div>
+          <dt>Complexity</dt>
+          <dd>{project.card.complexity}</dd>
+        </div>
+      </dl>
+    </div>
+    {large && project.image && (
+      <div class="project-preview" aria-hidden="true">
+        <div class="preview-toolbar"><i></i><i></i><i></i><span>Schedule analysis / Risk view</span></div>
+        <img
+          src={project.image}
+          alt=""
+          width={project.imageWidth}
+          height={project.imageHeight}
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    )}
+  </a>
+</article>
