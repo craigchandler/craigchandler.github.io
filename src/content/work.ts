@@ -125,7 +125,7 @@ export const work: WorkItem[] = [
       },
       {
         label: '03 / Operating model',
-        title: 'Scenarios remain usable before, during and after execution',
+        title: 'Run state is independent of the browser session',
         paragraphs: [
           'A user can submit a run, follow phase and workload status, leave the application, and return to the persisted results. The split also keeps customer-facing concerns out of the container runtime and compute-specific concerns out of the web application.'
         ]

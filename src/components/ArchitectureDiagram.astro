@@ -29,7 +29,7 @@ const diagrams = {
     label: 'Control architecture',
     context: 'Network state to movement authority',
     description:
-      'Observed topology, train position, route and switch state, restrictions and reservations enter a C++ control core. It evaluates routes, following separation, conflict resources, movement authority and speed. Planimate applies returned commands, advances the simulation and supplies the next observed state through the native interface.',
+      'An abstract railway schematic shows a following train behind a lead train, plus a switch to an unavailable branch. Observed topology, train position, route and switch state, restrictions and reservations enter a C++ control core. It evaluates routes, following separation, conflict resources, movement authority and speed. Planimate applies returned commands, advances the simulation and supplies the next observed state through the native interface.',
     caption:
       'A closed control loop: observed railway state in, revisioned authority and speed commands out, then fresh state back on the next step.'
   },
@@ -39,7 +39,7 @@ const diagrams = {
     description:
       'A discrete-event model follows material and fleet through mine or source, stockpile and loadout, the rail network, port or plant unloading, and the empty return cycle. Schedules, maintenance, delays, infrastructure, operating rules and fleet availability influence the entire cycle. Outputs include throughput, utilisation, queues, cycle times, bottlenecks and scenario comparisons.',
     caption:
-      'The model represents the complete operating cycle so a change at one stage can be traced through the rest of the system.'
+      'Loaded movement runs to the destination; the empty fleet returns through the network to begin the next cycle.'
   }
 } as const;
 
@@ -204,6 +204,19 @@ const captionId = `${type}-diagram-caption`;
           <span>Observed inputs</span>
           <strong>Railway state</strong>
         </div>
+        <div
+          class="diagram-topology-cue"
+          role="img"
+          aria-label="Abstract railway topology showing a following train behind a lead train on the main route, with a switch to an unavailable branch"
+        >
+          <i class="topology-line topology-main" aria-hidden="true"></i>
+          <i class="topology-line topology-branch" aria-hidden="true"></i>
+          <span class="topology-switch" aria-hidden="true"></span>
+          <span class="topology-train topology-following"><small>Following</small></span>
+          <span class="topology-train topology-leading"><small>Lead</small></span>
+          <span class="topology-blocked" aria-hidden="true">×</span>
+          <small class="topology-label">Branch unavailable</small>
+        </div>
         <div class="diagram-state-list">
           <span>Network topology</span>
           <span>Train front / rear</span>
@@ -314,8 +327,9 @@ const captionId = `${type}-diagram-caption`;
           </div>
         </div>
         <div class="diagram-return-path">
-          <span>Empty fleet returns through the network and re-enters the next loading cycle</span>
-          <i aria-hidden="true">↶</i>
+          <i aria-hidden="true">←</i>
+          <span><strong>Empty fleet return</strong> · network back to the next loading cycle</span>
+          <b aria-hidden="true">↵</b>
         </div>
         <p class="diagram-shared-state">Shared state: queues · asset availability · fleet position · current events</p>
       </div>
