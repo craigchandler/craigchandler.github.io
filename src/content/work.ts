@@ -18,6 +18,14 @@ export interface WorkItem {
     role: string;
     complexity: string;
   };
+  metadata: {
+    title: string;
+    description: string;
+    image: string;
+    imageAlt: string;
+    entityType: 'SoftwareApplication' | 'CreativeWork';
+    applicationCategory?: string;
+  };
   sections: CaseSection[];
   services: string[];
   technologies: string[];
@@ -42,6 +50,15 @@ export const work: WorkItem[] = [
       problem: 'Turn complex work schedules into secure, organisation-specific fatigue-risk analysis.',
       role: 'Product architecture + full-stack engineering',
       complexity: 'Angular · .NET · Azure · Auth0 · multi-tenancy · biomathematical analysis'
+    },
+    metadata: {
+      title: 'FAID Quantum — Fatigue-Risk Analytics | Craig Chandler',
+      description:
+        'Case study of a secure, multi-tenant fatigue-risk platform for analysing work schedules, built with Angular, .NET, Auth0 and Azure.',
+      image: '/assets/social/faid-quantum.png',
+      imageAlt: 'FAID Quantum — multi-tenant fatigue-risk analytics platform',
+      entityType: 'SoftwareApplication',
+      applicationCategory: 'Fatigue-risk analysis software'
     },
     sections: [
       {
@@ -101,6 +118,15 @@ export const work: WorkItem[] = [
       role: 'Solution architecture + full-stack engineering',
       complexity: 'Angular · .NET · Azure · container orchestration · Cosmos DB'
     },
+    metadata: {
+      title: 'DASH-X — Cloud Simulation Platform | Craig Chandler',
+      description:
+        'Case study of a cloud platform separating interactive scenario workflows from asynchronous, containerised simulation workloads and persisted results.',
+      image: '/assets/social/dash-x.png',
+      imageAlt: 'DASH-X — cloud simulation workload architecture',
+      entityType: 'SoftwareApplication',
+      applicationCategory: 'Simulation software'
+    },
     sections: [
       {
         label: '01 / Workload problem',
@@ -147,6 +173,14 @@ export const work: WorkItem[] = [
       problem: 'Model network-aware movement authority and safe train separation across changing rail topology.',
       role: 'Systems architecture + C++ engineering',
       complexity: 'C++ · moving block · route control · Planimate integration · Windows · Linux'
+    },
+    metadata: {
+      title: 'Moving Block Train Control — C++ Simulation | Craig Chandler',
+      description:
+        'Case study of a cross-platform C++ train-control component modelling rail topology, moving-block separation, movement authority and Planimate integration.',
+      image: '/assets/social/moving-block.png',
+      imageAlt: 'Moving Block Train Control — C++ simulation and control architecture',
+      entityType: 'CreativeWork'
     },
     sections: [
       {
@@ -195,6 +229,14 @@ export const work: WorkItem[] = [
       problem: 'Expose capacity constraints and trade-offs across tightly coupled mine, rail, and port systems.',
       role: 'Operational modelling + decision-support design',
       complexity: 'Discrete-event simulation · scheduling · stochastic delay · capacity analysis'
+    },
+    metadata: {
+      title: 'Rail & Bulk Supply Chain Modelling | Craig Chandler',
+      description:
+        'Case study of discrete-event models for mine, rail and port operations, examining fleet cycles, capacity constraints, bottlenecks and operating scenarios.',
+      image: '/assets/social/rail-supply-chain.png',
+      imageAlt: 'Rail and bulk supply-chain modelling — recirculating operational model',
+      entityType: 'CreativeWork'
     },
     sections: [
       {

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#171918"/>
+  <g stroke="#f1eee5" stroke-opacity=".07"><path d="M0 126h1200M0 252h1200M0 378h1200M0 504h1200"/><path d="M240 0v630M480 0v630M720 0v630M960 0v630"/></g>
+  <rect x="64" y="56" width="45" height="45" fill="none" stroke="#d0a85f"/>
+  <text x="75" y="84" font-family="monospace" font-size="14" fill="#d0a85f">CC</text>
+  <text x="130" y="86" font-family="Arial, sans-serif" font-size="19" font-weight="600" fill="#f1eee5">Craig Chandler</text>
+  <text x="1136" y="84" text-anchor="end" font-family="monospace" font-size="12" letter-spacing="2" fill="#a6aaa3">CASE STUDY / 02</text>
+  <text x="64" y="206" font-family="monospace" font-size="14" letter-spacing="2" fill="#d0a85f">CLOUD SIMULATION PLATFORM</text>
+  <text x="64" y="310" font-family="Arial, sans-serif" font-size="72" letter-spacing="-3" fill="#f1eee5">DASH-X</text>
+  <text x="64" y="375" font-family="Arial, sans-serif" font-size="28" fill="#ead5aa">Interactive control. Independent compute. Durable results.</text>
+  <g transform="translate(64 444)" font-family="monospace" font-size="11">
+    <g fill="#222522" stroke="#f1eee5" stroke-opacity=".3"><rect width="252" height="40"/><rect x="294" width="252" height="40"/><rect x="588" width="252" height="40"/><rect x="294" y="68" width="252" height="40"/><rect x="588" y="68" width="252" height="40"/></g>
+    <g fill="#f1eee5"><text x="82" y="25">SCENARIO</text><text x="381" y="25">API</text><text x="662" y="25">RUN STATE</text><text x="355" y="93">CONTAINERS</text><text x="660" y="93">RESULTS</text></g>
+    <path d="M252 20h42M546 20h42M420 40v28M714 40v28" stroke="#d0a85f" stroke-width="2" stroke-dasharray="4 7"/>
+  </g>
+  <text x="64" y="590" font-family="monospace" font-size="12" letter-spacing="1" fill="#a6aaa3">ANGULAR  ·  .NET  ·  AZURE  ·  CONTAINER WORKLOADS</text>
+</svg>

@@ -17,12 +17,56 @@ interface Props {
 
 const { project } = Astro.props;
 const related = work.filter((item) => item.slug !== project.slug).slice(0, 2);
+const pageUrl = new URL(`/work/${project.slug}`, Astro.site).toString();
+const siteUrl = new URL('/', Astro.site).toString();
+const personId = `${siteUrl}#person`;
+const websiteId = `${siteUrl}#website`;
+const projectId = `${pageUrl}#project`;
+const socialImage = new URL(project.metadata.image, Astro.site).toString();
+
+const projectEntity = {
+  '@type': project.metadata.entityType,
+  '@id': projectId,
+  name: project.title,
+  description: project.metadata.description,
+  url: pageUrl,
+  creator: { '@id': personId },
+  ...(project.metadata.applicationCategory
+    ? { applicationCategory: project.metadata.applicationCategory }
+    : {})
+};
+
+const article = {
+  '@type': 'Article',
+  '@id': `${pageUrl}#article`,
+  headline: project.title,
+  description: project.metadata.description,
+  url: pageUrl,
+  image: socialImage,
+  author: { '@id': personId },
+  isPartOf: { '@id': websiteId },
+  inLanguage: 'en',
+  about: { '@id': projectId }
+};
+
+const breadcrumb = {
+  '@type': 'BreadcrumbList',
+  '@id': `${pageUrl}#breadcrumb`,
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Craig Chandler', item: siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'Selected Work', item: `${siteUrl}#work` },
+    { '@type': 'ListItem', position: 3, name: project.title, item: pageUrl }
+  ]
+};
 ---
 
 <BaseLayout
-  title={`${project.title} — Craig Chandler`}
-  description={project.summary}
+  title={project.metadata.title}
+  description={project.metadata.description}
+  image={project.metadata.image}
+  imageAlt={project.metadata.imageAlt}
   type="article"
+  structuredData={[projectEntity, article, breadcrumb]}
 >
   <article class="case-study">
     <header class="case-hero container-wide">

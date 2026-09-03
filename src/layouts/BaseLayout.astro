@@ -7,24 +7,31 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  imageAlt?: string;
   type?: 'website' | 'article';
+  structuredData?: Array<Record<string, unknown>>;
 }
 
 const {
   title = 'Craig Chandler — Solution Architect & Decision Intelligence Specialist',
-  description = 'Craig Chandler designs and builds analytical software for complex operational systems, bridging software, cloud, operational modelling, and decision intelligence.',
+  description = 'Solution architect specialising in analytical software, cloud architecture, operational modelling and decision-support systems for complex operations.',
   image = '/assets/social-preview.png',
-  type = 'website'
+  imageAlt = 'Craig Chandler — Solution Architect and Decision Intelligence Specialist',
+  type = 'website',
+  structuredData = []
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const socialImage = new URL(image, Astro.site);
-const jsonLd = {
-  '@context': 'https://schema.org',
+const siteURL = new URL('/', Astro.site).toString();
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+const socialImage = new URL(image, Astro.site).toString();
+const personId = `${siteURL}#person`;
+const websiteId = `${siteURL}#website`;
+const person = {
   '@type': 'Person',
+  '@id': personId,
   name: 'Craig Chandler',
-  url: 'https://craigchandler.xyz',
-  image: 'https://craigchandler.xyz/assets/images/craig-chandler.webp',
+  url: siteURL,
+  image: `${siteURL}assets/images/craig-chandler.webp`,
   jobTitle: ['Solution Architect', 'Software Architect', 'Cloud Architect', 'Decision Intelligence Specialist'],
   worksFor: {
     '@type': 'Organization',
@@ -35,10 +42,20 @@ const jsonLd = {
     '@type': 'CollegeOrUniversity',
     name: 'The University of Adelaide'
   },
-  sameAs: [
-    'https://github.com/craigchandler',
-    'https://www.linkedin.com/in/craig-chandler/'
-  ]
+  sameAs: ['https://github.com/craigchandler', 'https://www.linkedin.com/in/craig-chandler/']
+};
+const website = {
+  '@type': 'WebSite',
+  '@id': websiteId,
+  name: 'Craig Chandler',
+  url: siteURL,
+  creator: { '@id': personId },
+  publisher: { '@id': personId },
+  inLanguage: 'en'
+};
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [person, website, ...structuredData]
 };
 ---
 
@@ -50,6 +67,7 @@ const jsonLd = {
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#171918" />
     <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
     <link rel="canonical" href={canonicalURL} />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -59,6 +77,7 @@ const jsonLd = {
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={socialImage} />
+    <meta property="og:image:alt" content={imageAlt} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:site_name" content="Craig Chandler" />
@@ -68,6 +87,7 @@ const jsonLd = {
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImage} />
+    <meta name="twitter:image:alt" content={imageAlt} />
 
     <title>{title}</title>
     <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
