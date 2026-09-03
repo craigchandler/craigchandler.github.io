@@ -351,7 +351,7 @@ h3 {
 
 .system-grid {
   fill: none;
-  stroke: rgba(241, 238, 229, 0.055);
+  stroke: rgba(241, 238, 229, 0.068);
   stroke-width: 1;
 }
 
@@ -359,23 +359,23 @@ h3 {
   fill: none;
   stroke: var(--accent);
   stroke-dasharray: 3 7;
-  stroke-width: 1.2;
+  stroke-width: 1.35;
 }
 
 .system-nodes rect {
   fill: var(--bg-soft);
-  stroke: var(--line-strong);
+  stroke: rgba(241, 238, 229, 0.31);
 }
 
 .system-nodes text {
-  fill: var(--accent);
+  fill: var(--accent-soft);
   font-family: var(--font-mono);
   font-size: 8px;
   letter-spacing: 0.09em;
 }
 
 .system-nodes .node-value {
-  fill: var(--ink-soft);
+  fill: #e2dfd6;
   font-family: var(--font-sans);
   font-size: 11px;
   font-weight: 600;
@@ -395,7 +395,7 @@ h3 {
   margin: 0;
   padding-top: 0.9rem;
   border-top: 1px solid var(--line);
-  color: var(--muted);
+  color: #b8bbb4;
   font-family: var(--font-mono);
   font-size: 0.63rem;
   letter-spacing: 0.07em;
@@ -560,8 +560,8 @@ h3 {
 
 .expertise-card {
   display: grid;
-  min-height: 390px;
-  padding: clamp(1.5rem, 3vw, 3rem);
+  min-height: 350px;
+  padding: clamp(1.5rem, 2.6vw, 2.5rem);
   border-right: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   grid-template-rows: auto 1fr auto;
@@ -573,7 +573,7 @@ h3 {
 }
 
 .card-index {
-  margin-bottom: 3rem;
+  margin-bottom: 2.25rem;
   color: var(--accent);
   font-family: var(--font-mono);
   font-size: 0.7rem;
@@ -581,7 +581,7 @@ h3 {
 
 .expertise-card h3 {
   max-width: 470px;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
   font-size: clamp(1.65rem, 2.5vw, 2.6rem);
   font-weight: 430;
   letter-spacing: -0.035em;
@@ -590,7 +590,7 @@ h3 {
 
 .expertise-card p {
   max-width: 570px;
-  margin-bottom: 2rem;
+  margin-bottom: 1.6rem;
   color: var(--muted);
 }
 
@@ -733,10 +733,10 @@ h3 {
 
 .project-preview {
   position: absolute;
-  right: clamp(2rem, 5vw, 5rem);
-  bottom: -9rem;
-  left: clamp(2rem, 5vw, 5rem);
-  height: 480px;
+  right: clamp(1.5rem, 3.5vw, 3.5rem);
+  bottom: -8rem;
+  left: clamp(1.5rem, 3.5vw, 3.5rem);
+  height: 540px;
   overflow: hidden;
   border: 1px solid var(--line-strong);
   background: #f2f2f0;
@@ -778,6 +778,14 @@ h3 {
 }
 
 /* Process */
+.process-section {
+  padding-block: clamp(5rem, 8vw, 7.5rem);
+}
+
+.process-section .section-heading {
+  margin-bottom: clamp(2.75rem, 4.5vw, 4rem);
+}
+
 .process-flow {
   display: grid;
   border-top: 1px solid var(--line);
@@ -787,15 +795,15 @@ h3 {
 
 .process-step {
   position: relative;
-  min-height: 285px;
-  padding: clamp(1.5rem, 2.7vw, 2.7rem);
+  min-height: 250px;
+  padding: clamp(1.5rem, 2.3vw, 2.25rem);
   border-right: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
 }
 
 .process-step > span {
   display: block;
-  margin-bottom: 4rem;
+  margin-bottom: 2.75rem;
   color: var(--accent);
   font-family: var(--font-mono);
   font-size: 0.68rem;
@@ -1770,7 +1778,7 @@ h3 {
   }
 
   .expertise-card {
-    min-height: 350px;
+    min-height: 320px;
   }
 
   .project-card-topline {
@@ -1778,14 +1786,14 @@ h3 {
   }
 
   .project-card-large .project-card-link {
-    min-height: 720px;
+    min-height: 760px;
   }
 
   .project-preview {
     right: 1.25rem;
     bottom: -7rem;
     left: 1.25rem;
-    height: 390px;
+    height: 420px;
   }
 
   .technology-group {
