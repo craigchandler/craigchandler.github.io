@@ -10,12 +10,12 @@ const { type, compact = false } = Astro.props;
 
 const diagrams = {
   fatigue: {
-    label: 'Application architecture',
-    context: 'Identity, tenancy and analytical workflow',
+    label: 'Platform architecture',
+    context: 'One analytical capability · three delivery models',
     description:
-      'A user authenticates through Auth0 before working in the Angular application. Organisation context is carried into .NET application services, which coordinate customer data and the fatigue analysis engine. The same result set feeds risk views, comparisons and reports.',
+      'FAID analytical capability is delivered through three integration surfaces: the Angular and .NET FAID Quantum web application, a managed developer API using Azure API Management and .NET Azure Functions, and a native C++ shared library embedded in third-party software. The developer API uses separate controls for API subscription access and product entitlement, with entitlement validated by the InterDynamics Licensing Platform.',
     caption:
-      'Identity establishes access; organisation context scopes the workflow; analysis remains behind the application-service boundary.'
+      'Interactive, managed API and local native integrations use the same analytical capability; developer API access and product entitlement remain separate controls.'
   },
   platform: {
     label: 'Workload architecture',
@@ -62,64 +62,80 @@ const captionId = `${type}-diagram-caption`;
 
   {type === 'fatigue' && (
     <div class="diagram-canvas diagram-faid">
-      <div class="diagram-boundary diagram-identity">
+      <div class="diagram-faid-delivery">
         <div class="diagram-boundary-heading">
-          <span>Boundary 01</span>
-          <strong>Identity &amp; access</strong>
+          <span>Delivery surfaces</span>
+          <strong>Choose the integration model that fits the consuming system</strong>
         </div>
-        <div class="diagram-inline-flow">
-          <div class="diagram-node">
-            <small>User</small>
-            <strong>Browser session</strong>
+        <div class="diagram-faid-surface-grid">
+          <div class="diagram-node diagram-node-emphasis diagram-faid-surface">
+            <small>Interactive product</small>
+            <strong>FAID Quantum web application</strong>
+            <span>Angular · .NET</span>
+            <em>Identity · organisation context · reporting</em>
           </div>
-          <span class="diagram-arrow" aria-hidden="true">↔</span>
-          <div class="diagram-node">
-            <small>Identity provider</small>
-            <strong>Auth0</strong>
+          <div class="diagram-node diagram-faid-surface">
+            <small>Managed integration</small>
+            <strong>FAID Developer API</strong>
+            <span>Azure API Management · .NET Azure Functions</span>
+            <em>Developer subscription credential</em>
+          </div>
+          <div class="diagram-node diagram-faid-surface">
+            <small>Native integration</small>
+            <strong>C++ shared library</strong>
+            <span>Embedded in third-party software</span>
+            <em>No remote service dependency</em>
           </div>
         </div>
-        <p class="diagram-note">Authentication · access claims</p>
       </div>
 
-      <div class="diagram-boundary-link" aria-hidden="true">
-        <span>Identity + organisation membership</span>
-        <i>→</i>
+      <div class="diagram-faid-convergence" aria-hidden="true">
+        <span>Delivery-specific adapters</span>
+        <i>↓</i>
       </div>
 
-      <div class="diagram-boundary diagram-tenant">
+      <div class="diagram-boundary diagram-faid-engine">
         <div class="diagram-boundary-heading">
-          <span>Boundary 02</span>
-          <strong>Organisation / tenant context</strong>
+          <span>Shared analytical capability</span>
+          <strong>FAID fatigue engine</strong>
         </div>
-        <div class="diagram-stack">
+        <div class="diagram-faid-engine-flow">
+          <span>Work &amp; sleep data</span>
+          <i aria-hidden="true">→</i>
           <div class="diagram-node diagram-node-emphasis">
-            <small>Customer workflow</small>
-            <strong>Angular web application</strong>
-            <span>Import · edit · analyse · review</span>
+            <small>Analytical core</small>
+            <strong>FAID analytical algorithms</strong>
           </div>
-          <div class="diagram-stack-link">
-            <span>Authenticated request + tenant context</span>
-            <i aria-hidden="true">↓</i>
+          <i aria-hidden="true">→</i>
+          <span>Fatigue outputs &amp; risk measures</span>
+        </div>
+      </div>
+
+      <div class="diagram-faid-support">
+        <div class="diagram-boundary-heading">
+          <span>Supporting platform services</span>
+          <strong>Controls remain explicit to the delivery surface</strong>
+        </div>
+        <div class="diagram-faid-support-grid">
+          <div>
+            <small>Web application</small>
+            <strong>Identity &amp; organisation</strong>
+            <span>Auth0 · tenant context</span>
           </div>
-          <div class="diagram-node">
-            <small>Application boundary</small>
-            <strong>.NET application services</strong>
-            <span>Access · workflow · coordination</span>
+          <div>
+            <small>Developer API access</small>
+            <strong>Subscription credential</strong>
+            <span>Gateway access control</span>
           </div>
-          <div class="diagram-analysis-grid">
-            <div class="diagram-node">
-              <small>Analytical service</small>
-              <strong>Fatigue analysis engine</strong>
-            </div>
-            <div class="diagram-node">
-              <small>Organisation-owned</small>
-              <strong>Schedules &amp; results</strong>
-            </div>
+          <div>
+            <small>Developer API entitlement</small>
+            <strong>Licensing platform</strong>
+            <span>Product licence validation</span>
           </div>
-          <div class="diagram-output-row">
-            <span>Risk views</span>
-            <span>Comparisons</span>
-            <span>Reports</span>
+          <div>
+            <small>Web application</small>
+            <strong>Schedules &amp; reporting</strong>
+            <span>Tenant-scoped persistence</span>
           </div>
         </div>
       </div>

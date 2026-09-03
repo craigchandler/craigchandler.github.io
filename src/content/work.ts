@@ -45,18 +45,18 @@ export const work: WorkItem[] = [
     title: 'FAID Quantum',
     kicker: 'Fatigue-risk analytics platform',
     summary:
-      'A secure, multi-tenant web platform that turns work schedules into practical fatigue-risk analysis and reporting.',
+      'A secure, multi-tenant fatigue-risk platform with interactive web, managed API and native integration options.',
     card: {
-      problem: 'Turn complex work schedules into secure, organisation-specific fatigue-risk analysis.',
-      role: 'Product architecture + full-stack engineering',
-      complexity: 'Angular · .NET · Azure · Auth0 · multi-tenancy · biomathematical analysis'
+      problem: 'Deliver one fatigue-analysis capability through secure web, API and native integration models.',
+      role: 'Product + integration architecture and engineering',
+      complexity: 'Angular · .NET · Azure · Auth0 · API Management · C++ · licensing'
     },
     metadata: {
-      title: 'FAID Quantum — Fatigue-Risk Analytics | Craig Chandler',
+      title: 'FAID Quantum — Fatigue-Risk Platform | Craig Chandler',
       description:
-        'Case study of a secure, multi-tenant fatigue-risk platform for analysing work schedules, built with Angular, .NET, Auth0 and Azure.',
+        'Case study of a multi-tenant fatigue-risk platform delivered through an interactive web product, managed developer API and native C++ library.',
       image: '/assets/social/faid-quantum.png',
-      imageAlt: 'FAID Quantum — multi-tenant fatigue-risk analytics platform',
+      imageAlt: 'FAID Quantum — web, API and native fatigue-risk integration platform',
       entityType: 'SoftwareApplication',
       applicationCategory: 'Fatigue-risk analysis software'
     },
@@ -83,15 +83,32 @@ export const work: WorkItem[] = [
         ]
       },
       {
-        label: '03 / Product outcome',
+        label: '03 / Integration models',
+        title: 'One analytical engine, three delivery models',
+        paragraphs: [
+          'The same analytical capability can be consumed interactively through FAID Quantum, remotely through the developer API, or embedded directly into third-party software through a native C++ library. Each surface fits a different operating context without turning the underlying fatigue model into three unrelated products.'
+        ],
+        points: [
+          'Web application — Angular and .NET provide schedule analysis, identity, organisation context, reporting and the complete user workflow.',
+          'Developer API — Azure API Management and .NET Azure Functions provide remote integration. Requests require API subscription credentials and valid product entitlement, checked separately through the InterDynamics Licensing Platform.',
+          'Native integration — A C++ shared library embeds the algorithms in rostering, scheduling or workforce-management software without depending on a remote web-service call.'
+        ]
+      },
+      {
+        label: '04 / Product outcome',
         title: 'Analysis that can be inspected and reported',
         paragraphs: [
-          'FAID Quantum brings schedule preparation, FAID and KSS indicators, comparative views and reporting into one browser-based workflow. Teams can examine fatigue exposure across a roster and carry the findings into their operational risk process.'
+          'FAID Quantum brings schedule preparation, FAID and KSS indicators, comparative views and reporting into one browser-based workflow. For integrated workflows, the developer API and native library let the consuming system choose managed or local calculation without redefining the analytical logic.'
         ]
       }
     ],
-    services: ['Product architecture', 'Full-stack engineering', 'Identity and tenancy', 'Cloud architecture'],
-    technologies: ['Angular', 'TypeScript', '.NET', 'C#', 'Auth0', 'Azure', 'OpenAPI'],
+    services: [
+      'Product & integration architecture',
+      'Full-stack engineering',
+      'API & cloud architecture',
+      'Identity, tenancy & entitlement'
+    ],
+    technologies: ['Angular', 'TypeScript', '.NET / C#', 'C++', 'Auth0', 'Azure API Management', 'Azure Functions', 'REST'],
     diagram: 'fatigue',
     featured: true,
     image: '/assets/images/faid-quantum-dashboard.webp',
@@ -100,10 +117,12 @@ export const work: WorkItem[] = [
     imageHeight: 1741,
     externalLinks: [
       { label: 'Visit FAID Quantum', href: 'https://faidquantum.com/' },
+      { label: 'Developer portal', href: 'https://developer.faidquantum.com/' },
       {
-        label: 'Read the user guide',
+        label: 'FAID Quantum user guide',
         href: 'https://www.interdynamics.com/download/documents/FAID-Quantum-Web-User-Guide.pdf'
-      }
+      },
+      { label: 'InterDynamics licensing platform', href: 'https://licensing.interdynamics.com/about' }
     ]
   },
   {
