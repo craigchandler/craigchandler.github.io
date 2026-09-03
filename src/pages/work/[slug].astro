@@ -17,7 +17,7 @@ interface Props {
 
 const { project } = Astro.props;
 const related = work.filter((item) => item.slug !== project.slug).slice(0, 2);
-const pageUrl = new URL(`/work/${project.slug}`, Astro.site).toString();
+const pageUrl = new URL(`/work/${project.slug}/`, Astro.site).toString();
 const siteUrl = new URL('/', Astro.site).toString();
 const personId = `${siteUrl}#person`;
 const websiteId = `${siteUrl}#website`;

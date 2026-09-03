@@ -10,7 +10,7 @@ const { project, large = false } = Astro.props;
 ---
 
 <article class:list={['project-card', { 'project-card-large': large }]}> 
-  <a class="project-card-link" href={`/work/${project.slug}`} aria-label={`Read the ${project.title} case study`}>
+  <a class="project-card-link" href={`/work/${project.slug}/`} aria-label={`Read the ${project.title} case study`}>
     <div class="project-card-topline">
       <span>{project.number}</span>
       <span>{project.kicker}</span>
