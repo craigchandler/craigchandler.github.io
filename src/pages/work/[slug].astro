@@ -67,13 +67,22 @@ const breadcrumb = {
   type="article"
   structuredData={[projectEntity, article, breadcrumb]}
 >
-  <article class="case-study">
+  <article class:list={['case-study', `case-study-${project.slug}`]}>
     <header class="case-hero container-wide">
       <a class="back-link" href="/#work"><span aria-hidden="true">←</span> Selected work</a>
       <div class="case-title-grid">
         <div>
           <p class="eyebrow">Case study / {project.number}</p>
-          <h1>{project.title}</h1>
+          <h1>
+            {project.titleSegments
+              ? project.titleSegments.map((segment, index) => (
+                  <Fragment>
+                    <span class="case-title-segment">{segment}</span>
+                    {index < project.titleSegments!.length - 1 && ' '}
+                  </Fragment>
+                ))
+              : project.title}
+          </h1>
         </div>
         <div class="case-summary">
           <p class="case-kicker">{project.kicker}</p>
@@ -87,10 +96,22 @@ const breadcrumb = {
     </section>
 
     {project.image && (
-      <figure class="case-interface container-wide">
-        <div class="case-interface-frame">
+      <figure
+        id="project-visual"
+        class:list={[
+          'case-interface',
+          'container-wide',
+          { 'case-interface-natural': project.imageNaturalRatio }
+        ]}
+      >
+        <div
+          class:list={[
+            'case-interface-frame',
+            { 'case-interface-frame-natural': project.imageNaturalRatio }
+          ]}
+        >
           <div class="preview-toolbar" aria-hidden="true">
-            <i></i><i></i><i></i><span>Product interface / Sample schedule</span>
+            <i></i><i></i><i></i><span>{project.imageLabel ?? 'Product interface / Sample schedule'}</span>
           </div>
           <img
             src={project.image}
@@ -101,7 +122,7 @@ const breadcrumb = {
             decoding="async"
           />
         </div>
-        <figcaption>FAID Quantum schedule dashboard — sample data shown.</figcaption>
+        <figcaption>{project.imageCaption ?? 'FAID Quantum schedule dashboard — sample data shown.'}</figcaption>
       </figure>
     )}
 
@@ -117,8 +138,8 @@ const breadcrumb = {
         </div>
       </aside>
       <div class="case-narrative">
-        {project.sections.map((section) => (
-          <section>
+        {project.sections.map((section, index) => (
+          <section id={`case-section-${String(index + 1).padStart(2, '0')}`}>
             <p class="eyebrow">{section.label}</p>
             <h2>{section.title}</h2>
             <div class="case-copy">
@@ -128,6 +149,14 @@ const breadcrumb = {
               <ul class="case-points">
                 {section.points.map((point) => <li>{point}</li>)}
               </ul>
+            )}
+            {section.subsection && (
+              <div class="case-subsection">
+                <h3>{section.subsection.title}</h3>
+                <div class="case-copy">
+                  {section.subsection.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+                </div>
+              </div>
             )}
           </section>
         ))}
