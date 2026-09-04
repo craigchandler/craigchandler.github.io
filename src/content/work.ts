@@ -15,6 +15,7 @@ export interface WorkItem {
   slug: string;
   number: string;
   title: string;
+  titleSegments?: string[];
   kicker: string;
   summary: string;
   card: {
@@ -315,6 +316,7 @@ export const work: WorkItem[] = [
     slug: 'wizball-remake',
     number: '05',
     title: 'Wizball Remake — Legacy C++ Revival',
+    titleSegments: ['Wizball Remake —', 'Legacy C++', 'Revival'],
     kicker: 'Legacy software recovery and modernisation',
     summary:
       'Recovered the source of a 2007 C++ game remake and revived it for modern Linux and ARM handhelds, replacing obsolete platform dependencies, hardening runtime behaviour and establishing a modern build and release path with extensive AI-assisted engineering.',

@@ -67,13 +67,22 @@ const breadcrumb = {
   type="article"
   structuredData={[projectEntity, article, breadcrumb]}
 >
-  <article class="case-study">
+  <article class:list={['case-study', `case-study-${project.slug}`]}>
     <header class="case-hero container-wide">
       <a class="back-link" href="/#work"><span aria-hidden="true">←</span> Selected work</a>
       <div class="case-title-grid">
         <div>
           <p class="eyebrow">Case study / {project.number}</p>
-          <h1>{project.title}</h1>
+          <h1>
+            {project.titleSegments
+              ? project.titleSegments.map((segment, index) => (
+                  <Fragment>
+                    <span class="case-title-segment">{segment}</span>
+                    {index < project.titleSegments!.length - 1 && ' '}
+                  </Fragment>
+                ))
+              : project.title}
+          </h1>
         </div>
         <div class="case-summary">
           <p class="case-kicker">{project.kicker}</p>
@@ -87,7 +96,14 @@ const breadcrumb = {
     </section>
 
     {project.image && (
-      <figure id="project-visual" class="case-interface container-wide">
+      <figure
+        id="project-visual"
+        class:list={[
+          'case-interface',
+          'container-wide',
+          { 'case-interface-natural': project.imageNaturalRatio }
+        ]}
+      >
         <div
           class:list={[
             'case-interface-frame',
