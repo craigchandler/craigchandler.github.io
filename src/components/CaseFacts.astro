@@ -1,0 +1,15 @@
+---
+import type { WorkItem } from '../content/work';
+interface Props { project: WorkItem; }
+const { project } = Astro.props;
+---
+      <aside class="case-facts">
+        <div>
+          <p>Contribution</p>
+          <ul>{project.services.map((service) => <li>{service}</li>)}</ul>
+        </div>
+        <div>
+          <p>Technology</p>
+          <ul>{project.technologies.map((technology) => <li>{technology}</li>)}</ul>
+        </div>
+      </aside>

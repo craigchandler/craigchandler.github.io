@@ -1,0 +1,35 @@
+---
+import type { WorkItem } from '../content/work';
+interface Props { project: WorkItem; inline?: boolean; }
+const { project, inline = false } = Astro.props;
+---
+    {project.image && (
+      <figure
+        id="project-visual"
+        class:list={[
+          'case-interface',
+          { 'container-wide': !inline },
+          { 'case-interface-natural': project.imageNaturalRatio }
+        ]}
+      >
+        <div
+          class:list={[
+            'case-interface-frame',
+            { 'case-interface-frame-natural': project.imageNaturalRatio }
+          ]}
+        >
+          <div class="preview-toolbar" aria-hidden="true">
+            <i></i><i></i><i></i><span>{project.imageLabel ?? 'Product interface / Sample schedule'}</span>
+          </div>
+          <img
+            src={project.image}
+            alt={project.imageAlt}
+            width={project.imageWidth}
+            height={project.imageHeight}
+            loading={inline ? 'lazy' : 'eager'}
+            decoding="async"
+          />
+        </div>
+        <figcaption>{project.imageCaption ?? 'FAID Quantum schedule dashboard — sample data shown.'}</figcaption>
+      </figure>
+    )}

@@ -4,6 +4,7 @@ export interface CaseSection {
   label: string;
   title: string;
   paragraphs: string[];
+  figure?: 'diagram' | 'image';
   points?: string[];
   subsection?: {
     title: string;
@@ -32,6 +33,7 @@ export interface WorkItem {
     applicationCategory?: string;
   };
   sections: CaseSection[];
+  factsPosition?: 'intro';
   services: string[];
   technologies: string[];
   diagram: DiagramType;
@@ -52,18 +54,16 @@ export const work: WorkItem[] = [
     slug: 'faid-quantum',
     number: '01',
     title: 'FAID Quantum',
-    kicker: 'Fatigue-risk analytics platform',
-    summary:
-      'A secure, multi-tenant fatigue-risk platform with interactive web, managed API and native integration options.',
+    kicker: 'Analytical implementation, product architecture and integration',
+    summary: 'Two fatigue-analysis algorithms delivered through a native library, a browser application and a managed web API. Developed at InterDynamics, the products support direct schedule analysis and integration into third-party rostering and workforce systems.',
     card: {
-      problem: 'Deliver one fatigue-analysis capability through secure web, API and native integration models.',
+      problem: 'Deliver two fatigue-analysis algorithms through web, API and native integration models.',
       role: 'Product + integration architecture and engineering',
       complexity: 'Angular · .NET · Azure · Auth0 · API Management · C++ · licensing'
     },
     metadata: {
-      title: 'FAID Quantum — Fatigue-Risk Platform | Craig Chandler',
-      description:
-        'Case study of a multi-tenant fatigue-risk platform spanning the FAID Quantum web product, developer API and Shared Object Library.',
+      title: 'FAID Quantum — Analytical Implementation & Architecture | Craig Chandler',
+      description: 'Implementation and product architecture for FAID and FAID Quantum: two fatigue-analysis algorithms delivered through a native library, browser application and managed web API.',
       image: '/assets/social/faid-quantum.png',
       imageAlt: 'FAID Quantum — web, API and native fatigue-risk integration platform',
       entityType: 'SoftwareApplication',
@@ -71,59 +71,65 @@ export const work: WorkItem[] = [
     },
     sections: [
       {
-        label: '01 / Product problem',
-        title: 'Turn schedule data into a usable fatigue picture',
+        label: '01 / Analytical implementation',
+        title: 'From analytical models to production calculations',
         paragraphs: [
-          'Fatigue analysis starts with working-time and sleep data, but the useful output is not a raw score. People need to see where risk changes across a schedule, compare patterns, and understand the result in the context of the work being assessed.',
-          'The same product serves multiple customer organisations. Jobs, schedules, analysis and reports therefore have to remain within the correct organisation and access context throughout the workflow.'
+          'My work began with the existing FAID implementation in the desktop product. I translated the calculations into C++ and packaged them as a DLL, making the algorithm available to external applications while improving calculation performance within our own software.',
+          'The second algorithm, FAID Quantum, required implementation directly from academic research papers covered by InterDynamics’ exclusive commercial licences. Results were checked against a calculation spreadsheet supplied by the researchers.',
+          'The established DLL subsequently provided raw reference outputs for checking later implementations. Comparisons with the desktop product also covered the graphical presentation of results, including outputs requiring interpolation and interpretation.'
         ]
       },
       {
-        label: '02 / Application architecture',
-        title: 'Identity and tenancy run through the application',
+        label: '02 / Integration architecture',
+        title: 'Two algorithms, three delivery models',
         paragraphs: [
-          'The Angular application supports schedule import, editing, analysis and review. Auth0 establishes user identity; the .NET application services resolve organisation context and enforce access before customer data or analytical services are reached.',
-          'Fatigue calculations sit behind the application layer rather than inside the browser. That keeps the analytical model separate from interface concerns and gives reporting a consistent set of results to work from.'
+          'The native library allows customers to calculate fatigue predictions from roster data within their own software. Customers control how the results are analysed and presented, fitting fatigue analysis into their existing product workflows.',
+          'My responsibility included the integration interfaces, examples in multiple programming languages, API documentation, licensing and expiry controls, and error reporting for invalid inputs.',
+          'The managed web API followed requests from customers who preferred remote calculation to installing a native component. Azure API Management and .NET Azure Functions provide the integration surface, with subscription access and product entitlement handled as separate controls.',
+          'Both algorithms are available through the native library, web application and web API.'
         ],
-        points: [
-          'Organisation context follows authenticated requests',
-          'Schedule data and analysis remain separate concerns',
-          'Charts, tables and reports use the same calculated result set'
-        ]
+        figure: 'diagram'
       },
       {
-        label: '03 / Integration models',
-        title: 'One analytical capability, three delivery models',
+        label: '03 / Product workflow',
+        title: 'From exchanged files to retained assessments',
         paragraphs: [
-          'The same FAID methodology can be applied interactively through FAID Quantum, remotely through the developer API, or embedded directly into third-party software through a native library. Each surface fits a different operating context while providing a consistent fatigue-analysis capability.'
+          'The desktop product used a file-based workflow: users loaded roster data, ran an analysis and exchanged input files when sharing work. For the web application, I introduced named assessments that retain inputs and calculated outputs together, with access governed by group permissions.',
+          'Corporate customers needed to collect individual submissions for manager-led analysis. In this workflow, ordinary users manage their own records; authorised managers can review and consolidate submissions into a separate group assessment. Shared assessments remain available for collaborative work.',
+          'The distinction keeps individual users focused on their own data and prevents them from changing another person’s submissions, while giving managers the visibility needed for group analysis.'
         ],
-        points: [
-          'Web application — Angular and .NET provide schedule analysis, identity, organisation context, reporting and the complete user workflow.',
-          'Developer API — Azure API Management and .NET Azure Functions provide remote integration. Requests require API subscription credentials and valid product entitlement, checked separately through the InterDynamics Licensing Platform.',
-          'Native integration — The FAID Quantum Shared Object Library (formerly FAID DLL) embeds FAID calculations in third-party rostering, scheduling or workforce-management software without requiring a remote API call.'
+        figure: 'image'
+      },
+      {
+        label: '04 / Application and cloud architecture',
+        title: 'Delivery across the application and platform',
+        paragraphs: [
+          'I owned the web product’s design and implementation across the Angular frontend, C# backend, database structure, cloud architecture, deployment and CI pipelines. Auth0 establishes user identity, while backend services enforce organisation context and access to assessment data. Calculations remain behind the application layer.',
+          'The browser application extended access beyond the Windows desktop product and introduced persistent, permission-controlled workflows across users and groups. Colleagues contributed testing, QA and product feedback.',
+          'Alongside engineering delivery, I led early internal presentations and customer demonstrations. Ongoing work includes technical support and helping customers integrate the products into their software and operational workflows.'
         ]
       },
       {
-        label: '04 / Product outcome',
-        title: 'Analysis that can be inspected and reported',
+        label: '05 / Outcomes',
+        title: 'Established products and corporate adoption',
         paragraphs: [
-          'FAID Quantum brings schedule preparation, FAID and KSS indicators, comparative views and reporting into one browser-based workflow. For integrated workflows, the developer API and native library let the consuming system choose managed or local calculation while applying the same FAID methodology.'
+          'The DLL became one of InterDynamics’ strongest-selling products over many years.',
+          'The web application gained corporate customers, including organisations seeking individual data collection with manager-led consolidation and analysis. The web API attracted several corporate users within its first year of operation.'
         ]
       }
     ],
-    services: [
-      'Product & integration architecture',
-      'Full-stack engineering',
-      'API & cloud architecture',
-      'Identity, tenancy & entitlement'
-    ],
-    technologies: ['Angular', 'TypeScript', '.NET / C#', 'C++', 'Auth0', 'Azure API Management', 'Azure Functions', 'REST'],
+    services: ['Algorithm implementation and verification', 'Product and integration architecture', 'Full-stack engineering', 'Database and cloud architecture', 'CI and deployment', 'Customer integration support'],
+    technologies: ['C++', 'Angular', 'TypeScript', 'C# / .NET', 'Azure', 'Auth0', 'Azure API Management', 'Azure Functions'],
+    factsPosition: 'intro',
     diagram: 'fatigue',
     featured: true,
     image: '/assets/images/faid-quantum-dashboard.webp',
-    imageAlt: 'FAID Quantum sample schedule dashboard showing KSS and FAID risk indicators',
+    imageAlt: 'FAID Quantum Sample Schedule Dashboard showing the analysis date range, KSS indicators, hours worked chart and FAID indicators',
     imageWidth: 1200,
     imageHeight: 1741,
+    imageNaturalRatio: true,
+    imageLabel: 'Product interface / Sample schedule',
+    imageCaption: 'FAID Quantum sample schedule dashboard showing calculated KSS and FAID fatigue indicators. Sample data.',
     externalLinks: [
       { label: 'Visit FAID Quantum', href: 'https://faidquantum.com/' },
       { label: 'Developer portal', href: 'https://developer.faidquantum.com/' },

@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArchitectureDiagram from '../../components/ArchitectureDiagram.astro';
+import CaseImage from '../../components/CaseImage.astro';
+import CaseFacts from '../../components/CaseFacts.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import { work, type WorkItem } from '../../content/work';
 
@@ -89,54 +91,17 @@ const breadcrumb = {
           <p>{project.summary}</p>
         </div>
       </div>
+      {project.factsPosition === 'intro' && <CaseFacts project={project} />}
     </header>
 
-    <section class="case-diagram container-wide" aria-label="System overview">
+    {!project.sections.some((section) => section.figure === 'diagram') && <section class="case-diagram container-wide" aria-label="System overview">
       <ArchitectureDiagram type={project.diagram} />
-    </section>
+    </section>}
 
-    {project.image && (
-      <figure
-        id="project-visual"
-        class:list={[
-          'case-interface',
-          'container-wide',
-          { 'case-interface-natural': project.imageNaturalRatio }
-        ]}
-      >
-        <div
-          class:list={[
-            'case-interface-frame',
-            { 'case-interface-frame-natural': project.imageNaturalRatio }
-          ]}
-        >
-          <div class="preview-toolbar" aria-hidden="true">
-            <i></i><i></i><i></i><span>{project.imageLabel ?? 'Product interface / Sample schedule'}</span>
-          </div>
-          <img
-            src={project.image}
-            alt={project.imageAlt}
-            width={project.imageWidth}
-            height={project.imageHeight}
-            loading="eager"
-            decoding="async"
-          />
-        </div>
-        <figcaption>{project.imageCaption ?? 'FAID Quantum schedule dashboard — sample data shown.'}</figcaption>
-      </figure>
-    )}
+    {!project.sections.some((section) => section.figure === 'image') && <CaseImage project={project} />}
 
     <section class="case-body container-wide">
-      <aside class="case-facts">
-        <div>
-          <p>Contribution</p>
-          <ul>{project.services.map((service) => <li>{service}</li>)}</ul>
-        </div>
-        <div>
-          <p>Technology</p>
-          <ul>{project.technologies.map((technology) => <li>{technology}</li>)}</ul>
-        </div>
-      </aside>
+      {project.factsPosition !== 'intro' && <CaseFacts project={project} />}
       <div class="case-narrative">
         {project.sections.map((section, index) => (
           <section id={`case-section-${String(index + 1).padStart(2, '0')}`}>
@@ -158,6 +123,8 @@ const breadcrumb = {
                 </div>
               </div>
             )}
+            {section.figure === 'diagram' && <ArchitectureDiagram type={project.diagram} />}
+            {section.figure === 'image' && <CaseImage project={project} inline />}
           </section>
         ))}
         {project.externalLinks && (
