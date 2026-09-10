@@ -91,17 +91,16 @@ const breadcrumb = {
           <p>{project.summary}</p>
         </div>
       </div>
-      {project.factsPosition === 'intro' && <CaseFacts project={project} />}
     </header>
 
-    {!project.sections.some((section) => section.figure === 'diagram') && <section class="case-diagram container-wide" aria-label="System overview">
+    <section class="case-diagram container-wide" aria-label="System overview">
       <ArchitectureDiagram type={project.diagram} />
-    </section>}
+    </section>
 
     {!project.sections.some((section) => section.figure === 'image') && <CaseImage project={project} />}
 
     <section class="case-body container-wide">
-      {project.factsPosition !== 'intro' && <CaseFacts project={project} />}
+      <CaseFacts project={project} />
       <div class="case-narrative">
         {project.sections.map((section, index) => (
           <section id={`case-section-${String(index + 1).padStart(2, '0')}`}>
@@ -123,7 +122,6 @@ const breadcrumb = {
                 </div>
               </div>
             )}
-            {section.figure === 'diagram' && <ArchitectureDiagram type={project.diagram} />}
             {section.figure === 'image' && <CaseImage project={project} inline />}
           </section>
         ))}

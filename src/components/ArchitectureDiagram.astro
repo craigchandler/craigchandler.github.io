@@ -19,11 +19,11 @@ const diagrams = {
   },
   platform: {
     label: 'Workload architecture',
-    context: 'Interactive control plane and isolated compute',
+    context: 'Management application, reusable controller and workloads',
     description:
-      'The Angular client and application API form an interactive control plane. They persist scenario configuration, submit asynchronous work and report status. A separate compute plane orchestrates isolated container runs, with cloud storage holding inputs, execution state and results.',
+      'The Angular and .NET management application organises projects, studies, scenarios and phases, and manages project access. A separate Azure Container Instances controller executes configured Windows or Linux workloads. Independent simulation runs can execute concurrently, followed by an optional configured analysis phase. Cosmos DB stores application metadata; Blob Storage holds input and output files.',
     caption:
-      'The browser submits and observes work through durable state; long-running compute continues independently.'
+      'Application responsibilities remain separate from the reusable ACI controller. Statistical analysis runs as an optional configured phase, using outputs from preceding runs.'
   },
   control: {
     label: 'Simulation integration',
@@ -149,13 +149,13 @@ const captionId = `${type}-diagram-caption`;
     <div class="diagram-canvas diagram-dash">
       <div class="diagram-plane diagram-control-plane">
         <div class="diagram-boundary-heading">
-          <span>Plane 01</span>
-          <strong>Interactive / control plane</strong>
+          <span>Application</span>
+          <strong>Management application</strong>
         </div>
         <div class="diagram-stage-row">
           <div class="diagram-node">
             <small>User workflow</small>
-            <strong>Projects · studies · scenarios</strong>
+            <strong>Projects · studies · scenarios · phases</strong>
           </div>
           <span class="diagram-arrow" aria-hidden="true">→</span>
           <div class="diagram-node diagram-node-emphasis">
@@ -166,7 +166,7 @@ const captionId = `${type}-diagram-caption`;
           <div class="diagram-node">
             <small>Application service</small>
             <strong>.NET API</strong>
-            <span>Configure · submit · monitor</span>
+            <span>Access · configure · submit · monitor</span>
           </div>
         </div>
       </div>
@@ -179,38 +179,36 @@ const captionId = `${type}-diagram-caption`;
 
       <div class="diagram-plane diagram-compute-plane">
         <div class="diagram-boundary-heading">
-          <span>Plane 02</span>
-          <strong>Isolated compute plane</strong>
+          <span>Execution</span>
+          <strong>Reusable controller and configured workloads</strong>
         </div>
         <div class="diagram-stage-row">
           <div class="diagram-node">
-            <small>Control service</small>
-            <strong>Workload orchestration</strong>
+            <small>Separate service</small>
+            <strong>ACI controller</strong>
           </div>
           <span class="diagram-arrow" aria-hidden="true">→</span>
           <div class="diagram-node diagram-node-emphasis">
-            <small>Disposable workers</small>
-            <strong>Container runs</strong>
-            <span>Staged / parallel work</span>
+            <small>Concurrent runs</small>
+            <strong>Executable workloads</strong>
+            <span>Windows · Linux</span>
           </div>
           <span class="diagram-arrow" aria-hidden="true">→</span>
           <div class="diagram-node">
-            <small>Post-run</small>
-            <strong>Result aggregation</strong>
+            <small>Optional next phase</small>
+            <strong>Configured analysis</strong>
           </div>
         </div>
       </div>
 
       <div class="diagram-persistence">
         <div class="diagram-boundary-heading">
-          <span>Durable layer</span>
-          <strong>Persisted independently of workers</strong>
+          <span>Persistent storage</span>
+          <strong>Metadata and files</strong>
         </div>
         <div class="diagram-persistence-list">
-          <span>Scenario configuration</span>
-          <span>Workload inputs</span>
-          <span>Execution state</span>
-          <span>Analytical outputs</span>
+          <span>Cosmos DB<br />Application metadata</span>
+          <span>Blob Storage<br />Input and output files</span>
         </div>
       </div>
     </div>

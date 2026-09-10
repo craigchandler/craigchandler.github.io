@@ -4,7 +4,7 @@ export interface CaseSection {
   label: string;
   title: string;
   paragraphs: string[];
-  figure?: 'diagram' | 'image';
+  figure?: 'image';
   points?: string[];
   subsection?: {
     title: string;
@@ -33,8 +33,8 @@ export interface WorkItem {
     applicationCategory?: string;
   };
   sections: CaseSection[];
-  factsPosition?: 'intro';
   services: string[];
+  contributionNote?: string;
   technologies: string[];
   diagram: DiagramType;
   featured: boolean;
@@ -87,8 +87,7 @@ export const work: WorkItem[] = [
           'My responsibility included the integration interfaces, examples in multiple programming languages, API documentation, licensing and expiry controls, and error reporting for invalid inputs.',
           'The managed web API followed requests from customers who preferred remote calculation to installing a native component. Azure API Management and .NET Azure Functions provide the integration surface, with subscription access and product entitlement handled as separate controls.',
           'Both algorithms are available through the native library, web application and web API.'
-        ],
-        figure: 'diagram'
+        ]
       },
       {
         label: '03 / Product workflow',
@@ -120,7 +119,6 @@ export const work: WorkItem[] = [
     ],
     services: ['Algorithm implementation and verification', 'Product and integration architecture', 'Full-stack engineering', 'Database and cloud architecture', 'CI and deployment', 'Customer integration support'],
     technologies: ['C++', 'Angular', 'TypeScript', 'C# / .NET', 'Azure', 'Auth0', 'Azure API Management', 'Azure Functions'],
-    factsPosition: 'intro',
     diagram: 'fatigue',
     featured: true,
     image: '/assets/images/faid-quantum-dashboard.webp',
@@ -148,18 +146,16 @@ export const work: WorkItem[] = [
     slug: 'dash-x',
     number: '02',
     title: 'DASH-X',
-    kicker: 'Cloud simulation platform',
-    summary:
-      'A cloud platform for preparing, orchestrating, and running analytical simulation workloads at scale.',
+    kicker: 'Cloud simulation and analysis workflows',
+    summary: 'Developed at InterDynamics, DASH-X supports simulation studies from scenario preparation through repeated runs, statistical analysis and result inspection. It was designed around Planimate Monte Carlo workloads, while allowing configured Windows and Linux executables to run within the same workflow.',
     card: {
-      problem: 'Run computational simulation workloads without coupling long-running compute to the user experience.',
-      role: 'Solution architecture + full-stack engineering',
-      complexity: 'Angular · .NET · Azure · container orchestration · Cosmos DB'
+      problem: 'Prepare simulation scenarios, run seeded repetitions and consolidate outputs for analysis.',
+      role: 'Product workflow + application and cloud architecture',
+      complexity: 'Angular · .NET · Azure Container Instances · Cosmos DB · Blob Storage'
     },
     metadata: {
-      title: 'DASH-X — Cloud Simulation Platform | Craig Chandler',
-      description:
-        'Case study of a cloud platform separating interactive scenario workflows from asynchronous, containerised simulation workloads and persisted results.',
+      title: 'DASH-X — Cloud Simulation & Analysis Workflows | Craig Chandler',
+      description: 'Application and cloud architecture for DASH-X at InterDynamics: scenario preparation, repeated simulation runs, configured analysis phases and result inspection.',
       image: '/assets/social/dash-x.png',
       imageAlt: 'DASH-X — cloud simulation workload architecture',
       entityType: 'SoftwareApplication',
@@ -167,36 +163,56 @@ export const work: WorkItem[] = [
     },
     sections: [
       {
-        label: '01 / Workload problem',
-        title: 'A simulation run is not a web request',
+        label: "01 / Operational context",
+        title: "From individual runs to simulation studies",
         paragraphs: [
-          'Users prepare projects, studies and scenarios interactively, but the associated simulation work can be long-running and computationally intensive. It cannot depend on an open browser tab or the lifetime of a single API request.',
-          'Inputs, run state and outputs also need durable identities so a scenario can be monitored, revisited and compared after its compute process has finished.'
+          "A simulation study often needs more than a single result. Analysts run the same scenario with different random seeds to examine the distribution of possible outcomes, then compare scenarios representing different operating assumptions.",
+          "Before DASH-X, users typically started those runs manually, exported the outputs and assembled them for analysis in their own scripts or Excel. They also needed access to enough local computing capacity to complete the work.",
+          "DASH-X brought preparation, execution and access to results into a shared application. InterDynamics could configure projects for customers to use directly, or use the platform internally to carry out studies and prepare client reports."
         ]
       },
       {
-        label: '02 / Workload architecture',
-        title: 'A control plane submits work; a compute plane runs it',
+        label: "02 / Analyst workflow",
+        title: "Projects, studies and scenarios",
         paragraphs: [
-          'The Angular client and .NET application API form the interactive control plane. They manage scenario configuration, submission and status. A separate cloud-run service turns approved requests into staged container workloads and monitors their execution.',
-          'Scenario metadata and execution state are persisted independently of the workers. Inputs and outputs live in cloud storage, so containers can remain isolated and disposable without losing the analytical record.'
-        ],
-        points: [
-          'The browser observes work; it does not host or hold it open',
-          'Each compute run has explicit inputs, state and outputs',
-          'Application and workload services can change independently'
+          "I designed the application structure around the way an analyst organises work. A project represents the system under investigation, such as a supply chain. Within it, a study contains the scenarios to be compared, each with its own inputs.",
+          "Project managers define workloads, typically representing a particular simulation version. Users upload scenario input files and, where the project is configured for it, edit those files within the application. Existing scenarios can be duplicated to prepare further alternatives.",
+          "My responsibility covered the management application’s design and implementation: the Angular interface, application backend, database structure, cloud architecture, project membership and roles, and access to input and output data."
         ]
       },
       {
-        label: '03 / Operating model',
-        title: 'Run state is independent of the browser session',
+        label: "03 / Execution and analysis",
+        title: "Repeated runs followed by post-processing",
         paragraphs: [
-          'A user can submit a run, follow phase and workload status, leave the application, and return to the persisted results. The split also keeps customer-facing concerns out of the container runtime and compute-specific concerns out of the web application.'
+          "A scenario can contain multiple execution phases, with one phase’s outputs becoming inputs to the next. For a Monte Carlo study, the first phase runs the simulation repeatedly with different random seeds. A second phase can execute a configured process that consolidates those outputs and calculates statistics.",
+          "Each run’s status is recorded. A subsequent phase can require a minimum number of successful runs before proceeding, allowing the analyst to set whether incomplete results are sufficient for further processing.",
+          "The resulting data can be inspected through a spreadsheet-style interface, with charts created from the outputs. All output data is also available for download and external analysis or report preparation."
+        ]
+      },
+      {
+        label: "04 / Architecture",
+        title: "Separate application responsibilities from compute control",
+        paragraphs: [
+          "A colleague developed the core Azure Container Instances API for creating and removing containers, staging data, starting workloads and collecting outputs. The application keeps project organisation, user access and analytical workflow decisions outside the controller.",
+          "That separation allowed the controller to remain reusable across applications. DASH-X itself is not restricted to Planimate: workloads can use Windows or Linux executables, provided they are configured to read inputs and write outputs in the form expected by the execution environment.",
+          "Input and output files are held in Blob Storage. These datasets can be large, their structure varies between projects, and the application did not need database queries over their contents. Application metadata is stored separately in Cosmos DB.",
+          "Azure Container Instances allowed compute resources to be sized for individual runs. The simulation workloads were single-threaded, so each run could use a small container.",
+          "Independent runs can execute concurrently rather than sequentially. For example, 100 runs taking ten minutes each would require around 1,000 minutes if executed one after another. With sufficient cloud capacity to run all 100 concurrently, the simulation time could approach ten minutes, plus container startup, data transfer and other orchestration overheads."
+        ]
+      },
+      {
+        label: "05 / Verification and use",
+        title: "Supporting client analysis and reporting",
+        paragraphs: [
+          "Initial comparisons checked cloud execution against local runs, particularly Linux command-line execution against the Windows graphical application. For one client with an existing cloud system, comparisons also established equivalent simulation results before InterDynamics used DASH-X to perform analysis and prepare reports for them.",
+          "In consulting work, the platform supported studies involving 10–20 seeded runs or 10–20 scenarios, with consolidated outputs used to report distributions around the results.",
+          "Client users who tried DASH-X reported a more responsive interface than their existing system and valued the ability to include post-processing in the workflow. Its practical value to InterDynamics has been supporting the analysis and reporting work around a simulation, alongside supplying the model itself."
         ]
       }
     ],
-    services: ['Solution architecture', 'Cloud architecture', 'Workload orchestration', 'Full-stack engineering'],
-    technologies: ['Angular', '.NET', 'Azure', 'Containers', 'Cosmos DB', 'Blob storage', 'OpenAPI'],
+    services: ['Product workflow and application architecture', 'Angular frontend', 'Application backend and database design', 'Cloud architecture', 'Project access and roles'],
+    contributionNote: 'A colleague developed the underlying Azure Container Instances control API.',
+    technologies: ['Angular', 'TypeScript', 'C# / .NET', 'Azure Container Instances', 'Cosmos DB', 'Blob Storage'],
     diagram: 'platform',
     featured: true
   },

@@ -3123,74 +3123,6 @@ h3 {
   }
 }
 
-/* FAID case study: compact introduction and section-associated figures. */
-.case-study-faid-quantum .case-hero {
-  padding-block: clamp(2rem, 4vw, 4rem) 2.5rem;
-}
-
-.case-study-faid-quantum .back-link {
-  margin-bottom: 2.5rem;
-}
-
-.case-study-faid-quantum .case-title-grid {
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-}
-
-.case-study-faid-quantum .case-title-grid h1 {
-  font-size: clamp(3rem, 7vw, 6.5rem);
-  line-height: 1;
-}
-
-.case-study-faid-quantum .case-summary {
-  max-width: 780px;
-  padding: 0;
-  border: 0;
-}
-
-.case-study-faid-quantum .case-facts {
-  display: grid;
-  position: static;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 1rem 3rem;
-  margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--line);
-}
-
-.case-study-faid-quantum .case-facts > div {
-  margin: 0;
-}
-
-.case-study-faid-quantum .case-facts li {
-  display: inline;
-  font-size: 0.85rem;
-}
-
-.case-study-faid-quantum .case-facts li + li::before {
-  content: ' · ';
-  color: var(--accent);
-}
-
-.case-study-faid-quantum .case-body {
-  display: block;
-  padding-top: 3rem;
-}
-
-.case-study-faid-quantum .case-narrative {
-  max-width: none;
-}
-
-.case-study-faid-quantum .case-narrative h2,
-.case-study-faid-quantum .case-copy {
-  max-width: 780px;
-}
-
-.case-study-faid-quantum .case-narrative section {
-  margin-bottom: clamp(3.5rem, 6vw, 5.5rem);
-}
-
-.case-study-faid-quantum .architecture-diagram,
 .case-study-faid-quantum .case-interface {
   margin: 2.5rem 0 0;
 }
@@ -3237,10 +3169,6 @@ h3 {
 }
 
 @media (max-width: 700px) {
-  .case-study-faid-quantum .case-facts {
-    grid-template-columns: 1fr;
-  }
-
   .architecture-diagram-fatigue .diagram-faid-engine-flow {
     grid-template-columns: 1fr;
   }
@@ -3251,12 +3179,42 @@ h3 {
   }
 }
 
-.case-study-faid-quantum .case-facts ul {
-  display: block;
+/* Keep DASH-X diagram labels readable at desktop and mobile widths. */
+.case-study-dash-x .diagram-node small,
+.case-study-dash-x .diagram-node span,
+.case-study-dash-x .diagram-boundary-heading span,
+.case-study-dash-x .diagram-async-bridge,
+.case-study-dash-x .diagram-async-bridge strong,
+.case-study-dash-x .diagram-persistence-list span {
+  font-size: 0.7rem;
 }
 
-.case-study-faid-quantum .case-facts li {
-  padding: 0;
-  border: 0;
-  line-height: 1.8;
+.case-study-dash-x .diagram-node strong {
+  font-size: 0.9rem;
+}
+
+.case-facts .case-contribution-note {
+  margin-top: 1rem;
+  color: var(--muted);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: normal;
+  line-height: 1.6;
+  text-transform: none;
+}
+
+/* Give the longer analytical-product introductions room in the split hero. */
+@media (min-width: 1081px) {
+  :is(.case-study-dash-x, .case-study-faid-quantum) .case-title-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  }
+
+  .case-study-faid-quantum .case-title-grid h1 {
+    font-size: clamp(4rem, 6vw, 6.5rem);
+  }
+}
+
+.case-narrative h2 {
+  text-wrap: balance;
 }
