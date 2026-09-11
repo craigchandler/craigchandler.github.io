@@ -221,55 +221,72 @@ export const work: WorkItem[] = [
     slug: 'moving-block',
     number: '03',
     title: 'Moving Block Train Control',
-    kicker: 'Cross-platform control and simulation',
+    kicker: 'Railway simulation capability and integration',
     summary:
-      'A C++ train-control component for modelling moving-block train behaviour, changing separation and network-aware rail operations.',
+      'A C++ component integrated with Planimate to represent moving-block railway operation within a wider operational simulation. I initiated the work for InterDynamics, defining the requirements and directing development while building the Planimate integration, test networks and tools used to review train behaviour. The work is owned by InterDynamics.',
     card: {
       problem: 'Model realistic train separation and network interactions across changing rail topology.',
-      role: 'Systems architecture + C++ engineering',
+      role: 'Engineering direction + Planimate integration and validation',
       complexity: 'C++ · moving block · rail topology · Planimate integration · Windows · Linux'
     },
     metadata: {
       title: 'Moving Block Train Control — C++ Simulation | Craig Chandler',
       description:
-        'Case study of a cross-platform C++ component for modelling moving-block train behaviour and network-aware rail operations within Planimate simulations.',
+        'Operational requirements, engineering direction and Planimate validation for an InterDynamics moving-block simulation component, ready for project-model integration.',
       image: '/assets/social/moving-block.png',
       imageAlt: 'Moving Block Train Control — C++ simulation and control architecture',
       entityType: 'CreativeWork'
     },
     sections: [
       {
-        label: '01 / Control problem',
-        title: 'Movement constraints change with the railway',
-        paragraphs: [
-          'Moving-block behaviour depends on more than which section of track a train occupies. Train length, changing separation, junctions, shared infrastructure, closures and speed restrictions all affect what movements remain practical as the simulation evolves.',
-          'Representing those effects requires the model to account for changing physical and network conditions rather than treating movement as a fixed sequence of occupied and clear sections.'
+        "label": "01 / Modelling requirement",
+        "title": "Represent changing separation across a railway",
+        "paragraphs": [
+          "Moving-block operation requires a railway simulation to account for changing separation between trains. Train length, speed, acceleration and the surrounding network all affect how movements interact.",
+          "The requirement extends beyond trains following one another along a line. Junctions, single-track sections, passing loops, dwell times and speed restrictions introduce different operating conditions that need to remain consistent within the same simulation.",
+          "Closures and changing speed restrictions can alter the conditions during a run, requiring train behaviour to respond as the simulated operation changes.",
+          "The purpose of this work is to represent those behaviours for operational modelling and decision support. It concerns train movement within a simulation, rather than control of an operating railway."
         ]
       },
       {
-        label: '02 / Control architecture',
-        title: 'Separate the operational model from specialist control logic',
-        paragraphs: [
-          'The train-control logic is implemented as a separate C++ component integrated with the operational simulation. Keeping those responsibilities separate allows the railway model to focus on the wider operation while the specialist component handles detailed train-control behaviour.',
-          'That separation also makes the control behaviour easier to test independently from the larger simulation model and keeps the integration boundary explicit.'
-        ],
-        points: [
-          'Train length and changing separation affect movement behaviour',
-          'Junctions and shared infrastructure introduce network-level constraints',
-          'Closures and speed restrictions can alter earlier operating assumptions'
+        "label": "02 / Architecture",
+        "title": "Keep detailed control practical to simulate",
+        "paragraphs": [
+          "I chose a separate C++ library for the decision engine because the control problem is computationally intensive. The aim was to keep simulation run times practical as the detail and complexity of the model increased.",
+          "Planimate provides the operational simulation around that component. My work included the integration, model construction, train graphs and reporting used to exercise and inspect its behaviour.",
+          "The separation allows the control behaviour to be tested independently of the wider simulation. The same C++ source is designed to build for Windows and Linux.",
+          "Keeping the engine separate also provides room to extend train-performance modelling when a project requires it. A full train-performance calculator is a possible future addition, subject to project scope."
         ]
       },
       {
-        label: '03 / Integration',
-        title: 'Detailed train behaviour within a larger operational simulation',
-        paragraphs: [
-          'The component is written in C++ and integrated with Planimate through a deliberately narrow native boundary. The same source is designed to build for Windows and Linux.',
-          'Within the wider simulation it supports topology-aware train movement, changing operating constraints and interactions across the rail network.'
+        "label": "03 / Simulation development",
+        "title": "Build complexity into the test networks progressively",
+        "paragraphs": [
+          "Testing began with a small network and simple movements. I then added operating features, including node dwell and section speed restrictions, before building a larger network containing duplicated track, single-track sections and passing loops.",
+          "This progression made it possible to examine individual behaviours before reviewing their interaction across a more complex railway. The Planimate models provided an environment in which to observe movements, inspect data and repeat scenarios after changes.",
+          "Train graphs were the main visual review tool. They show movements across the network over time, making unexpected stops, prolonged waits and conflicting movements easier to identify. Data review provided a further check on train speeds and headways."
+        ]
+      },
+      {
+        "label": "04 / Behavioural validation",
+        "title": "Review the operation, not just the execution",
+        "paragraphs": [
+          "The train graphs exposed behaviours that required correction: a train remaining at a node while other trains passed it, an abrupt stop from running speed, or trains passing one another on single track. They also made it apparent when the operation became stuck because a train did not resume its journey.",
+          "These observations directed further investigation and correction. The identified behaviours were retested after changes, and there are no currently known operational problems in the tested scenarios.",
+          "Extended simulation runs also examined whether trains continued to circulate. Reaching the configured end time is insufficient if meaningful operational activity stopped earlier; movement records provide the evidence needed to distinguish the two."
+        ]
+      },
+      {
+        "label": "05 / Current status",
+        "title": "Ready for project-model integration",
+        "paragraphs": [
+          "The component is ready for integration into a project model, with final API documentation to complete. It has not yet been delivered to a client.",
+          "Further capability will be driven by project requirements, including whether more detailed train-performance calculations are needed."
         ]
       }
     ],
-    services: ['Control-system architecture', 'C++ engineering', 'Planimate integration', 'Test architecture'],
-    technologies: ['C++', 'CMake', 'Windows', 'Linux', 'Planimate', 'Native APIs'],
+    services: ['Operational requirements', 'Architecture and engineering direction', 'Planimate integration', 'Simulation test models', 'Train graphs and reporting', 'Behavioural validation'],
+    technologies: ['C++', 'Planimate', 'Windows', 'Linux', 'Discrete-event simulation'],
     diagram: 'control',
     featured: true,
     furtherReading: [
