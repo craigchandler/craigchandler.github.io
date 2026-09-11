@@ -3,6 +3,8 @@ import { dirname, extname, join, relative } from 'node:path';
 
 const outputDirectory = 'dist';
 const siteOrigin = 'https://craigchandler.xyz';
+// This project website is deployed separately from the portfolio on the same domain.
+const separatelyHostedPages = new Set(['https://craigchandler.xyz/wizball-remake/']);
 const htmlFiles = [];
 
 function collectHtmlFiles(directory) {
@@ -44,6 +46,7 @@ for (const htmlFile of htmlFiles) {
 
     const url = new URL(value, `${siteOrigin}${sourcePath}`);
     if (url.origin !== siteOrigin) continue;
+    if (separatelyHostedPages.has(url.href)) continue;
 
     const pathname = url.pathname;
 

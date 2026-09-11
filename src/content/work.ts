@@ -405,11 +405,11 @@ export const work: WorkItem[] = [
     titleSegments: ['Wizball Remake —', 'Legacy C++', 'Revival'],
     kicker: 'Legacy software recovery and modernisation',
     summary:
-      'Recovered the source of a 2007 C++ game remake and revived it for modern Linux and ARM handhelds, replacing obsolete platform dependencies, hardening runtime behaviour and establishing a modern build and release path with extensive AI-assisted engineering.',
+      'A recovery and modernisation of Graham Goring’s Retrospec Wizball remake, prompted by wanting to play it on a Linux handheld. After locating the surviving source, I directed the revival independently, choosing the architecture, guiding coding-agent implementation and testing the game through to its release on PortMaster.',
     card: {
       problem:
-        'Modernise a recovered C++ game codebase whose original platform, runtime and distribution assumptions no longer held on current systems.',
-      role: 'Legacy recovery + C++ modernisation',
+        'Bring a recovered C++ game remake to a Linux handheld, adapting its runtime, rendering and save behaviour to the device.',
+      role: 'Recovery + engineering direction + validation',
       complexity: 'C++ · SDL2 · legacy migration · Linux · ARM handhelds · build/release engineering'
     },
     metadata: {
@@ -422,69 +422,63 @@ export const work: WorkItem[] = [
     },
     sections: [
       {
-        label: '01 / Recovery',
-        title: 'Recover a codebase from another software era',
-        paragraphs: [
-          'The original Wizball was released by Sensible Software in 1987. Nearly two decades later, Graham Goring and collaborators created the Retrospec remake for Windows and Mac, with new graphics by Trevor “Smila” Storey and music and arrangements by Infamous, Chris Nunn.',
-          'By 2026, the remake’s source appeared to have been lost. After I contacted Graham, he reached out to Peter Hull, who had worked on the Mac conversion. Peter still had a surviving copy, including the Mac-specific project material from that period.',
-          'Recovering the files was only the beginning. The archive contained Visual Studio and early Xcode project files, bundled legacy libraries, generated binary data and runtime output. The engine expected Allegro 4, AllegroGL, desktop OpenGL 1.3 and FMOD APIs from the original development period. It also contained Windows, Mac and partial Linux assumptions accumulated across earlier ports.',
-          'The first task was therefore investigative: establish what had survived, reconstruct how the engine and data fitted together, and create a working Linux baseline without confusing the 2026 revival with authorship of the original remake.',
-          'Preservation included provenance as well as code. The original documentation and contributor credits were retained, and the project history now distinguishes clearly between the 1987 game, the 2006–2007 Retrospec remake and the later recovery work.'
-        ]
-      },
-      {
-        label: '02 / Runtime boundary',
-        title: 'Replace the platform layer, preserve the game',
-        paragraphs: [
-          'The modernisation was not approached as a clean-sheet rewrite. The aim was to keep the existing game, scripting system and creative content recognisable while concentrating change around the platform services that had aged out.',
-          'Window management, input, timing and rendering were progressively moved behind a new platform boundary. SDL2 replaced the active Allegro runtime, SDL_image took over image loading, and SDL_mixer replaced the legacy FMOD audio path. The old AllegroGL and desktop OpenGL integration was retired from the supported build.',
-          'Rendering was split into two targets. A conventional SDL renderer supports the desktop Linux build, while a direct OpenGL ES 2.0 path serves PortMaster and other handheld-style environments. The GLES2 renderer required more than API substitution: draw batching, texture handling, scaling and viewport behaviour had to be adapted until the game reached usable performance on the target hardware.',
-          'This boundary also made a later Android experiment possible. The Android branch builds the same native engine through Gradle and the NDK, packages the same game data, uses the GLES2 renderer and adds a touch-control overlay through the SDL activity. It can reach gameplay, but remains prototype work with unresolved lifecycle and memory concerns rather than a completed Android release.',
-          'The result is not universal portability, nor a claim of exact behavioural equivalence. It is a substantially more portable runtime architecture that retains the original remake as the system being modernised.'
-        ]
-      },
-      {
-        label: '03 / Runtime hardening',
-        title: 'Make runtime assumptions visible',
-        paragraphs: [
-          'A successful compilation did not mean the game was correct.',
-          'The recovered code contained assumptions that had been harmless—or at least hidden—on its original platforms. Asset names did not always match their on-disk case. Partial resource loads could leave invalid data for later systems to consume. Tile, collision and scripting paths assumed that indexes and references were valid. Input and simulation behaviour could become coupled to display refresh. A portal failed because its frame-zero state was indistinguishable from an uninitialised value.',
-          'Later stages exposed a different class of problem. The first handheld rendering path worked but was too slow to be useful. Release candidates uncovered GLES2 scaling problems. New asset packaging revealed stale-cache behaviour. Save-and-continue required several corrections around restored entities and bonus-stage state. Android testing exposed second-launch crashes, surface lifecycle behaviour and the cost of eagerly decoding long audio streams.',
-          'These failures were addressed with more explicit validation, defensive loading, diagnostic logging, a sanitizer-enabled build configuration and repeated testing on the environments that mattered. The purpose was not to suppress every symptom. It was to make enough of the old engine’s implicit contract visible that failures could be understood and corrected.'
+        "label": "01 / Recovery and purpose",
+        "title": "Bring the remake to a handheld",
+        "paragraphs": [
+          "Getting an Anbernic RG40XX-H prompted the project. I wanted to play Graham Goring’s Retrospec remake of Wizball on it, rather than an emulated version of the original Commodore 64 game.",
+          "The remake was developed in 2006–2007, but by 2026 its source appeared to have been lost. After I contacted Graham, he reached out to Peter Hull, who had worked on the Mac conversion. Peter still had a surviving copy, including the Mac project material.",
+          "The archive contained Visual Studio and early Xcode projects, bundled libraries and generated game data. Its runtime depended on Allegro 4, AllegroGL, desktop OpenGL and older FMOD APIs. The initial work established how the engine and data fitted together and brought up a working Linux baseline.",
+          "The original game logic, scripting system and creative content provided the foundation for the revival. Modernisation concentrated on the platform dependencies and runtime assumptions that prevented the remake from working reliably on current hardware."
         ],
-        subsection: {
-          title: 'AI-assisted engineering',
-          paragraphs: [
-            'Coding agents, including Codex and Claude via GitHub Copilot, were used extensively for scaffolding, migration and repetitive implementation. Their output was treated as a proposed change rather than evidence of correctness. Source review, builds, diagnostics, desktop execution, handheld testing and later release feedback determined whether each change was acceptable.',
-            'This distinction matters in legacy work. Agents can move quickly through unfamiliar code, but they cannot replace the engineering judgement required to recognise when a plausible change has altered a load-bearing behaviour.'
+        "subsection": {
+          "title": "AI-assisted engineering",
+          "paragraphs": [
+            "Coding agents, including Codex and Claude via GitHub Copilot, carried out much of the implementation. My work covered task definition, architectural decisions, reviewing and redirecting changes, and acceptance through builds, diagnostics, gameplay and device testing. The project also became a practical way to develop that engineering workflow against an unfamiliar legacy codebase."
           ]
         }
       },
       {
-        label: '04 / Delivery',
-        title: 'From recovered source to distributable software',
-        paragraphs: [
-          'Portability extended beyond the executable.',
-          'The original project mixed source assets with generated scripts, tile sets, tile maps and historical packfiles. Some release data could only be regenerated by running modes built into the game itself. Those relationships had to become explicit before the project could be built consistently outside its original development environment.',
-          'CMake now describes the native build, dependency selection, renderer target and installation layout. The existing data-generation modes can run headlessly, allowing scripts and map data to be rebuilt without opening a game window. Generated output is no longer treated as hand-maintained source.',
-          'PhysFS provides a consistent virtual filesystem over a single data.zip. The same package can be mounted by desktop, PortMaster and Android builds, while unpacked files remain available during development. Writable configuration, scores, saves and reports are kept outside the packaged assets.',
-          'GitHub Actions builds the game data once and uses it to produce Linux and Windows packages together with PortMaster binaries for both aarch64 and armhf. A separate assembly stage creates the exact launcher, metadata, controller mapping, licence and directory layout expected by PortMaster.',
-          'The Windows pipeline demonstrates automated compilation and packaging, but Windows runtime validation has not been established. The strongest completed outcome is the Linux and handheld path: the game runs on modern Linux, reached usable speed on ARM hardware, is available through tagged releases and is now distributed through PortMaster as a ready-to-run port.',
-          'What began as an uncertain source-recovery exercise is now a maintained public codebase with an explicit runtime boundary, a defined asset package and a repeatable route from source to release.'
+        "label": "02 / Runtime and performance",
+        "title": "Choose portability, then test it on the device",
+        "paragraphs": [
+          "SDL2 was chosen as a cross-platform foundation with support for desktop systems and a possible Android version. Window management, input, timing and rendering moved behind a platform boundary, with SDL_image handling image loading and SDL_mixer replacing the legacy audio path.",
+          "The initial SDL rendering path worked well on the desktop but was too slow on the handheld. Reviewing the alternatives led to a direct OpenGL ES 2.0 renderer, supported by PortMaster. Draw batching, texture handling, scaling and viewport behaviour were adapted for the device, while the conventional SDL renderer remained available for desktop use.",
+          "Testing on the RG40XX-H guided that work. A functioning renderer was an intermediate result; acceptable performance had to be established through actual gameplay on the handheld.",
+          "The platform boundary also supported the later Android version, which builds the native engine through Gradle and the NDK, uses the GLES2 renderer and adds a touch-control overlay."
         ]
       },
       {
-        label: '05 / Attribution',
-        title: 'Provenance and credits',
-        paragraphs: [
-          'Wizball was originally released in 1987 by Sensible Software, designed by Jon Hare and Chris Yates, with programming by Chris Yates, graphics by Jon Hare and music by Martin Galway.',
-          'The 2006–2007 Retrospec remake was programmed by Graham Goring, with graphics by Trevor “Smila” Storey, music and arrangements by Infamous — Chris Nunn — and a Mac conversion by Peter Hull. Scott Wightman contributed the original Linux conversion effort.',
-          'This case study covers Craig Chandler’s 2026 recovery and modernisation work. It does not imply authorship of the original game or Retrospec remake.'
+        "label": "03 / Playing and testing",
+        "title": "Make the game suit interrupted play",
+        "paragraphs": [
+          "A game of Wizball can occupy a long session, while handheld play is often interrupted. Save-and-continue was added so a run could be stopped and resumed later without losing progress.",
+          "Restoring a run required corrections to entity state and bonus-stage behaviour. Saving also needed to be quick enough to use comfortably on the handheld. Removing unnecessary work from the save and load path made the feature practical for short sessions.",
+          "Gameplay testing exposed assumptions elsewhere in the recovered engine: asset-name case differences, incomplete resource loads, unchecked references and input or simulation behaviour coupled to display refresh. A portal failure was traced to its frame-zero state being indistinguishable from an uninitialised value.",
+          "Diagnostic logging, defensive loading, explicit validation and a sanitizer-enabled build configuration supported investigation. Repeated desktop and handheld play provided the evidence that changes worked in the game, alongside source review and build checks."
         ]
+      },
+      {
+        "label": "04 / Delivery and current status",
+        "title": "Package the game for players",
+        "paragraphs": [
+          "A release needed both the executable and a dependable route from source assets to packaged game data. CMake defines the native builds, while the game’s existing data-generation modes run headlessly to rebuild scripts, tile sets and tile maps.",
+          "PhysFS provides access to a shared data.zip package across desktop, PortMaster and Android builds. Writable configuration, scores and saves remain outside the packaged assets.",
+          "GitHub Actions builds the game data once, then produces Linux and Windows packages and PortMaster binaries for aarch64 and armhf. A separate assembly stage combines both handheld binaries with the launcher, metadata, controller mapping and game data.",
+          "The PortMaster submission was accepted and the game is available through its catalogue. Submission testing led to startup-script adjustments, with no changes required to the game itself. It runs well on my Anbernic RG40XX-H and has also been tested through gameplay on my Linux and Windows desktops.",
+          "The Android version is operational in emulator testing. Earlier memory and lifecycle problems have been resolved, with work continuing on the touch-control overlay before release."
+        ],
+        "subsection": {
+          "title": "Provenance and credits",
+          "paragraphs": [
+            "The original Wizball was released by Sensible Software in 1987, designed by Jon Hare and Chris Yates, with programming by Chris Yates, graphics by Jon Hare and music by Martin Galway.",
+            "The 2006–2007 Retrospec remake was programmed by Graham Goring, with graphics by Trevor “Smila” Storey, music and arrangements by Infamous — Chris Nunn — and a Mac conversion by Peter Hull. Scott Wightman contributed the original Linux conversion effort. This case study covers Craig Chandler’s 2026 recovery and modernisation of that work."
+          ]
+        }
       }
     ],
     services: [
       'Legacy software recovery',
+      'Architecture and engineering direction',
       'C++ modernisation',
       'Cross-platform runtime engineering',
       'Runtime diagnostics and hardening',
@@ -514,6 +508,7 @@ export const work: WorkItem[] = [
     imageCaption: 'The recovered 2007 Retrospec remake running through the modern SDL2-based runtime.',
     imageNaturalRatio: true,
     externalLinks: [
+      { label: 'Project website and development diary', href: 'https://craigchandler.xyz/wizball-remake/' },
       { label: 'Source repository and full credits', href: 'https://github.com/craigchandler/wizball-remake' },
       { label: 'Tagged releases', href: 'https://github.com/craigchandler/wizball-remake/releases' },
       { label: 'PortMaster listing', href: 'https://portmaster.games/detail.html?name=wizball' },
