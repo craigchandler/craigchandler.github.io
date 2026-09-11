@@ -114,14 +114,14 @@ const breadcrumb = {
                 {section.points.map((point) => <li>{point}</li>)}
               </ul>
             )}
-            {section.subsection && (
+            {(section.subsections ?? (section.subsection ? [section.subsection] : [])).map((subsection) => (
               <div class="case-subsection">
-                <h3>{section.subsection.title}</h3>
+                <h3>{subsection.title}</h3>
                 <div class="case-copy">
-                  {section.subsection.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+                  {subsection.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
                 </div>
               </div>
-            )}
+            ))}
             {section.figure === 'image' && <CaseImage project={project} inline />}
           </section>
         ))}

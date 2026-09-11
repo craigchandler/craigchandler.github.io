@@ -3218,3 +3218,28 @@ h3 {
 .case-narrative h2 {
   text-wrap: balance;
 }
+
+/* Keep the body-of-work diagram readable without narrowing its overview. */
+.architecture-diagram-supply-chain .diagram-node small,
+.architecture-diagram-supply-chain .diagram-node span,
+.architecture-diagram-supply-chain .diagram-chip-row span,
+.architecture-diagram-supply-chain .diagram-output-grid span,
+.architecture-diagram-supply-chain .diagram-return-path span,
+.architecture-diagram-supply-chain .diagram-shared-state,
+.architecture-diagram-supply-chain figcaption {
+  font-size: 0.7rem;
+}
+
+.architecture-diagram-supply-chain .diagram-node strong {
+  font-size: 0.9rem;
+}
+
+@media (min-width: 1081px) {
+  .case-study-rail-supply-chain .case-title-grid {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  }
+
+  .case-study-rail-supply-chain .case-title-grid h1 {
+    font-size: clamp(4rem, 6.5vw, 7rem);
+  }
+}

@@ -5,6 +5,7 @@ export interface CaseSection {
   title: string;
   paragraphs: string[];
   figure?: 'image';
+  subsections?: Array<{ title: string; paragraphs: string[] }>;
   points?: string[];
   subsection?: {
     title: string;
@@ -279,67 +280,106 @@ export const work: WorkItem[] = [
     ]
   },
   {
-    slug: 'rail-supply-chain',
-    number: '04',
-    title: 'Rail & Bulk Supply Chain Modelling',
-    kicker: 'Operational decision support',
-    summary:
-      'A body of simulation and capacity work spanning mine, rail, port, logistics, and infrastructure planning.',
-    card: {
-      problem: 'Expose capacity constraints and trade-offs across tightly coupled mine, rail, and port systems.',
-      role: 'Operational modelling + decision-support design',
-      complexity: 'Discrete-event simulation · scheduling · stochastic delay · capacity analysis'
+    "slug": "rail-supply-chain",
+    "number": "04",
+    "title": "Rail & Bulk Supply Chain Modelling",
+    "kicker": "Operational modelling and decision support",
+    "summary": "Over more than twenty years at InterDynamics, I have developed Planimate simulations for rail, bulk-material and distribution systems. The work spans capacity reviews, infrastructure expansion, annual operating and maintenance plans, and supply-chain redesign.",
+    "card": {
+      "problem": "Assess capacity, operating plans and redesign options across rail, bulk-material and distribution systems.",
+      "role": "Simulation design + client scoping and decision support",
+      "complexity": "Planimate · reusable components · configurable networks · scenario analysis"
     },
-    metadata: {
-      title: 'Rail & Bulk Supply Chain Modelling | Craig Chandler',
-      description:
-        'Case study of discrete-event models for mine, rail and port operations, examining fleet cycles, capacity constraints, bottlenecks and operating scenarios.',
-      image: '/assets/social/rail-supply-chain.png',
-      imageAlt: 'Rail and bulk supply-chain modelling — recirculating operational model',
-      entityType: 'CreativeWork'
+    "metadata": {
+      "title": "Rail & Bulk Supply Chain Modelling | Craig Chandler",
+      "description": "Twenty years of Planimate simulation work at InterDynamics: client scoping, reusable models and planning studies across rail, bulk-material and distribution systems.",
+      "image": "/assets/social/rail-supply-chain.png",
+      "imageAlt": "Rail and bulk supply-chain modelling — recirculating operational model",
+      "entityType": "CreativeWork"
     },
-    sections: [
+    "sections": [
       {
-        label: '01 / Operational question',
-        title: 'The bottleneck moves',
-        paragraphs: [
-          'The capacity of a loadout, rail line or unloader does not predict the throughput of the whole operation. Fleet cycles, queues, train interactions, maintenance, stochastic delay and operating rules move the effective constraint from one part of the system to another.',
-          'The modelling task is to represent those dependencies at the level needed for a real planning decision, without burying the result in unnecessary detail.'
+        "label": "01 / Operational questions",
+        "title": "Define the decision before the model",
+        "paragraphs": [
+          "Clients bring questions ranging from the capacity of an existing operation to the configuration of a proposed supply chain. Some studies investigate infrastructure or fleet investment; others support recurring capacity reviews, annual planning or maintenance programmes.",
+          "Scoping begins with client discussions led by InterDynamics, drawing on our experience to examine how the operation works and what the study needs to establish. I generally worked as the sole simulation developer, often alongside a general manager responsible for project management. My role commonly extended from scoping and design reviews through to delivery, training and technical support.",
+          "The required outputs guide the level of detail. Data availability also sets a practical limit: a detailed representation needs evidence to support its assumptions. Model design establishes the data requirements, but the available data can in turn change what is reasonable to model."
         ]
       },
       {
-        label: '02 / Model boundary',
-        title: 'Follow the complete operating cycle',
-        paragraphs: [
-          'Discrete-event models follow material from mine or source through stockpile and loadout, across the rail network, into port or plant unloading, and then follow the empty fleet back into the next cycle.',
-          'Schedules, asset availability, maintenance windows, delay distributions, infrastructure limits and operating rules all change the same shared system state. That is what exposes queue formation, knock-on delay and constraints that isolated calculations miss.'
-        ],
-        points: [
-          'Calibrated process and travel times',
-          'Explicit infrastructure, fleet and operating constraints',
-          'Controlled scenario changes against a common baseline'
+        "label": "02 / Model engineering",
+        "title": "Reusable components, configurable networks",
+        "paragraphs": [
+          "Across these projects, I developed reusable simulation components and the system used to maintain and place them within a model. The main benefit is faster network construction, alongside consistent behaviour between models and less effort when the scope changes.",
+          "The Coles Myer project in 2004 was my first supply-chain model built entirely from input tables driving generic network components. The network could be regenerated as designs changed, allowing the same modelling logic to represent different configurations.",
+          "CBG subsequently used an early reusable rail-location component. By the Bowen Rail project in 2023, reusable rail-location components were used throughout the mine-to-port model, with their configuration defined by internal tables. This approach has made initial proof-of-concept models quicker to build.",
+          "Internal model construction and client configuration are separate decisions. Some models expose the complete network definition to users; others provide controls for agreed operating and infrastructure alternatives, with further structural changes remaining development work."
         ]
       },
       {
-        label: '03 / Decision outputs',
-        title: 'Compare the operation, not just a headline tonnage',
-        paragraphs: [
-          'Scenario runs report throughput alongside cycle times, utilisation, queues and bottlenecks. Together, those measures explain why a result changed and help distinguish a local improvement from a constraint shifted elsewhere in the chain.'
+        "label": "03 / Verification and interpretation",
+        "title": "Compare model behaviour with the operation",
+        "paragraphs": [
+          "Existing operations provide the strongest starting point for checking model logic. Cycle times and achieved capacity can be compared with actual performance before introducing proposed changes. For Coles Myer’s redesigned network, the configurable model could first represent the existing network using the same underlying logic.",
+          "Where practical, model outputs follow the data structures clients already use. That makes comparison with operational records more direct. Charts provide an overview, while train graphs are particularly useful to rail clients reviewing modelled movements.",
+          "Reviews often expose mismatches or incomplete assumptions in the input data. A mine cycle that appears too short may indicate a missing process, or time that belongs within an existing pre-load or post-load activity. The task is to identify what explains the difference and represent it at an appropriate level of detail."
         ]
       },
       {
-        label: '04 / Representative work',
-        title: 'Rail and bulk systems across several operating contexts',
-        paragraphs: [
-          'Public examples include Mineral Resources iron ore, Bowen Rail, Roy Hill, CBG bauxite, BHP Billiton iron ore, Aurizon coal, Queensland Rail bulk freight and Hunter Valley coal operations.',
-          'The Roy Hill rail operations platform was delivered over ten weeks, with partial functionality available after five. It combined mine and port delays, train scheduling, maintenance closures, infrastructure options and operational reporting in one simulation environment.'
+        "label": "04 / Representative work",
+        "title": "Different systems, different uses",
+        "paragraphs": [],
+        "subsections": [
+          {
+            "title": "Coles Myer — supply-chain redesign, 2004",
+            "paragraphs": [
+              "Working within the implementation team, I ran a configurable model of a proposed distribution network. The study examined warehouse locations, truck fleet requirements and stocks of pallets, roll cages and other handling units against forecast demand growth.",
+              "The model also served as a communication tool. It made the proposed operation tangible through measures such as daily truck movements at individual sites and the quantities of handling equipment required at each location. As the network design changed, its configuration could be rebuilt from input data."
+            ]
+          },
+          {
+            "title": "CBG — bauxite supply chain, since 2010",
+            "paragraphs": [
+              "The CBG model combines rail transport with a detailed conveyor and processing-plant representation. It has remained in use and under continuing development since 2010, supporting studies of staged capacity expansion.",
+              "The client can change operating rates, equipment capacities, transport speeds, demand, breakdown assumptions and maintenance. Changes to rail infrastructure or the conveyor plant require corresponding model development."
+            ]
+          },
+          {
+            "title": "Bowen Rail — mine-to-port capacity planning, 2023 onwards",
+            "paragraphs": [
+              "The Bowen Rail model supports investigation of rail capacity, maintenance, infrastructure alternatives, rolling stock and demand. It was delivered with user training and remains in use by the client.",
+              "Users can enable or disable locations, change passing capability and rail duplication, and adjust operating rates, speeds, maintenance, rolling-stock numbers and shipping demand. Adding new rail locations or links remains a model-development task.",
+              "InterDynamics also used the model for a study comparing configuration combinations over a five-to-seven-year planning horizon. The work considered infrastructure, rolling stock, operating arrangements, demand, and mine and port stockpile capacities, with a report comparing alternatives to support investment planning."
+            ]
+          }
+        ]
+      },
+      {
+        "label": "05 / Delivery and ongoing use",
+        "title": "Models for client use and consulting work",
+        "paragraphs": [
+          "Delivery depends on how the model will be used. For some assignments, I operate it within the project team and provide analysis and reporting. For others, clients receive a model they can configure and run themselves, supported by training and subsequent technical assistance.",
+          "Deciding what clients can change is part of the model design. Clients need access to the assumptions and alternatives relevant to their planning work, while changes beyond that boundary require the model to be extended. Continued support allows the simulation to develop alongside new operating questions and project scope."
         ]
       }
     ],
-    services: ['Operational modelling', 'Discrete-event simulation', 'Capacity analysis', 'Scenario design'],
-    technologies: ['Discrete-event simulation', 'Rail modelling', 'Scheduling', 'Scenario analysis', 'Planimate'],
-    diagram: 'supply-chain',
-    featured: true
+    "services": [
+      "Simulation design and development",
+      "Client scoping and technical reviews",
+      "Reusable modelling components",
+      "Scenario analysis and reporting",
+      "Training and ongoing support"
+    ],
+    "technologies": [
+      "Planimate",
+      "Discrete-event simulation",
+      "Networks defined by data",
+      "Rail and logistics modelling",
+      "Scenario analysis"
+    ],
+    "diagram": "supply-chain",
+    "featured": true
   },
   {
     slug: 'wizball-remake',

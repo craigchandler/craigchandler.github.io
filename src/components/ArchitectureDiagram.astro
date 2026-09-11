@@ -34,12 +34,12 @@ const diagrams = {
       'The operational simulation and specialist C++ component remain separate responsibilities within one cross-platform model.'
   },
   'supply-chain': {
-    label: 'Operational model',
-    context: 'System boundary and decision outputs',
+    label: 'Operational modelling',
+    context: 'Rail, bulk-material and distribution systems',
     description:
-      'A discrete-event model follows material and fleet through mine or source, stockpile and loadout, the rail network, port or plant unloading, and the empty return cycle. Schedules, maintenance, delays, infrastructure, operating rules and fleet availability influence the entire cycle. Outputs include throughput, utilisation, queues, cycle times, bottlenecks and scenario comparisons.',
+      'A conceptual overview of the range of systems modelled across separate projects. Sources feed transport and storage, processing or distribution, and destinations. Fleet and handling equipment return for reuse. Demand, maintenance, delays, infrastructure, operating rules and asset availability influence the operation. Outputs support capacity, cycle-time and scenario comparisons. The diagram does not represent one network shared by all projects.',
     caption:
-      'Loaded movement runs to the destination; the empty fleet returns through the network to begin the next cycle.'
+      'An overview of the range of systems modelled, rather than one network shared by all projects. Fleet and handling-equipment return flows depend on the operation.'
   },
   revival: {
     label: 'Modernisation boundary',
@@ -349,54 +349,54 @@ const captionId = `${type}-diagram-caption`;
       <div class="diagram-influences">
         <div class="diagram-boundary-heading">
           <span>Model inputs</span>
-          <strong>Conditions affecting the whole cycle</strong>
+          <strong>Conditions shaping the operation</strong>
         </div>
         <div class="diagram-chip-row">
-          <span>Schedules</span>
+          <span>Demand &amp; schedules</span>
           <span>Maintenance</span>
           <span>Stochastic delay</span>
           <span>Infrastructure</span>
           <span>Operating rules</span>
-          <span>Fleet availability</span>
+          <span>Asset availability</span>
         </div>
       </div>
 
       <div class="diagram-operating-cycle">
         <div class="diagram-boundary-heading">
           <span>Discrete-event simulation boundary</span>
-          <strong>Mine-to-destination operating cycle</strong>
+          <strong>Material movement and resource cycles</strong>
         </div>
         <div class="diagram-cycle-row">
           <div class="diagram-node">
             <small>01</small>
-            <strong>Mine / source</strong>
-            <span>Material release</span>
+            <strong>Sources</strong>
+            <span>Mines · suppliers</span>
           </div>
           <span class="diagram-arrow" aria-hidden="true">→</span>
           <div class="diagram-node">
             <small>02</small>
-            <strong>Stockpile / loadout</strong>
-            <span>Queue · load · depart</span>
+            <strong>Transport &amp; storage</strong>
+            <span>Rail · trucks · stockpiles</span>
           </div>
           <span class="diagram-arrow" aria-hidden="true">→</span>
           <div class="diagram-node diagram-node-emphasis">
             <small>03</small>
-            <strong>Rail fleet &amp; network</strong>
-            <span>Travel · meet · pass · wait</span>
+            <strong>Processing / distribution</strong>
+            <span>Plants · conveyors · warehouses</span>
           </div>
           <span class="diagram-arrow" aria-hidden="true">→</span>
           <div class="diagram-node">
             <small>04</small>
-            <strong>Port / plant</strong>
-            <span>Queue · unload · release</span>
+            <strong>Destinations</strong>
+            <span>Ports · receiving sites</span>
           </div>
         </div>
         <div class="diagram-return-path">
           <i aria-hidden="true">←</i>
-          <span><strong>Empty fleet return</strong> · network back to the next loading cycle</span>
+          <span><strong>Fleet &amp; handling-equipment return</strong> · resources available for the next cycle</span>
           <b aria-hidden="true">↵</b>
         </div>
-        <p class="diagram-shared-state">Shared state: queues · asset availability · fleet position · current events</p>
+        <p class="diagram-shared-state">Model detail follows the planning question and available data</p>
       </div>
 
       <div class="diagram-decision-outputs">
