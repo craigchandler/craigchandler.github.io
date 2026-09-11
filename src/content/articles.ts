@@ -35,9 +35,8 @@ export const articles: ArticleItem[] = [
     },
     introduction: [
       'Railway simulations often begin with a convenient abstraction: divide the track into sections, represent each train by its current location, and move it from one part of the network to the next. For many planning questions, this works well. It makes occupancy visible, creates clear event boundaries and keeps the model understandable.',
-      'Moving-block behaviour asks a more demanding set of questions.',
       "The separation between trains changes as they move. A train's front can pass a location while hundreds of metres of train remain behind it. Two trains that are adequately separated on parallel tracks may still compete for the same junction. A route that was available moments ago may be affected by another movement, a closure or a new restriction.",
-      'The challenge is not simply making trains move more smoothly. It is choosing a modelling abstraction that remains physically meaningful while the state of the railway changes.',
+      'Modelling these interactions requires an abstraction that remains physically meaningful as the state of the railway changes.',
       'The work discussed here concerns train-control behaviour inside an operational, discrete-event simulation. It is not a production signalling system, a safety case or a certified railway control implementation. Its purpose is to represent these operational effects with enough fidelity for simulation experiments and decision support.'
     ],
     sections: [
@@ -54,11 +53,11 @@ export const articles: ArticleItem[] = [
       {
         title: 'A train is not a point',
         paragraphs: [
-          'The most important physical correction is also one of the easiest to overlook. A train has length.',
+          'Train length affects both the space a movement needs and when infrastructure becomes available to other trains.',
           'Consider a leading train passing through a junction. Its front may already be on the outgoing track while its rear remains on the approach. To an animation or a node-based movement process, the train may appear to have reached the next part of its route. To another train seeking to use the junction, the first movement has not yet finished.',
           'This distinction affects more than junctions. It influences when following space becomes available, whether a train fits at a proposed stopping location, when a speed restriction has been fully cleared and whether a movement would leave part of the train obstructing shared infrastructure.',
           'Long trains also cross modelling boundaries frequently. The front and rear may occupy different sections, with a node, crossing or other network feature between them. A model that records only the leading position risks releasing infrastructure too soon or misunderstanding the space available to the next train.',
-          'The public lesson is not about a particular data structure or algorithm. It is that the physical extent of an asset must remain visible in the abstraction. If length matters operationally, representing the asset as a point creates errors precisely at the boundaries where coordination matters most.'
+          'The model therefore needs to represent the physical extent of the train wherever length affects clearance, available space or interaction with another movement.'
         ],
         figure: 'whole-train-clearance'
       },
@@ -69,28 +68,25 @@ export const articles: ArticleItem[] = [
           'At a merge, two adequately separated trains may still want to occupy the same path. On single track, trains travelling in opposite directions can be far apart and nevertheless be committed to incompatible movements. At a crossing, movements on different tracks may interact even though neither train is following the other.',
           'The surrounding network matters as well. It is not always enough to know that a junction itself is clear. The receiving track must be able to accommodate the movement without leaving the train stranded across the conflict. A seemingly helpful advance can make the wider operation worse if it blocks another movement needed to restore flow.',
           'Closures and restrictions add another source of change. They can alter which parts of the network are usable, which movements remain practical and how approaching trains behave. Their effects may extend beyond the location where they apply because trains need space and time to respond.',
-          'These are coordination questions rather than simple proximity questions. They require the model to consider how several movements interact across connected infrastructure. The important point is why a purely local view of each train is insufficient.'
+          'The model must therefore account for how several movements interact across connected infrastructure. Separation between individual trains is only part of that assessment.'
         ]
       },
       {
         title: 'A continuously changing problem in a discrete-event model',
         paragraphs: [
-          'Railway movement appears continuous, but a discrete-event simulation advances through selected events and time points. Between those points, trains move, separation changes and earlier assumptions age.',
+          'Railway movement appears continuous, but a discrete-event simulation advances through selected events and time points. Between those points, trains move and separation changes.',
           'This creates a modelling trade-off. Reconsidering every movement extremely frequently may add significant computational work without improving the decisions being studied. Waiting too long can leave the simulated behaviour based on conditions that no longer describe the railway.',
           'The appropriate balance depends on the purpose of the model. A strategic capacity model may not need the same movement detail as a study concerned with close following, junction approaches or the effects of temporary restrictions. Greater detail is valuable only when it changes the operational questions the model can answer.',
-          'Timing also affects physical credibility. A train cannot change its behaviour at an arbitrary point without regard to how it arrived there. If the model recognises a constraint too late, the resulting movement may contain implausible stops or abrupt changes. If it retains an earlier decision for too long, the train may continue as though the surrounding railway had not changed.',
-          'The difficulty lies in keeping the movement behaviour consistent with the resolution of the simulation, not in pretending that a discrete model has become continuous.'
+          'Timing also affects physical credibility. A train cannot change its behaviour at an arbitrary point without regard to how it arrived there. If the model recognises a constraint too late, the resulting movement may contain implausible stops or abrupt changes.',
+          'Movement behaviour must remain physically credible at the chosen simulation resolution.'
         ]
       },
       {
         title: 'Valid decisions can become outdated assumptions',
         paragraphs: [
-          'A movement decision is made in a context. The leading train is travelling at a particular speed. A route is available. Shared infrastructure is clear. A restriction is absent or has not yet begun.',
-          'Any of those conditions can change.',
-          'The earlier decision was not necessarily wrong. It may have been entirely appropriate for the state that existed when it was made. The modelling problem is recognising that its assumptions are no longer current.',
+          'A movement decision depends on the conditions when it is made: the speed of the leading train, the availability of a route, the use of shared infrastructure and any restrictions in effect.',
           'A leader may slow unexpectedly. Another movement may occupy shared infrastructure. A route may become unavailable, or a temporary restriction may change the appropriate approach. Conversely, a constraint may clear and allow a train to resume progress.',
-          'Moving-block behaviour therefore has to respond to changing operating conditions. A decision that was appropriate earlier in the simulation may need to be reconsidered as the surrounding railway changes.',
-          "A useful model makes these changes visible in the train's behaviour without creating contradictions between physical movement, network occupancy and the events recorded by the simulation."
+          'An earlier decision may have been appropriate when it was made but no longer suit the current conditions. The model needs to reflect that change in train behaviour while keeping physical movement, network occupancy and recorded events consistent.'
         ]
       },
       {
@@ -106,9 +102,8 @@ export const articles: ArticleItem[] = [
       {
         title: 'Start with the physical abstraction',
         paragraphs: [
-          'Moving-block simulation becomes difficult because physical extent, changing separation, network topology and time interact. Simplifying any one of them can make the software easier to build, but it may also remove the behaviour the model was intended to study.',
-          'The most useful design question comes before software architecture: what physical facts must remain true as the simulated operation changes?',
-          'Once that abstraction is clear, implementation choices can be evaluated against it. Without it, even well-structured software can produce movement that is internally consistent but operationally unconvincing.'
+          'The modelling abstraction needs to preserve the physical facts that affect the study: the space a train occupies, its changing separation from other trains and its interaction with connected infrastructure.',
+          'Implementation choices can then be assessed against observable behaviour: credible movement, appropriate responses to changing conditions and continued operation over the course of a simulation.'
         ]
       }
     ],
