@@ -1,0 +1,141 @@
+<figure class="article-figure npu-stack-figure">
+  <div class="npu-stack" role="img" aria-labelledby="npu-stack-title" aria-describedby="npu-stack-description">
+    <p id="npu-stack-title" class="eyebrow">From ONNX model to XDNA2</p>
+    <p id="npu-stack-description" class="visually-hidden">
+      The ONNX model uses ONNX Runtime 1.27.0 and its Vitis AI execution provider from Ryzen AI Software 1.8.
+      The NPU path connects through XRT 2.26.0 and the XDNA userspace plugin 2.26.0 to the existing CachyOS
+      amdxdna kernel driver and the AMD XDNA2 NPU. ONNX Runtime also executes CPU-assigned operators on the CPU.
+    </p>
+    <div class="npu-stack-layers" aria-hidden="true">
+      <div class="npu-stack-layer">
+        <span class="npu-stack-label">Model</span>
+        <div class="npu-stack-node"><strong>ONNX model</strong></div>
+      </div>
+      <div class="npu-stack-layer">
+        <span class="npu-stack-label">Userspace</span>
+        <div class="npu-stack-node">
+          <span>Ryzen AI Software 1.8</span>
+          <strong>ONNX Runtime 1.27.0</strong>
+          <span>VitisAIExecutionProvider</span>
+          <div class="npu-stack-runtime">
+            <strong>XRT 2.26.0</strong>
+            <span>XDNA userspace plugin 2.26.0</span>
+          </div>
+        </div>
+      </div>
+      <div class="npu-stack-layer">
+        <span class="npu-stack-label">Kernel</span>
+        <div class="npu-stack-node npu-stack-retained">
+          <strong>amdxdna</strong>
+          <span>Existing CachyOS in-tree driver retained</span>
+        </div>
+      </div>
+      <div class="npu-stack-layer">
+        <span class="npu-stack-label">Hardware</span>
+        <div class="npu-stack-node">
+          <strong>AMD XDNA2 NPU</strong>
+          <span>Ryzen AI 9 HX 470</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <figcaption>
+    The tested NPU path, with userspace components installed above the existing kernel driver.
+    ONNX Runtime also executes the operators assigned to the CPU.
+  </figcaption>
+</figure>
+
+<style>
+  .npu-stack-figure {
+    width: 100%;
+    margin-inline: 0;
+    transform: none;
+  }
+
+  .npu-stack {
+    padding: clamp(1rem, 3vw, 2rem);
+    border: 1px solid var(--line-strong);
+    background: var(--bg-soft);
+  }
+
+  .npu-stack-layer {
+    display: grid;
+    grid-template-columns: 6rem minmax(0, 1fr);
+    gap: 1.25rem;
+    align-items: center;
+  }
+
+  .npu-stack-layer + .npu-stack-layer {
+    margin-top: 1.75rem;
+  }
+
+  .npu-stack-label {
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+
+  .npu-stack-node {
+    position: relative;
+    display: grid;
+    gap: 0.35rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--line-strong);
+    text-align: center;
+  }
+
+  .npu-stack-layer + .npu-stack-layer .npu-stack-node::before {
+    position: absolute;
+    top: -1.8rem;
+    left: 50%;
+    height: 1.75rem;
+    border-left: 1px solid var(--accent);
+    content: '';
+  }
+
+  .npu-stack-node strong {
+    color: var(--ink-soft);
+    font-size: 1rem;
+    font-weight: 550;
+  }
+
+  .npu-stack-node span {
+    color: var(--muted);
+    font-size: 0.8rem;
+    overflow-wrap: anywhere;
+  }
+
+  .npu-stack-runtime {
+    display: grid;
+    gap: 0.35rem;
+    margin-top: 0.65rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .npu-stack-retained {
+    border-color: var(--accent);
+  }
+
+  @media (max-width: 540px) {
+    .npu-stack-layer {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.5rem;
+    }
+
+    .npu-stack-label {
+      position: relative;
+      z-index: 1;
+      justify-self: start;
+    }
+
+    .npu-stack-layer + .npu-stack-layer .npu-stack-node::before {
+      top: -3.6rem;
+      height: 3.55rem;
+    }
+
+    .npu-stack-node {
+      padding-inline: 0.75rem;
+    }
+  }
+</style>

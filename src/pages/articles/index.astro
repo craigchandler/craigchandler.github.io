@@ -47,7 +47,8 @@ const breadcrumb = {
       {articles.map((article) => (
         <article>
           <time datetime={article.published}>
-            {new Date(`${article.published}T00:00:00+09:30`).toLocaleDateString('en-AU', {
+            {new Date(`${article.published}T00:00:00Z`).toLocaleDateString('en-AU', {
+              timeZone: 'UTC',
               day: 'numeric',
               month: 'long',
               year: 'numeric'
